@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import "./homePage.css";
+import "./HomePage.css";
 import Loading from './common/Loading';
 import Menu from "./menu/menu";
-import Home from "./home/home";
+import Home from "./home/Home";
 
 function HomePage() {
     const [loading, setLoading] = useState(false);

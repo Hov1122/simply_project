@@ -4,7 +4,7 @@ import ErrorBoundary from './components/common/ErrorBoundary';
 import Login from './components/auth/Login';
 import LogOut from './components/auth/LogOut';
 import RequireAuth from './components/auth/RequireAuth';
-import HomePage from "./components/homePage";
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
