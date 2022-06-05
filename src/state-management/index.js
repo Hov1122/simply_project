@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import authReducer from './auth/reducer';
+import tokenMiddleware from './middleware/tokenMiddleware';
 import rootSaga from './sagas/rootSaga';
 
 const rootReducer = combineReducers({
@@ -10,10 +11,11 @@ const rootReducer = combineReducers({
 
 const sagaMiddleware = createSagaMiddleware();
 
+
 const store = configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware().concat(sagaMiddleware),
+        getDefaultMiddleware().concat(tokenMiddleware, sagaMiddleware),
     devTools: process.env.REACT_APP_ENV !== 'production',
 });
 

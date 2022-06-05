@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginRequest } from '../../state-management/auth/actions';
 import { authSelector } from '../../state-management/auth/selectors';
+import Loading from '../common/Loading';
 
 function LoginPage() {
     const emailRef = useRef();
     const [email, setEmail] = useState('');
     const [password, setPassword] =  useState('');
+    const [loading, setLoading] = useState(false);
 
-    const { error, loading} = useSelector(authSelector);
+    const { error} = useSelector(authSelector);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -19,11 +21,13 @@ function LoginPage() {
     }, [])
 
     const logHandler = async () => {
+        setLoading(true);
         dispatch(loginRequest({email, password}));
 
         setTimeout(() => {
+            setLoading(false)
             navigate('/home');
-        }, 100)
+        }, 1000);
     }
 
     const handleEmailChange = (e) => {
@@ -32,6 +36,10 @@ function LoginPage() {
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value)
+    }
+
+    if(loading) {
+        return <Loading />
     }
 
     return (
