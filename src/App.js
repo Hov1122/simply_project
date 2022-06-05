@@ -4,6 +4,7 @@ import ErrorBoundary from './components/common/ErrorBoundary';
 import Login from './components/auth/Login';
 import LogOut from './components/auth/LogOut';
 import RequireAuth from './components/auth/RequireAuth';
+import HomePage from "./components/homePage";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
 
           // PROTECTED ROUTES
           <Route element={<RequireAuth />}>
-            <Route path='/home' element={<div>Welcome</div>}/>
+            <Route path='/home' element={<HomePage />}/>
           </Route>
         </Routes>
       </ErrorBoundary>

@@ -44,6 +44,7 @@ function LoginPage() {
 
     return (
         <div className="login-container">
+            <h1>Log In</h1>
             <input ref={emailRef} type="text" className="email-login-input" placeholder="Enter E-mail" onChange={handleEmailChange}/>
             <input type="password" className="password-login-input" placeholder="Enter Password" onChange={handlePasswordChange}/>
             {error && <span className='login-error'>{error}</span>}
