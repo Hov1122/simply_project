@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import "./HomePage.css";
 import Loading from './common/Loading';
-import Menu from "./menu/menu";
+import Menu from "./menu/Menu";
 import Home from "./home/Home";
 
 function HomePage() {

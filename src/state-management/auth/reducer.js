@@ -14,7 +14,7 @@ const authReducer = createReducer(initialState, builder => {
         .addCase(loginPending, (state, { payload }) => {
             state.loading = true;
         })
-        .addCase(loginSuccess, (state, { payload: { data } }) => {
+        .addCase(loginSuccess, (state, { payload: { data: {data} } }) => {
             state.user = data.user;
             state.token = data.accessToken;
             state.loading = false;

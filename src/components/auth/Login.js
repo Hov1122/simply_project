@@ -2,9 +2,9 @@ import React, {useEffect, useRef, useState} from 'react';
 import "./Login.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginRequest } from '../../state-management/auth/actions';
 import { authSelector } from '../../state-management/auth/selectors';
 import Loading from '../common/Loading';
+import { loginRequest } from '../../state-management/auth/requests';
 
 function LoginPage() {
     const emailRef = useRef();
