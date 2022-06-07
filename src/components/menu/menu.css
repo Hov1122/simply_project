@@ -1,6 +1,6 @@
 #root {
     width: 100%;
-    height: auto !important;
+    height: 100vh;
 }
 
 .menu {
@@ -9,7 +9,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    justify-content: start;
 }
 
 .menu button {
@@ -19,13 +18,14 @@
     padding: 20px;
     border: none;
     opacity: .6;
+    max-width: 100px;
 }
 
 .menu button:hover {
     border-bottom:1px solid white;
 }
 
-.selected {
+.active {
     border-bottom: 1px solid white;
     opacity: 1;
 }

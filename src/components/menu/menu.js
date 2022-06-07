@@ -3,35 +3,37 @@ import "./menu.css";
 import Loading from '../common/Loading';
 import { useDispatch } from 'react-redux'
 import { logoutRequest } from '../../state-management/auth/requests';
-import { useNavigate } from 'react-router-dom';
+import {  NavLink, useLocation, useNavigate } from 'react-router-dom';
 
-function Menu(props) {
+function Menu() {
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const { pathname } = useLocation();
 
     if(loading) {
         return <Loading />
     }
-
-    const handleMenuClick = (e) => {
-        const MenuButtons = document.querySelectorAll('.menu button')
-        MenuButtons.forEach(element => {
-            element.classList.remove('selected')
-        })
-        e.target.classList.add('selected')
-        props.handleSwitchComp(e.target.innerText)
-    }
  
     return (
-        <div className={`menu`}>
-            <button onClick={handleMenuClick} className={`selected`}>Home</button>
-            <button onClick={handleMenuClick}>Schedule</button>
-            <button onClick={handleMenuClick}>Tests</button>
-            <button onClick={() => {
-                dispatch(logoutRequest())
-            }}>Logout</button>
-        </div>  
+    
+           pathname !== '/' ? 
+           <div className={`menu`}>
+               <NavLink to="/home">
+                <button>Home</button>
+               </NavLink>
+
+               <NavLink to='schedule'>
+                    <button>Schedule</button>
+                </NavLink>
+
+                <NavLink to='tests'>
+                    <button>Tests</button>
+                </NavLink>
+                <button onClick={() => {
+                    dispatch(logoutRequest())
+                }}>Logout</button>
+            </div> : null
+        
     );
 }
 
