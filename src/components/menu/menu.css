@@ -1,0 +1,31 @@
+#root {
+    width: 100%;
+    height: auto !important;
+}
+
+.menu {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: start;
+}
+
+.menu button {
+    background-color: inherit;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    border: none;
+    opacity: .6;
+}
+
+.menu button:hover {
+    border-bottom:1px solid white;
+}
+
+.selected {
+    border-bottom: 1px solid white;
+    opacity: 1;
+}

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import "./Home.css";
+import "./home.css";
 import Loading from '../common/Loading';
 
 function Home() {
@@ -11,7 +11,7 @@ function Home() {
 
     return (
         <div className={`home`}>
-
+            <h2>Home Page</h2>
         </div>
     );
 }
