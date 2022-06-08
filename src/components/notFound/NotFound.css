@@ -1,0 +1,20 @@
+.not-found-title {
+    color: #ffff;
+    font-size: 40px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.go-back-button {
+    background-color: transparent;
+    border: none;
+    width: 120px;
+    height: 40px;
+    color: #ffff;
+    margin: 20px;
+}
+
+.go-back-button:hover {
+    border: 1px solid #ffff;
+}

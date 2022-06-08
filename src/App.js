@@ -8,6 +8,7 @@ import HomePage from "./components/homePage";
 import Menu from './components/menu/menu';
 import Schedule from './components/schedule/schedule';
 import Tests from './components/tests/tests';
+import NotFound from './components/notFound/NotFound';
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
 
             <Route path='/logout' element={<LogOut />} />
           </Route>
+
+          (// NOT FOUND ROUTE)
+          <Route path='*' element={<NotFound />}/>
         </Routes>
       </ErrorBoundary>
     </div>
