@@ -1,0 +1,29 @@
+.Header-Container {
+    height: 70px;
+    border-bottom: 1px solid #ffff;
+
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+
+    padding: 0 50px;
+}
+
+.search-bar-container {
+    margin: auto 0;
+    height: 30px;
+}
+
+.search-bar {
+    height: 100%;
+    border-radius: 15px;
+    width: 300px;
+}
+
+.profile-picture {
+    cursor: pointer;
+    margin: auto 0;
+    width: 54px;
+    border-radius: 50%;
+    /* height: 12px; */
+}

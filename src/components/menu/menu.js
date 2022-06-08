@@ -37,6 +37,7 @@ function Menu() {
                 <button onClick={() => {
                     dispatch(logoutRequest())
                 }}>Logout</button>
+                
             </div> : null
         
     );

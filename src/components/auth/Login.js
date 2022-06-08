@@ -14,7 +14,7 @@ function LoginPage() {
     const [password, setPassword] =  useState('');
     const [loading, setLoading] = useState(true);
 
-    const { error } = useSelector(authSelector);
+    const { error, token } = useSelector(authSelector);
     const dispatch = useDispatch();
     const { state } = useLocation();
     const navigate = useNavigate();
@@ -22,19 +22,22 @@ function LoginPage() {
     useEffect(() => {
         emailRef?.current?.focus();
         
-        (async () => {
-            const response = await refreshTokenRequest();
-
-            if(response?.data?.data?.accessToken) {
-                dispatch(loginSuccess(response));
-                navigate(state?.from?.pathname || '/home');
-            }
-
-            setLoading(false);
-        })()
+        if(!token) {
+            (async () => {
+                const response = await refreshTokenRequest();
+    
+                if(response?.data?.data?.accessToken) {
+                    dispatch(loginSuccess(response));
+                    navigate(state?.from?.pathname || '/home');
+                }
+    
+                setLoading(false);
+            })()
+        }
+        
 
         
-    }, [dispatch, navigate, state]);
+    }, [dispatch, navigate, state, token]);
 
     const logHandler = async () => {
         setLoading(true);

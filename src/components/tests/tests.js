@@ -10,7 +10,7 @@ function Tests() {
     }
 
     return (
-        <div className={`tests`}>
+        <div className='Tests-Container'>
             <h2>Tests</h2>
         </div>
     );
