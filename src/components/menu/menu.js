@@ -1,14 +1,19 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import "./menu.css";
 import Loading from '../common/Loading';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logoutRequest } from '../../state-management/auth/requests';
-import {  NavLink, useLocation, useNavigate } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
+import { authSelector } from '../../state-management/auth/selectors';
 
 function Menu() {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
-    const { pathname } = useLocation();
+    const { token } = useSelector(authSelector)
+
+    useEffect(() => {
+            setLoading(false);
+    }, [])
 
     if(loading) {
         return <Loading />
@@ -16,7 +21,7 @@ function Menu() {
  
     return (
     
-           pathname !== '/' ? 
+           token ? 
            <div className={`menu`}>
                <NavLink to="/home">
                 <button>Home</button>

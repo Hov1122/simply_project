@@ -1,24 +1,40 @@
 import React, {useEffect, useRef, useState} from 'react';
 import "./Login.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { authSelector } from '../../state-management/auth/selectors';
 import Loading from '../common/Loading';
 import { loginRequest } from '../../state-management/auth/requests';
+import { refreshTokenRequest } from '../../helpers/requests/refreshTokenRequest';
+import { loginSuccess } from '../../state-management/auth/actions';
 
 function LoginPage() {
     const emailRef = useRef();
     const [email, setEmail] = useState('');
     const [password, setPassword] =  useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    const { error} = useSelector(authSelector);
+    const { error } = useSelector(authSelector);
     const dispatch = useDispatch();
+    const { state } = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
         emailRef?.current?.focus();
-    }, [])
+        
+        (async () => {
+            const response = await refreshTokenRequest();
+
+            if(response?.data?.data?.accessToken) {
+                dispatch(loginSuccess(response));
+                navigate(state?.from?.pathname || '/home');
+            }
+
+            setLoading(false);
+        })()
+
+        
+    }, [dispatch, navigate, state]);
 
     const logHandler = async () => {
         setLoading(true);
@@ -49,7 +65,7 @@ function LoginPage() {
             <input type="password" className="password-login-input" placeholder="Enter Password" onChange={handlePasswordChange}/>
             {error && <span className='login-error'>{error}</span>}
             <button disabled={!(email && password)} onClick={logHandler}>Log In</button>
-        </div>
+        </div> 
     );
 }
 

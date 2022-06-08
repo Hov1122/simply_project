@@ -15,16 +15,16 @@ function App() {
       <ErrorBoundary>
         <Menu />
         <Routes>
-          // PUBLIC ROUTES
+          (// PUBLIC ROUTES)
           <Route path='/' element={<Login />}/>
 
-          // PROTECTED ROUTES
+          (// PROTECTED ROUTES)
           <Route element={<RequireAuth />}>
             <Route path='/home' element={<HomePage />}/>
 
-            <Route path='schedule' element={<Schedule />}/>
+            <Route path='/schedule' element={<Schedule />}/>
 
-            <Route path='tests' element={<Tests />}/>
+            <Route path='/tests' element={<Tests />}/>
 
             <Route path='/logout' element={<LogOut />} />
           </Route>

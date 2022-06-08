@@ -1,12 +1,4 @@
-body {
-    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-h1 {
+.login-container h1 {
     color: #fff;
 }
 
@@ -17,7 +9,10 @@ h1 {
     align-items: center;
     width: 350px;
     height: 500px;
-    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 10px;
     box-shadow: 5px 20px 50px #000;
 }
