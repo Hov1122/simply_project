@@ -14,6 +14,16 @@
     justify-content: center;
     padding: 10px 0 10px 10px;
     border-right: 2px solid #ffff;
+    animation: menuFadeIn .8s ease
+}
+
+@keyframes menuFadeIn {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translate(0);
+    }
 }
 
 .menu button {
