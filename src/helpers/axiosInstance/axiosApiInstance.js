@@ -6,6 +6,7 @@ const axiosApiInstance = axios.create({
    baseURL: process.env.REACT_APP_BASE_URL
   });
 
+// Axios send access token in header for every request
 axiosApiInstance.interceptors.request.use(
   async config => {
     const accessToken = store.getState().auth.token
@@ -22,7 +23,7 @@ axiosApiInstance.interceptors.request.use(
     Promise.reject(error)
 });
 
-
+// Axios interceptor for refresh token
 axiosApiInstance.interceptors.response.use((response) => {
   return response
 }, async function (error) {

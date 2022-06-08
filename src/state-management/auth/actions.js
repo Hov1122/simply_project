@@ -7,7 +7,6 @@ export const authTypes = {
     LOGIN_FAILURE: 'LOGIN_FAILURE',
 
     // LOGOUT
-    LOGOUT_REQUEST: 'LOGOUT_REQUEST',
     LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
 }
 

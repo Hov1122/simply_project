@@ -1,5 +1,5 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { fetchGroupsSuccess, fetchGroupsPending, fetchGroupsFailure, createGroupSuccess, updateGroupSuccess, deleteGroupSuccess } from './actions';
+import { fetchGroupsSuccess, fetchGroupsPending, fetchGroupsFailure, createGroupSuccess, deleteGroupSuccess } from './actions';
 
 const initialState = {
     groups: [],
@@ -20,15 +20,6 @@ const groupsReducer = createReducer(initialState, builder => {
             state.groups.push(payload.createdGroup);
             state.loading = false;
             state.error = null;
-        })
-        // UPDATE GROUP
-        .addCase(updateGroupSuccess, (state, { payload }) => {
-            state.groups = state.groups.map(group => {
-                if (group.id === payload.updatedGroup.id) {
-                    return payload.updatedGroup;
-                }
-                return group;
-            });
         })
         // DELETE GROUP
         .addCase(deleteGroupSuccess, (state, { payload }) => {
