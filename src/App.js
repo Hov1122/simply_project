@@ -14,14 +14,14 @@ import Main from './components/main/Main';
 
 function App() {
 
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <div className="App">
       <ErrorBoundary>
         <Header setShowMenu={setShowMenu}/>
         <Main>
-          {showMenu && <Menu />}
+          <Menu showMenu={showMenu}/>
           <Routes>
             (// PUBLIC ROUTES)
             <Route path='/' element={<Login />}/>
