@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Menu.css";
+import "./menu.css";
 import Loading from "../common/Loading";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";

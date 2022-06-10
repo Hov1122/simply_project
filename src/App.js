@@ -4,13 +4,13 @@ import "./App.css";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import Login from "./components/auth/Login";
 import RequireAuth from "./components/auth/RequireAuth";
-import Menu from "./components/menu/Menu";
-import Schedule from "./components/schedule/Schedule";
-import Tests from "./components/tests/Tests";
+import Menu from "./components/menu/menu";
+import Schedule from "./components/schedule/schedule";
+import Tests from "./components/tests/tests";
 import NotFound from "./components/notFound/NotFound";
 import Header from "./components/header/Header";
 import Main from "./components/main/Main";
-import Home from "./components/home/Home";
+import Home from "./components/home/home";
 import Profile from "./components/profile/Profile";
 
 function App() {
