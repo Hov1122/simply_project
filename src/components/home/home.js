@@ -1,19 +1,24 @@
-import React, {useState} from 'react';
-import "./home.css";
-import Loading from '../common/Loading';
+import React, { useState } from "react";
+import "./Home.css";
+import Loading from "../common/Loading";
+import { useSelector } from "react-redux";
+import { authSelector } from "../../state-management/auth/selectors";
 
 function Home() {
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const {
+    user: { firstName, lastName },
+  } = useSelector(authSelector);
 
-    if(loading) {
-        return <Loading />
-    }
+  if (loading) {
+    return <Loading />;
+  }
 
-    return (
-        <div className={`home`}>
-            <h2>Home Page</h2>
-        </div>
-    );
+  return (
+    <div className="Home-Container">
+      <h1 className="home-title">{`Welcome ${firstName} ${lastName}!`}</h1>
+    </div>
+  );
 }
 
 export default Home;
