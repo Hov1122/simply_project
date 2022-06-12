@@ -12,6 +12,7 @@ import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Home from "./components/home/home";
 import Profile from "./components/profile/Profile";
+import TestCreater from "./components/testCreate/CreateTest";
 
 function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -31,7 +32,7 @@ function App() {
 
               <Route path="/schedule" element={<Schedule />} />
 
-              <Route path="/tests" element={<Tests />} />
+              <Route path="/tests" element={<TestCreater />} />
 
               <Route path="/profile" element={<Profile />} />
             </Route>

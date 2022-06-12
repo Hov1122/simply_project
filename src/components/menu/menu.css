@@ -4,6 +4,7 @@
 }
 
 .menu {
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
     display: inline-block;
     min-width: 150px;
     max-width: 150px;
@@ -14,8 +15,14 @@
     justify-content: center;
     padding: 10px 0 10px 10px;
     border-right: 2px solid #ffff;
-    animation: men .8s ease
+    animation: menu .8s ease
 }
+
+
+.Main-Container {
+    background-color: white;
+    height: calc(100vh - 80px);
+}   
 
 .menu button {
     background-color: inherit;
