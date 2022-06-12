@@ -11,7 +11,7 @@ import { Avatar } from "@mui/material";
 import { logoutRequest } from "../../state-management/auth/requests";
 
 const Header = ({ setShowMenu }) => {
-  const [color, setColor] = useState(randomColor());
+  const [color] = useState(randomColor());
   const [showDropDown, setShowDropDown] = useState(false);
   const dropDownRef = useRef(null);
 

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "./schedule.css";
+import "./Schedule.css";
 import Loading from "../common/Loading";
 
 function Schedule() {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
 
   if (loading) {
     return <Loading />;

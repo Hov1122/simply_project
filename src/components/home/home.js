@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./home.css";
+import "./Home.css";
 import Loading from "../common/Loading";
 import { useSelector } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
 
 function Home() {
-  const [loading, setLoading] = useState(false);
+  const [loading] = useState(false);
   const {
     user: { firstName, lastName },
   } = useSelector(authSelector);
