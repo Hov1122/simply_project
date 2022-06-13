@@ -19,6 +19,10 @@ function TestCreater() {
     const radioButton = newElement.querySelector("input[type=radio]");
     radioButton.value = answerNumber;
     const answerInput = newElement.querySelector("input[type=text]");
+    
+    newElement.querySelector("[data-value=deleteAnswer]").addEventListener('click', () => {
+      newElement.remove()
+    });
 
     answerInput.setAttribute("data-value", "answer");
     container.appendChild(newElement);
@@ -41,6 +45,12 @@ function TestCreater() {
       questionNumber - 1
     }`;
     newElement.querySelector("input[type=radio]").value = 1;
+    newElement.querySelector("[data-value=deleteQuestion]").addEventListener('click', () => {
+      newElement.remove()
+    });
+    newElement.querySelector("[data-value=deleteAnswer]").addEventListener('click', (e) => {
+      e.target.parentElement.remove()
+    });
 
     container.append(newElement);
   };
@@ -124,9 +134,7 @@ function TestCreater() {
             <input placeholder="Enter Question" type="text" />
             <button
               className="delete-question"
-              onClick={(e) => {
-                console.log(e.target.parentElement.parentElement);
-              }}
+              data-value="deleteQuestion"
             >
               x
             </button>
@@ -144,9 +152,7 @@ function TestCreater() {
                 />
                 <button
                   className="delete-answer"
-                  onClick={(e) => {
-                    console.log(e.target.parentElement.parentElement);
-                  }}
+                  data-value="deleteAnswer"
                 >
                   x
                 </button>
