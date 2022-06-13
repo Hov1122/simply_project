@@ -13,7 +13,7 @@ import Loading from "./components/common/Loading";
 // LAZY LOADING
 const Home = lazy(() => import("./components/home/home"));
 const Profile = lazy(() => import("./components/profile/Profile"));
-const TestCreater = lazy(() => import("./components/testCreate/CreateTest"));
+const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
 
                 <Route path="/schedule" element={<Schedule />} />
 
-                <Route path="/tests" element={<TestCreater />} />
+                <Route path="/tests" element={<Tests />} />
 
                 <Route path="/profile" element={<Profile />} />
               </Route>

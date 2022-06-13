@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "./CreateTest.css";
-import Loading from "../common/Loading";
+import Loading from "../../common/Loading";
+import { useDispatch } from "react-redux";
+import { createTestRequest } from "../../../state-management/tests/requests";
 
 function TestCreater() {
   const [loading] = useState(false);
+
+  const dispatch = useDispatch();
 
   // ADD NEW ANSWER ROW
   const addAnswerRow = (e) => {
@@ -15,7 +19,7 @@ function TestCreater() {
     const radioButton = newElement.querySelector("input[type=radio]");
     radioButton.value = answerNumber;
     const answerInput = newElement.querySelector("input[type=text]");
-    console.log(answerInput);
+
     answerInput.setAttribute("data-value", "answer");
     container.appendChild(newElement);
   };
@@ -86,7 +90,7 @@ function TestCreater() {
       rigthanswers: rigthAnswers,
     };
 
-    console.log(data); // back request
+    dispatch(createTestRequest(data));
   };
 
   if (loading) {
@@ -115,9 +119,17 @@ function TestCreater() {
       </div>
       <div className="QuestionsForm">
         <template>
-          <div>
+          <div className="Question-Container">
             <h3>Question</h3>
             <input placeholder="Enter Question" type="text" />
+            <button
+              className="delete-question"
+              onClick={(e) => {
+                console.log(e.target.parentElement.parentElement);
+              }}
+            >
+              x
+            </button>
             <div className="AnswersForm">
               <div className="Answer">
                 <input
@@ -130,6 +142,14 @@ function TestCreater() {
                   type="text"
                   data-value="answer"
                 />
+                <button
+                  className="delete-answer"
+                  onClick={(e) => {
+                    console.log(e.target.parentElement.parentElement);
+                  }}
+                >
+                  x
+                </button>
               </div>
             </div>
             <input

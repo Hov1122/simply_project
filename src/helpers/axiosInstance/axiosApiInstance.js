@@ -1,4 +1,8 @@
 import axios from "axios";
+import {
+  loginSuccess,
+  logoutSuccess,
+} from "../../state-management/auth/actions";
 import store from "../../state-management/index";
 import { refreshTokenRequest } from "../requests/refreshTokenRequest";
 const axiosApiInstance = axios.create({
@@ -12,7 +16,7 @@ axiosApiInstance.interceptors.request.use(
     const accessToken = store.getState().auth.token;
 
     config.headers = {
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: config.headers.Authorization || `Bearer ${accessToken}`,
       Accept: "application/json",
       "Content-Type": "application/json",
       "Access-Control-Allow-Credentials": true,
@@ -33,8 +37,15 @@ axiosApiInstance.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const { accessToken } = await refreshTokenRequest();
-      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      const response = await refreshTokenRequest();
+      if (response.status === 403) {
+        store.dispatch(logoutSuccess());
+        return;
+      }
+      originalRequest.headers.Authorization = `Bearer ${response.data.data.accessToken}`;
+      setTimeout(() => {
+        store.dispatch(loginSuccess(response));
+      }, 3000);
       return axiosApiInstance(originalRequest);
     }
     return Promise.reject(error);

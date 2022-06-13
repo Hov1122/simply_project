@@ -17,7 +17,7 @@ const Header = ({ setShowMenu }) => {
 
   const {
     token,
-    user: { firstName },
+    user: { firstName, image },
   } = useSelector(authSelector);
   const dispatch = useDispatch();
 
@@ -47,17 +47,21 @@ const Header = ({ setShowMenu }) => {
         <input className="search-bar" placeholder="Search User" />
       </div>
       <div className="profile-picture-dropdown">
-        <Avatar
-          sx={{ bgcolor: color }}
-          className="profile-picture"
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowDropDown(true);
-            document.addEventListener("click", closeDropDown);
-          }}
-        >
-          {firstName.charAt(0)}
-        </Avatar>
+        {!image ? (
+          <Avatar
+            sx={{ bgcolor: color }}
+            className="profile-picture"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowDropDown(true);
+              document.addEventListener("click", closeDropDown);
+            }}
+          >
+            {firstName.charAt(0)}
+          </Avatar>
+        ) : (
+          <img className="profile-picture" src={image} />
+        )}
         {showDropDown && (
           <div className="profile-dropdown" ref={dropDownRef}>
             <span

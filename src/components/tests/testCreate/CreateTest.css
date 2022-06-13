@@ -52,6 +52,10 @@
     width: 100%;
 }
 
+.Question-Container {
+    position: relative;
+}
+
 .Answer {
     display: flex;
 }
@@ -60,6 +64,22 @@
     display: flex;
     justify-content: center;
     width: 80%;
+}
+
+.delete-question {
+    position: absolute;
+    cursor: pointer;
+    width: 30px;
+    background-color: transparent;
+    border: none;
+    right: 0;
+    top: 15%;
+}
+
+.delete-answer {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 hr {

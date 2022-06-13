@@ -1,3 +1,18 @@
 .Tests-Container {
-    
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+}
+
+.Tests-Nav {
+    width: 200px;
+    margin-bottom: 50px;
+}
+
+.Tests-Nav span {
+    cursor: pointer;
+    margin-right: 20px;
+    font-size: 18px;
 }

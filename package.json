@@ -32,9 +32,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js",
-    "lint-staged": {
-      "*.js": "eslint --cache --fix"
-    },
     "lint:fix": "eslint . --fix",
     "prepare": "husky install"
   },

@@ -1,1 +1,1 @@
-export const testsSelectors = state => state.tests;
+export const testsSelector = (state) => state.tests;
