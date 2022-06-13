@@ -1,4 +1,23 @@
 .Home-Container {
-    color: black;
-    margin: 0 auto;
+    color: #333;
+    width: 100%;
+    height: 100%;
 }
+
+.home-title{
+    text-align: center;
+    width: 100%;
+}
+
+.hompage-content{
+    background-color:rgb(255, 248, 248);
+    border-radius: 10px;
+    margin: 0 auto;
+    height: 85%;
+    width: 95%;
+}
+
+.marks-box{
+    padding: 5px 40px 5px 40px;
+}
+
