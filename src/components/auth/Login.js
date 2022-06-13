@@ -24,11 +24,15 @@ function LoginPage() {
 
     if (!token) {
       (async () => {
-        const response = await refreshTokenRequest();
+        try {
+          const response = await refreshTokenRequest();
 
-        if (response?.data?.data?.accessToken) {
-          dispatch(loginSuccess(response));
-          navigate(state?.from?.pathname || "/home");
+          if (response?.data?.data?.accessToken) {
+            dispatch(loginSuccess(response));
+            navigate(state?.from?.pathname || "/home");
+          }
+        } catch (err) {
+          // do nothing
         }
 
         setLoading(false);
