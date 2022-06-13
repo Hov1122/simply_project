@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Home.css";
+import "./home.css";
 import Loading from "../common/Loading";
 import { useSelector } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
