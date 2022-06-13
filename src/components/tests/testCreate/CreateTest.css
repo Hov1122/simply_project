@@ -30,11 +30,11 @@
     width: 200px;
 }
 
-.TestCreater-Container input[type=radio] {
+.TestCreater-Container input[type=checkbox] {
     width: 50px;
 }
 
-.TestCreater-Container input[type=text], .TestCreater-Container input[type=datetime-local] {
+.TestCreater-Container input[type=text], .TestCreater-Container input[type=datetime-local], .TestCreater-Container input[type=number] {
     border: none;
     outline: none;
     border-bottom: .5px solid black;

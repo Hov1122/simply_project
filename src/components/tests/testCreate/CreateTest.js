@@ -3,6 +3,7 @@ import "./CreateTest.css";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
 import { createTestRequest } from "../../../state-management/tests/requests";
+import MultipleSelect from "./Subjects";
 
 function TestCreater() {
   const [loading] = useState(false);
@@ -16,7 +17,7 @@ function TestCreater() {
     const answerNumber = container.querySelectorAll(".Answer").length + 1;
 
     const newElement = element.cloneNode(true);
-    const radioButton = newElement.querySelector("input[type=radio]");
+    const radioButton = newElement.querySelector("input[type=checkbox]");
     radioButton.value = answerNumber;
     const answerInput = newElement.querySelector("input[type=text]");
     
@@ -36,17 +37,21 @@ function TestCreater() {
     const questionNumber = document.querySelectorAll(".Question").length + 1;
 
     const newElement = element.cloneNode(true);
-    newElement.querySelector("h3").innerText += questionNumber;
+    newElement.querySelector("h3").innerText += ` ${questionNumber}`;
     newElement.classList.add("Question");
     newElement
       .querySelector("input[type=button]")
       .addEventListener("click", addAnswerRow);
-    newElement.querySelector("input[type=radio]").name = `Question${
+    newElement.querySelector("input[type=checkbox]").name = `Question${
       questionNumber - 1
     }`;
-    newElement.querySelector("input[type=radio]").value = 1;
+    newElement.querySelector("input[type=checkbox]").value = 1;
     newElement.querySelector("[data-value=deleteQuestion]").addEventListener('click', () => {
       newElement.remove()
+      const headers = document.querySelectorAll('h3');
+      headers.forEach((element, index) => {
+        element.innerText = `Question ${index}`
+      })
     });
     newElement.querySelector("[data-value=deleteAnswer]").addEventListener('click', (e) => {
       e.target.parentElement.remove()
@@ -58,20 +63,23 @@ function TestCreater() {
   // ADD TEST IN DATABASE
   const addTest = () => {
     const testName = document.querySelector('[data-value="testName"]').value;
-    const testSubject = document.querySelector(
-      '[data-value="testSubject"]'
-    ).value;
+    const SubjectsArr = document.querySelector(
+      '[data-value="Subject"]'
+    ).innerText.split('\nName').join('').split(', ')
+    const GroupsArr = document.querySelector(
+      '[data-value="Groups"]'
+    ).innerText.split('\nName').join('').split(', ')
     const testDate = document.querySelector('[data-value="testDate"]').value;
-    const testGroup = document.querySelector('[data-value="testGroup"]').value;
     const testQuestions = document.querySelectorAll('[data-value="questions"]');
     const testAnswers = document.querySelectorAll('[data-value="answer"]');
-    const testRigthAnswers = document.querySelectorAll(
-      '[data-value="rigthAnswer"]'
-    );
+    const testLength = +document.querySelector('[data-value="testLength"]').value;
+    const testRating = +document.querySelector('[data-value="testRating"]').value;
 
     const questions = [];
     const answers = [];
-    const rigthAnswers = [];
+
+    const testSubject = SubjectsArr.map(element => subject.indexOf(element))
+    const testGroup = GroupsArr.map(element => groups.indexOf(element))
 
     testAnswers.forEach((element) => {
       const questionNumber =
@@ -79,33 +87,44 @@ function TestCreater() {
       if (isNaN(questionNumber)) return;
       else if (typeof answers[questionNumber] !== "object")
         answers[questionNumber] = [];
-      answers[questionNumber].push(element.value);
+      answers[questionNumber].push({'name': element.value, 'isCorrect' : element.parentElement.childNodes[0].checked});
     });
 
     testQuestions.forEach((element, index) => {
-      if (index) questions.push(element.value);
-    });
-
-    testRigthAnswers.forEach((element) => {
-      if (element.checked) rigthAnswers.push(+element.value - 1);
+      if (index) questions.push({'name' : element.value});
     });
 
     const data = {
+      userId: 1,
       name: testName,
-      subject: testSubject,
-      date: testDate,
+      subjectId: testSubject,
+      highestScore: testRating,
+      start: testDate,
+      length: testLength,
       group: testGroup,
       questions: questions,
       answers: answers,
-      rigthanswers: rigthAnswers,
     };
-
+    
+    console.log(data)
     dispatch(createTestRequest(data));
   };
 
   if (loading) {
     return <Loading />;
   }
+
+  /* Grel GetAllgroups u GetAllsubjects requestnery */
+   
+  const groups = [
+    'group1',
+    'group2'
+  ]
+  
+  const subject = [
+    'subject1',
+    'subject2'
+  ] 
 
   return (
     <div className="TestCreater-Container">
@@ -115,17 +134,17 @@ function TestCreater() {
         <input value="Add test" type="button" onClick={addTest} />
       </div>
       <div className="testInformationData">
-        <input
-          placeholder="Test Subject"
-          type="text"
-          data-value="testSubject"
-        />
+        <MultipleSelect dataName = {`Subject`} data = {subject}/>
+        <MultipleSelect dataName = {`Groups`}  data = {groups}/>
+      </div>
+      <div className="testInformationData">
         <input
           placeholder="Test Start Date"
           type="datetime-local"
           data-value="testDate"
         />
-        <input placeholder="Group" type="text" data-value="testGroup" />
+        <input placeholder="Test length" type="number" data-value="testLength" />
+        <input placeholder="Rating" type="number" data-value="testRating" />
       </div>
       <div className="QuestionsForm">
         <template>
@@ -141,7 +160,7 @@ function TestCreater() {
             <div className="AnswersForm">
               <div className="Answer">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="Question1Answer"
                   data-value="rigthAnswer"
                 />
