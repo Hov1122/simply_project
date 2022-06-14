@@ -89,3 +89,9 @@
 .menu-icon:hover {
     color: gray;
 }
+
+.Search-Loading {
+    position: absolute;
+    right: 80px;
+    top: 5px;
+}

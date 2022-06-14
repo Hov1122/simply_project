@@ -1,0 +1,29 @@
+.Search-Results-Container {
+    position: relative;
+    width: 100%;
+    max-height: 199px;
+    overflow-y: auto;
+    background-color: #10333E;
+    border: 1px solid #292D39;
+    border-radius: 4px;
+    box-shadow: 0px 0px 40px 0px#1f364d;
+    margin-top: 10px;
+}
+
+.Search-Results-Item {
+    display: flex;
+    color: #9CB3C9;
+    padding: 10px 0 10px 30px;
+    border-bottom: 2px solid #0C2033;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.Search-Item-Name {
+    font: normal 14px/16px Arial;
+    margin-right: 30px;
+}
+
+.Search-Item-Role {
+    font: bold 16px/16px "Roboto", sans-serif;
+}

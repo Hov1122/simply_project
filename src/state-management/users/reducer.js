@@ -17,8 +17,8 @@ const initialState = {
 const usersReducer = createReducer(initialState, (builder) => {
   builder
     // GET ALL USERS
-    .addCase(fetchUsersSuccess, (state, { payload }) => {
-      state.users = payload.users;
+    .addCase(fetchUsersSuccess, (state, { payload: { data } }) => {
+      state.users = data.users;
       state.loading = false;
       state.error = null;
     })
@@ -36,6 +36,7 @@ const usersReducer = createReducer(initialState, (builder) => {
         }
         return user;
       });
+      state.error = null;
     })
     // DELETE USER
     .addCase(deleteUserSuccess, (state, { payload }) => {
@@ -48,9 +49,9 @@ const usersReducer = createReducer(initialState, (builder) => {
       state.loading = true;
       state.error = null;
     })
-    .addCase(fetchUsersFailure, (state, { payload }) => {
+    .addCase(fetchUsersFailure, (state) => {
       state.loading = false;
-      state.error = payload;
+      state.error = "Incorrect Password";
     });
 });
 
