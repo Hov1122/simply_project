@@ -14,6 +14,7 @@ function UserCreater() {
     const defaultElement = document.querySelector('[data-value=firstChild]')
     const userNumber = document.querySelectorAll('[data-value=id]');
     const newElement = defaultElement.cloneNode(true);
+    newElement.querySelector('[data-value=deleteButton]').addEventListener('click', deleteRow)
     container.append(newElement)
     newElement.firstChild.innerText = userNumber.length + 1
     userNumber.forEach((element, index) => {
@@ -29,7 +30,6 @@ function UserCreater() {
     const e_mail = document.querySelectorAll('[data-value=eMail]')
     const password = document.querySelectorAll('[data-value=password]')
     const roleId = document.querySelectorAll('[data-value=role]')
-    const groupId = document.querySelectorAll('[data-value=group]')
 
     const data = [];
 
@@ -40,12 +40,26 @@ function UserCreater() {
         email: e_mail[index].value,
         password: password[index].value,
         roleId: roleId[index].value,
-        userGroup: groupId[index].value
       })
+      firstName[index].value = ''
+      lastName[index].value = ''
+      e_mail[index].value = ''
+      password[index].value = ''
+      roleId[index].value = ''
     })
+
+    console.log(data)
 
     // dispatch(createTestRequest(data));
   };
+
+  const deleteRow = (e)=> {
+    e.target.parentElement.remove()
+    const headers = document.querySelectorAll('[data-value=id]');
+    headers.forEach((element, index) => {
+      element.innerText = `${index + 1}`
+    })
+  }
 
   if (loading) {
     return <Loading />;
@@ -57,7 +71,7 @@ function UserCreater() {
       <table className="UserCreater-Table">
         <thead>
           <tr>
-            <td colSpan={6}><input type={`button`} value={`Add users`} onClick={addUser}/></td>
+            <td colSpan={7}><input type={`button`} value={`Add users`} onClick={addUser}/></td>
           </tr>
           <tr>
             <th>ID</th>
@@ -82,11 +96,12 @@ function UserCreater() {
                   <option value='3'>Student</option>
                 </select>
               </td>
+              <td data-value='deleteButton' onClick={deleteRow}>X</td>
             </tr>
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan={6}><input type={`button`} value={`Add new row`} onClick={addUserRow}/></td>
+            <td colSpan={7}><input type={`button`} value={`Add new row`} onClick={addUserRow}/></td>
           </tr>
         </tfoot>
       </table>
