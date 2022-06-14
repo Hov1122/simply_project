@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "./CreateUser.css";
 import Loading from "../../common/Loading";
-// import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { createUserRequest } from "../../../state-management/users/requests";
 
 function UserCreater() {
   const [loading] = useState(false);
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // ADD NEW USER ROW
   const addUserRow = () => {
@@ -39,7 +40,7 @@ function UserCreater() {
         lastName: lastName[index].value,
         email: e_mail[index].value,
         password: password[index].value,
-        roleId: roleId[index].value,
+        roleId: +roleId[index].value,
       })
       firstName[index].value = ''
       lastName[index].value = ''
@@ -50,7 +51,7 @@ function UserCreater() {
 
     console.log(data)
 
-    // dispatch(createTestRequest(data));
+    dispatch(createUserRequest(data));
   };
 
   const deleteRow = (e)=> {
