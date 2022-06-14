@@ -9,9 +9,10 @@ import NotFound from "./components/notFound/NotFound";
 import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Loading from "./components/common/Loading";
+import UserCreater from "./components/users/userCreate/CreateUser";
 
 // LAZY LOADING
-const Home = lazy(() => import("./components/home/home"));
+// const Home = lazy(() => import("./components/home/home"));
 const Profile = lazy(() => import("./components/profile/Profile"));
 const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
@@ -31,7 +32,7 @@ function App() {
               <Route path="/" element={<Login />} />
               (// PROTECTED ROUTES)
               <Route element={<RequireAuth />}>
-                <Route path="/home" element={<Home />} />
+                <Route path="/home" element={<UserCreater />} />
 
                 <Route path="/schedule" element={<Schedule />} />
 

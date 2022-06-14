@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Schedule.css";
+import "./schedule.css";
 import Loading from "../common/Loading";
 
 function Schedule() {
