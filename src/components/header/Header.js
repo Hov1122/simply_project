@@ -101,7 +101,7 @@ const Header = ({ setShowMenu }) => {
           <div className="profile-dropdown" ref={dropDownRef}>
             <span
               onClick={() => {
-                navigate("/profile");
+                navigate("/myProfile");
                 setShowDropDown(false);
               }}
             >

@@ -1,0 +1,12 @@
+.User-Profile-Container {
+    display: flex;
+    flex-direction: column;
+    min-height: fit-content;
+    margin: 0 auto;
+}
+
+.User-Profile-Container span {
+    font: bold 16px/1.5 'Open Sans', sans-serif;
+    margin-bottom: 20px;
+    padding: 20px;
+}

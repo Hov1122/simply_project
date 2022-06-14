@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authSelector } from "../../state-management/auth/selectors";
-import { updateUserRequest } from "../../state-management/users/requests";
-import { usersSelector } from "../../state-management/users/selectors";
-import Loading from "../common/Loading";
-import "./Profile.css";
+import { authSelector } from "../../../state-management/auth/selectors";
+import { updateUserRequest } from "../../../state-management/users/requests";
+import { usersSelector } from "../../../state-management/users/selectors";
+import Loading from "../../common/Loading";
+import "./MyProfile.css";
 
 const Profile = () => {
   const [passwordError, setPasswordError] = useState(null);
@@ -35,6 +35,7 @@ const Profile = () => {
 
   return (
     <div className="Profile-Container">
+      <h2>My Profile</h2>
       <div className="Change-Password-Container">
         <h3>Change Password</h3>
         {success && <p style={{ color: "green", fontSize: 20 }}>{success}</p>}

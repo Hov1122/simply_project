@@ -10,10 +10,13 @@ import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Loading from "./components/common/Loading";
 import UserCreater from "./components/users/userCreate/CreateUser";
+import UserProfile from "./components/profile/userProfile/UserProfile";
 
 // LAZY LOADING
 // const Home = lazy(() => import("./components/home/home"));
-const Profile = lazy(() => import("./components/profile/Profile"));
+const MyProfile = lazy(() =>
+  import("./components/profile/myProfile/MyProfile")
+);
 const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
 
@@ -38,7 +41,9 @@ function App() {
 
                 <Route path="/tests" element={<Tests />} />
 
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/myProfile" element={<MyProfile />} />
+
+                <Route path="/userProfile/:id" element={<UserProfile />} />
               </Route>
               (// NOT FOUND ROUTE)
               <Route path="*" element={<NotFound />} />
