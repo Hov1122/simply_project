@@ -106,7 +106,6 @@ function TestCreater() {
       answers: answers,
     };
     
-    console.log(data)
     dispatch(createTestRequest(data));
   };
 

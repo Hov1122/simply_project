@@ -93,17 +93,20 @@ input[area-hidden='true'] {
 .delete-question {
     position: absolute;
     cursor: pointer;
-    width: 30px;
-    background-color: transparent;
-    border: none;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    color: white;
     right: 0;
     top: 15%;
 }
 
 .delete-answer {
-    border: none;
-    background-color: transparent;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    color: white;
     cursor: pointer;
+    width: 35px;
+    margin-top:5px;
+    border-radius: 50%;
 }
 
 hr {
@@ -120,4 +123,13 @@ input[type='button']:hover {
 
 #addNewQuestion {
     width: 60%;
+}
+
+.delete-question:hover, .delete-answer:hover {
+    background: linear-gradient(to bottom, #0f0c29, #443bab, #24243e);
+}
+
+[data-value="rigthAnswer"] {
+    border-radius: 50%;
+    height: 20px;
 }
