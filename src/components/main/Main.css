@@ -1,5 +1,5 @@
 .Main-Container {
     display: flex;
     background-color: rgb(224, 220, 220);
-    overflow-x: hidden;
+    overflow: hidden;
 }

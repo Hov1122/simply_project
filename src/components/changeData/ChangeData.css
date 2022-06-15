@@ -9,7 +9,9 @@
 
 [data-value='deleteButton'] {
     border-radius: 50%;
-    border: 1px solid black;
+    width: 45px;
+    height: 45px;
+    border-bottom: 1px solid black;
 }
 
 .Change-Data-Main {

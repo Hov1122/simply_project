@@ -11,18 +11,17 @@ function CreateUser() {
 
   // ADD NEW USER ROW
   const addUserRow = () => {
-    const container = document.querySelector("tbody");
+    const container = document.querySelector(".UserCreater-Table-Body");
     const defaultElement = document.querySelector("[data-value=firstChild]");
-    const userNumber = document.querySelectorAll("[data-value=id]");
     const newElement = defaultElement.cloneNode(true);
     newElement
       .querySelector("[data-value=deleteButton]")
       .addEventListener("click", deleteRow);
     container.append(newElement);
-    newElement.firstChild.innerText = userNumber.length + 1;
-    userNumber.forEach((element, index) => {
-      element.innerText = index + 1;
-    });
+    const headers = document.querySelectorAll('[data-value=id]');
+      headers.forEach((element, index) => {
+        element.innerText = `${index + 1}`
+      })
   };
 
   // ADD USER IN DATABASE
@@ -56,7 +55,11 @@ function CreateUser() {
 
   const deleteRow = (e) => {
     if (+e.target.parentElement.firstChild.innerText === 1) return;
-    e.target.parentElement.remove();
+    e.target.parentElement.parentElement.remove();
+    const headers = document.querySelectorAll('[data-value=id]');
+      headers.forEach((element, index) => {
+        element.innerText = `${index + 1}`
+      })
   };
 
   if (loading) {
@@ -66,81 +69,75 @@ function CreateUser() {
   return (
     <div className="UserCreater-Container">
       <h2>Create User</h2>
-      <table className="UserCreater-Table">
-        <thead>
-          <tr>
-            <td colSpan={7}>
-              <input type={`button`} value={`Add users`} onClick={addUser} />
-            </td>
-          </tr>
-          <tr>
-            <th>ID</th>
-            <th>FirstName</th>
-            <th>LastName</th>
-            <th>E-mail</th>
-            <th>Password</th>
-            <th>Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-value="firstChild">
-            <td data-value="id">1</td>
-            <td>
+      <div className="UserCreater-Table">
+        <div className="UserCreater-Table-Header">
+          <div className="UserCreater-Table-Header-AddUserButton">
+            <input type={`button`} value={`Add users`} onClick={addUser} />
+          </div>
+        </div>
+        <div className="UserCreater-Table-Body">
+          <div data-value='firstChild'>
+            <div>
+              {/* <span>ID</span> */}
+              <span data-value="id">1</span>
+            </div>
+            <div>
+              {/* <span>FirstName</span> */}
               <input
                 type={`text`}
                 placeholder={"Enter FirstName"}
                 data-value="firstName"
               />
-            </td>
-            <td>
+            </div>
+            <div>
+              {/* <span>LastName</span> */}
               <input
                 type={`text`}
                 placeholder={"Enter LastName"}
                 data-value="lastName"
               />
-            </td>
-            <td>
+            </div>
+            <div>
+              {/* <span>E-mail</span> */}
               <input
                 type={`text`}
                 placeholder={"Enter E-mail"}
                 data-value="eMail"
               />
-            </td>
-            <td>
+            </div>
+            <div>
+              {/* <span>Password</span> */}
               <input
                 type={`password`}
                 placeholder={"Enter Password"}
                 data-value="password"
               />
-            </td>
-            <td>
+            </div>
+            <div>
+              {/* <span>Role</span> */}
               <select data-value="role">
                 <option value="1">Admin</option>
                 <option value="2">Teacher</option>
                 <option value="3">Student</option>
               </select>
-            </td>
-            <td
-              style={{ cursor: "pointer" }}
-              data-value="deleteButton"
-              onClick={deleteRow}
-            >
-              x
-            </td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colSpan={7}>
-              <input
-                type={`button`}
-                value={`Add new row`}
-                onClick={addUserRow}
-              />
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+            </div>
+            <div>
+              <button
+                style={{ cursor: "pointer" }}
+                data-value="deleteButton"
+                onClick={deleteRow}
+              >X</button>
+            </div>
+          </div>
+        </div>
+        <div className="UserCreater-Table-Footer">
+          <input
+            type={`button`}
+            value={`Add new row`}
+            onClick={addUserRow}
+          />
+        </div>
+      </div>
     </div>
   );
 }
