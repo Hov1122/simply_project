@@ -2,9 +2,18 @@
     overflow-x:hidden;
     margin: 0 auto;
     display: flex;
+    width: 100%;
     flex-direction: column;
     text-align: center;
-    overflow: auto;
+}
+
+[data-value='deleteButton'] {
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.Change-Data-Main {
+    width: 100%;
 }
 
 .Change-Data-Header {
