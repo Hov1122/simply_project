@@ -9,10 +9,12 @@
 .Tests-Nav {
     width: 200px;
     margin-bottom: 50px;
+    margin-top: 20px;
 }
 
 .Tests-Nav span {
     cursor: pointer;
     margin-right: 20px;
     font-size: 18px;
+    font: bold 18px/18px 'Roboto', sans-serif;
 }

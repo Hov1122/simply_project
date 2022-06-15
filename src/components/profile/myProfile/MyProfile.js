@@ -38,7 +38,9 @@ const Profile = () => {
       <h2>My Profile</h2>
       <div className="Change-Password-Container">
         <h3>Change Password</h3>
-        {success && <p style={{ color: "green", fontSize: 20 }}>{success}</p>}
+        {success && !requestError && (
+          <p style={{ color: "green", fontSize: 20 }}>{success}</p>
+        )}
         {requestError && (
           <p style={{ color: "red", fontSize: 20 }}>{requestError}</p>
         )}

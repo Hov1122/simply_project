@@ -1,6 +1,7 @@
 import { createReducer } from "@reduxjs/toolkit";
 import {
   fetchTestsSuccess,
+  fetchUserTestsSuccess,
   fetchTestsPending,
   fetchTestsFailure,
   createTestSuccess,
@@ -9,6 +10,7 @@ import {
 } from "./actions";
 
 const initialState = {
+  userTests: [],
   tests: [],
   loading: false,
   error: null,
@@ -19,6 +21,12 @@ const testsReducer = createReducer(initialState, (builder) => {
     // GET ALL TESTS
     .addCase(fetchTestsSuccess, (state, { payload }) => {
       state.tests = payload.tests;
+      state.loading = false;
+      state.error = null;
+    })
+    // GET CURRENT USER'S TESTS
+    .addCase(fetchUserTestsSuccess, (state, { payload }) => {
+      state.userTests = payload.data;
       state.loading = false;
       state.error = null;
     })

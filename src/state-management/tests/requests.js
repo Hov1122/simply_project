@@ -6,6 +6,7 @@ import {
   createTestSuccess,
   updateTestSuccess,
   deleteTestSuccess,
+  fetchUserTestsSuccess,
 } from "./actions";
 
 // GET ALL TESTS
@@ -15,6 +16,19 @@ export const fetchTestsRequest = () => {
     try {
       const { data } = await axiosApiInstance.get(`/tests`);
       dispatch(fetchTestsSuccess(data));
+    } catch (error) {
+      dispatch(fetchTestsFailure(error));
+    }
+  };
+};
+
+// GET CURRENT USER'S TESTS
+export const fetchUserTestsRequest = (payload) => {
+  return async (dispatch) => {
+    dispatch(fetchTestsPending());
+    try {
+      const { data } = await axiosApiInstance.get(`/tests/usersAll`, payload);
+      dispatch(fetchUserTestsSuccess(data));
     } catch (error) {
       dispatch(fetchTestsFailure(error));
     }

@@ -95,3 +95,17 @@
     right: 80px;
     top: 5px;
 }
+
+@media(max-width: 500px) {
+    .search-icon {
+        display: none;
+    }
+
+    .search-bar {
+        padding: 0;
+    }
+
+    .search-bar::placeholder {
+        font-size: 10px;
+    }
+}

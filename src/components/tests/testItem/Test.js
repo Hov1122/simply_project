@@ -1,8 +1,7 @@
 import React from "react";
 import "./Test.css";
 
-const Test = (props) => {
-  console.log(props);
+const Test = () => {
   return <div>Test</div>;
 };
 
