@@ -19,10 +19,26 @@ const UserProfile = () => {
   return (
     <div className="User-Profile-Container">
       <h2 style={{ marginLeft: 50 }}>Profile</h2>
-      <span className="profile-user-fname">first name: {firstName}</span>
-      <span className="profile-user-lname">last name: {lastName}</span>
-      <span className="profile-user-email">email: {email}</span>
-      <span className="profile-user-role">role: {name}</span>
+      <table>
+        <tbody>
+          <tr>
+            <td>FirstName:</td>
+            <td>{firstName}</td>
+          </tr>
+          <tr>
+            <td>LastName:</td>
+            <td>{lastName}</td>
+          </tr>
+          <tr>
+            <td>E-mail:</td>
+            <td>{email}</td>
+          </tr>
+          <tr>
+            <td>Role:</td>
+            <td>{name}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };

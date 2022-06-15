@@ -34,7 +34,33 @@
     width: 50px;
 }
 
+.MuiFormControl-root > label:first-child {
+    line-height: .8;
+    bottom: 15px;
+}
+
+fieldset[aria-hidden="true"] {
+    border: none;
+}
+
+label ~ [data-value] {
+    border-radius: 20px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+label ~ [data-value] > div:first-child {
+    padding: 10px;
+}
+
+input[area-hidden='true'] {
+    tabIndex: 0;
+}
+ 
 .TestCreater-Container input[type=text], .TestCreater-Container input[type=datetime-local], .TestCreater-Container input[type=number] {
+    background-color: inherit;
+    border-radius: 20px;
+    padding: 5px;
     border: none;
     outline: none;
     border-bottom: .5px solid black;
@@ -86,3 +112,14 @@ hr {
     width: 80%;
 }
 
+input[type='button'] {
+    cursor:pointer;
+}
+
+input[type='button']:hover {
+    background:  linear-gradient(to bottom, #0f0c29, #4036ae, #24243e);
+}
+
+#addNewQuestion {
+    width: 60%;
+}

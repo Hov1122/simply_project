@@ -185,7 +185,7 @@ function TestCreater() {
           </div>
         </template>
       </div>
-      <input value="Add New Question" type="button" onClick={addQuestionRow} />
+      <input id='addNewQuestion' value="Add New Question" type="button" onClick={addQuestionRow} />
     </div>
   );
 }

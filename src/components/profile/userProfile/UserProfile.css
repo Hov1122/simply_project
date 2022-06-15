@@ -7,6 +7,8 @@
 
 .User-Profile-Container span {
     font: bold 16px/1.5 'Open Sans', sans-serif;
-    margin-bottom: 20px;
-    padding: 20px;
+}
+
+.User-Profile-Container td:first-child {
+    font-weight: bold;
 }
