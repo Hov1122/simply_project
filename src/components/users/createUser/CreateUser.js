@@ -54,7 +54,8 @@ function CreateUser() {
   };
 
   const deleteRow = (e) => {
-    if (+e.target.parentElement.firstChild.innerText === 1) return;
+    const target = document.querySelector(`.UserCreater-Table-Body`)
+    if (target.children.length === 1) return;
     e.target.parentElement.parentElement.remove();
     const headers = document.querySelectorAll('[data-value=id]');
       headers.forEach((element, index) => {
