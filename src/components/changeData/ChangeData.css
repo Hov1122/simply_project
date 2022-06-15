@@ -28,4 +28,5 @@
 
 .active-link {
     border-bottom: 4px solid gray;
+    padding: 5px;
 }
