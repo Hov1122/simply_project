@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 function Menu({ showMenu }) {
   const [loading, setLoading] = useState(true);
-  const { token } = useSelector(authSelector);
+  const { user, token } = useSelector(authSelector);
 
   useEffect(() => {
     setLoading(false);
@@ -32,13 +32,19 @@ function Menu({ showMenu }) {
             <button>Home</button>
           </NavLink>
 
-          <NavLink to="schedule">
+          <NavLink to="/schedule">
             <button>Schedule</button>
           </NavLink>
 
-          <NavLink to="tests">
+          <NavLink to="/tests">
             <button>Tests</button>
           </NavLink>
+
+          {user.role.name === "Admin" && (
+            <NavLink to="/changeData">
+              <button>Change Data</button>
+            </NavLink>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

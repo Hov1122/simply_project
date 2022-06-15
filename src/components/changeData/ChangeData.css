@@ -1,0 +1,29 @@
+.Change-Data-Container {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.Change-Data-Header {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.Change-Data-Header div {
+    margin-bottom: 30px;
+}
+
+.Change-Data-Container div span {
+    cursor: pointer;
+    margin-right: 20px;
+    font-size: 18px;
+    font: bold 18px/18px 'Open Sans', sans-serif;
+}
+
+.active-link {
+    border-bottom: 4px solid gray;
+}

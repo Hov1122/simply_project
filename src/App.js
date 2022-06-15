@@ -9,11 +9,11 @@ import NotFound from "./components/notFound/NotFound";
 import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Loading from "./components/common/Loading";
-import UserCreater from "./components/users/userCreate/CreateUser";
 import UserProfile from "./components/profile/userProfile/UserProfile";
+import ChangeData from "./components/changeData/ChangeData";
 
 // LAZY LOADING
-// const Home = lazy(() => import("./components/home/home"));
+const Home = lazy(() => import("./components/home/home"));
 const MyProfile = lazy(() =>
   import("./components/profile/myProfile/MyProfile")
 );
@@ -35,7 +35,7 @@ function App() {
               <Route path="/" element={<Login />} />
               (// PROTECTED ROUTES)
               <Route element={<RequireAuth />}>
-                <Route path="/home" element={<UserCreater />} />
+                <Route path="/home" element={<Home />} />
 
                 <Route path="/schedule" element={<Schedule />} />
 
@@ -44,6 +44,8 @@ function App() {
                 <Route path="/myProfile" element={<MyProfile />} />
 
                 <Route path="/userProfile/:id" element={<UserProfile />} />
+
+                <Route path="/changeData" element={<ChangeData />} />
               </Route>
               (// NOT FOUND ROUTE)
               <Route path="*" element={<NotFound />} />
