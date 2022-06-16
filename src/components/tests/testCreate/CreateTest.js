@@ -1,14 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CreateTest.css";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
 import { createTestRequest } from "../../../state-management/tests/requests";
 import MultipleSelect from "./Subjects";
+import { fetchSubjectsRequest } from "../../../state-management/subjects/requests";
+import { useSelector } from "react-redux";
+import { subjectsSelector } from "../../../state-management/subjects/selectors";
 
 function TestCreater() {
   const [loading] = useState(false);
 
+  const { subjects } = useSelector(subjectsSelector);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchSubjectsRequest());
+  }, []);
 
   // ADD NEW ANSWER ROW
   const addAnswerRow = (e) => {
@@ -20,10 +28,12 @@ function TestCreater() {
     const radioButton = newElement.querySelector("input[type=checkbox]");
     radioButton.value = answerNumber;
     const answerInput = newElement.querySelector("input[type=text]");
-    
-    newElement.querySelector("[data-value=deleteAnswer]").addEventListener('click', () => {
-      newElement.remove()
-    });
+
+    newElement
+      .querySelector("[data-value=deleteAnswer]")
+      .addEventListener("click", () => {
+        newElement.remove();
+      });
 
     answerInput.setAttribute("data-value", "answer");
     container.appendChild(newElement);
@@ -46,16 +56,20 @@ function TestCreater() {
       questionNumber - 1
     }`;
     newElement.querySelector("input[type=checkbox]").value = 1;
-    newElement.querySelector("[data-value=deleteQuestion]").addEventListener('click', () => {
-      newElement.remove()
-      const headers = document.querySelectorAll('h3');
-      headers.forEach((element, index) => {
-        element.innerText = `Question ${index}`
-      })
-    });
-    newElement.querySelector("[data-value=deleteAnswer]").addEventListener('click', (e) => {
-      e.target.parentElement.remove()
-    });
+    newElement
+      .querySelector("[data-value=deleteQuestion]")
+      .addEventListener("click", () => {
+        newElement.remove();
+        const headers = document.querySelectorAll("h3");
+        headers.forEach((element, index) => {
+          element.innerText = `Question ${index}`;
+        });
+      });
+    newElement
+      .querySelector("[data-value=deleteAnswer]")
+      .addEventListener("click", (e) => {
+        e.target.parentElement.remove();
+      });
 
     container.append(newElement);
   };
@@ -63,23 +77,29 @@ function TestCreater() {
   // ADD TEST IN DATABASE
   const addTest = () => {
     const testName = document.querySelector('[data-value="testName"]').value;
-    const SubjectsArr = document.querySelector(
-      '[data-value="Subject"]'
-    ).innerText.split('\nName').join('').split(', ')
-    const GroupsArr = document.querySelector(
-      '[data-value="Groups"]'
-    ).innerText.split('\nName').join('').split(', ')
+    const SubjectsArr = document
+      .querySelector('[data-value="Subject"]')
+      .innerText.split("\nName")
+      .join("")
+      .split(", ");
+    const GroupsArr = document
+      .querySelector('[data-value="Groups"]')
+      .innerText.split("\nName")
+      .join("")
+      .split(", ");
     const testDate = document.querySelector('[data-value="testDate"]').value;
     const testQuestions = document.querySelectorAll('[data-value="questions"]');
     const testAnswers = document.querySelectorAll('[data-value="answer"]');
-    const testLength = +document.querySelector('[data-value="testLength"]').value;
-    const testRating = +document.querySelector('[data-value="testRating"]').value;
+    const testLength = +document.querySelector('[data-value="testLength"]')
+      .value;
+    const testRating = +document.querySelector('[data-value="testRating"]')
+      .value;
 
     const questions = [];
     const answers = [];
 
-    const testSubject = SubjectsArr.map(element => subject.indexOf(element))
-    const testGroup = GroupsArr.map(element => groups.indexOf(element))
+    const testSubject = SubjectsArr.map((element) => subjects.indexOf(element));
+    const testGroup = GroupsArr.map((element) => [{}, {}].indexOf(element));
 
     testAnswers.forEach((element) => {
       const questionNumber =
@@ -87,11 +107,14 @@ function TestCreater() {
       if (isNaN(questionNumber)) return;
       else if (typeof answers[questionNumber] !== "object")
         answers[questionNumber] = [];
-      answers[questionNumber].push({'name': element.value, 'isCorrect' : element.parentElement.childNodes[0].checked});
+      answers[questionNumber].push({
+        name: element.value,
+        isCorrect: element.parentElement.childNodes[0].checked,
+      });
     });
 
     testQuestions.forEach((element, index) => {
-      if (index) questions.push({'name' : element.value});
+      if (index) questions.push({ name: element.value });
     });
 
     const data = {
@@ -105,25 +128,13 @@ function TestCreater() {
       questions: questions,
       answers: answers,
     };
-    
+
     dispatch(createTestRequest(data));
   };
 
   if (loading) {
     return <Loading />;
   }
-
-  /* Grel GetAllgroups u GetAllsubjects requestnery */
-   
-  const groups = [
-    'group1',
-    'group2'
-  ]
-  
-  const subject = [
-    'subject1',
-    'subject2'
-  ] 
 
   return (
     <div className="TestCreater-Container">
@@ -133,8 +144,11 @@ function TestCreater() {
         <input value="Add test" type="button" onClick={addTest} />
       </div>
       <div className="testInformationData">
-        <MultipleSelect dataName = {`Subject`} data = {subject}/>
-        <MultipleSelect dataName = {`Groups`}  data = {groups}/>
+        <MultipleSelect
+          dataName={`Subject`}
+          data={subjects.map((subject) => subject.name)}
+        />
+        <MultipleSelect dataName={`Groups`} data={[]} />
       </div>
       <div className="testInformationData">
         <input
@@ -142,7 +156,11 @@ function TestCreater() {
           type="datetime-local"
           data-value="testDate"
         />
-        <input placeholder="Test length" type="number" data-value="testLength" />
+        <input
+          placeholder="Test length"
+          type="number"
+          data-value="testLength"
+        />
         <input placeholder="Rating" type="number" data-value="testRating" />
       </div>
       <div className="QuestionsForm">
@@ -150,10 +168,7 @@ function TestCreater() {
           <div className="Question-Container">
             <h3>Question</h3>
             <input placeholder="Enter Question" type="text" />
-            <button
-              className="delete-question"
-              data-value="deleteQuestion"
-            >
+            <button className="delete-question" data-value="deleteQuestion">
               x
             </button>
             <div className="AnswersForm">
@@ -168,10 +183,7 @@ function TestCreater() {
                   type="text"
                   data-value="answer"
                 />
-                <button
-                  className="delete-answer"
-                  data-value="deleteAnswer"
-                >
+                <button className="delete-answer" data-value="deleteAnswer">
                   x
                 </button>
               </div>
@@ -184,7 +196,12 @@ function TestCreater() {
           </div>
         </template>
       </div>
-      <input id='addNewQuestion' value="Add New Question" type="button" onClick={addQuestionRow} />
+      <input
+        id="addNewQuestion"
+        value="Add New Question"
+        type="button"
+        onClick={addQuestionRow}
+      />
     </div>
   );
 }

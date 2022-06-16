@@ -1,0 +1,41 @@
+.Test-Container {
+    background-color: rgb(190, 197, 200);
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px 30px;
+    width: 220px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    opacity: .7;
+    margin: 30px;
+}
+
+.Test-Container:hover {
+    opacity: 1;
+}
+
+.Test-Container h2 {
+    font-size: 30px;
+}
+
+.Test-Main {
+    display: flex;
+    flex-direction: column;
+    font: bold 16px/1.5 sans-serif;
+}
+
+.Test-Main span {
+    margin-bottom: 20px;
+}
+
+.take-test-button, .check-results-button {
+    cursor: pointer;
+    border: none;
+    border-radius: 7px;
+    padding: 10px;
+    background-color: aqua;
+    font-size: 20px;
+}

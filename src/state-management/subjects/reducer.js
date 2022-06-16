@@ -12,11 +12,11 @@ const initialState = {
   error: null,
 };
 
-const usersReducer = createReducer(initialState, (builder) => {
+const subjectsReducer = createReducer(initialState, (builder) => {
   builder
     // GET ALL USERS
     .addCase(fetchSubjectsSuccess, (state, { payload }) => {
-      state.subjects = payload;
+      state.subjects = payload.data;
       state.loading = false;
       state.error = null;
     })
@@ -37,4 +37,4 @@ const usersReducer = createReducer(initialState, (builder) => {
     });
 });
 
-export default usersReducer;
+export default subjectsReducer;

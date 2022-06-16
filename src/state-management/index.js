@@ -5,12 +5,14 @@ import authReducer from "./auth/reducer";
 import groupsReducer from "./groups/reducer";
 import testsReducer from "./tests/reducer";
 import usersReducer from "./users/reducer";
+import subjectsReducer from "./subjects/reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   users: usersReducer,
   tests: testsReducer,
   groups: groupsReducer,
+  subjects: subjectsReducer,
 });
 
 const store = configureStore({

@@ -6,6 +6,20 @@
     overflow: auto;
 }
 
+.Tests-Main-Container {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.Tests-Main-Container > div {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+}
+
 .Tests-Nav {
     width: 200px;
     margin-bottom: 50px;

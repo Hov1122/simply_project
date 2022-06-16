@@ -25,6 +25,7 @@ function Tests() {
     user: {
       role: { name },
       id,
+      userTest,
     },
   } = useSelector(authSelector);
 
@@ -86,18 +87,19 @@ function Tests() {
       <div className="Tests-Main-Container">
         {inComplete && (
           <div>
-            {userTests.map((test) => {
-              if (!test.completed) {
-                return <Test {...test} />;
+            {userTests.map((test, index) => {
+              if (userTest[index].isComplete === false) {
+                return <Test {...test} key={test.id} />;
               }
             })}
           </div>
         )}
         {completed && (
           <div>
-            {userTests.map((test) => {
-              if (test.completed) {
-                return <Test {...test} />;
+            {userTests.map((test, index) => {
+              const mark = userTest[index].mark;
+              if (userTest[index].isComplete === true) {
+                return <Test {...test} mark={mark} key={test.id} />;
               }
             })}
           </div>
