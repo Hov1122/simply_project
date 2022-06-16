@@ -64,7 +64,7 @@ function LoginPage() {
 
   return (
     <div className="login-container">
-      <h1 style={{ color: "purple" }}>Log In</h1>
+      <h1>Log In</h1>
       <input
         ref={emailRef}
         type="text"

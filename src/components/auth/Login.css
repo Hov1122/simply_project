@@ -1,5 +1,5 @@
 .login-container h1 {
-    color: #fff;
+    color: #10333E;
 }
 
 .login-container {
@@ -14,13 +14,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    box-shadow: 5px 20px 50px #000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .login-container input[type=text], .login-container input[type=password]  {
     width: 60%;
     height: 20px;
-    background: #e0dede;
+    background: #d8d2d2;
     justify-content: center;
     display: flex;
     margin: 20px auto;
@@ -42,7 +42,7 @@
     justify-content: center;
     display: block;
     color: #fff;
-    background: #573b8a;
+    background: #10333E;
     font-size: 1em;
     font-weight: bold;
     margin-top: 20px;
