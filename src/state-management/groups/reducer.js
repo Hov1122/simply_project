@@ -16,8 +16,8 @@ const initialState = {
 const groupsReducer = createReducer(initialState, (builder) => {
   builder
     // GET ALL GROUPS
-    .addCase(fetchGroupsSuccess, (state, { payload }) => {
-      state.groups = payload.groups;
+    .addCase(fetchGroupsSuccess, (state, { payload: { data }}) => {
+      state.groups = data.groups;
       state.loading = false;
       state.error = null;
     })

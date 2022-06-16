@@ -5,17 +5,21 @@ import { useDispatch } from "react-redux";
 import { createTestRequest } from "../../../state-management/tests/requests";
 import MultipleSelect from "./Subjects";
 import { fetchSubjectsRequest } from "../../../state-management/subjects/requests";
+import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
+import { groupsSelector } from "../../../state-management/groups/selectors";
 
 function TestCreater() {
   const [loading] = useState(false);
 
   const { subjects } = useSelector(subjectsSelector);
+  const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
+    dispatch(fetchGroupsRequest());
   }, []);
 
   // ADD NEW ANSWER ROW
@@ -148,7 +152,9 @@ function TestCreater() {
           dataName={`Subject`}
           data={subjects.map((subject) => subject.name)}
         />
-        <MultipleSelect dataName={`Groups`} data={[]} />
+        <MultipleSelect dataName={`Groups`} 
+          data={groups.map((group) => group.name)} 
+          />
       </div>
       <div className="testInformationData">
         <input
