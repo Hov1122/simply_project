@@ -102,8 +102,18 @@ function TestCreater() {
     const questions = [];
     const answers = [];
 
-    const testSubject = SubjectsArr.map((element) => subjects.indexOf(element));
-    const testGroup = GroupsArr.map((element) => [{}, {}].indexOf(element));
+
+    console.log(SubjectsArr)
+    console.log(subjects)
+
+    const testSubject = SubjectsArr.map((element) => subjects.find((item) => {
+      console.log(item.id)
+      if (item.name === element) {
+        return item.id
+      }
+    }))[0];
+
+    const testGroup = GroupsArr.map((element) => groups.indexOf(element)); // Backic heto dzel
 
     testAnswers.forEach((element) => {
       const questionNumber =
@@ -122,9 +132,9 @@ function TestCreater() {
     });
 
     const data = {
-      userId: 1,
+      userId: 1, // userId
       name: testName,
-      subjectId: testSubject,
+      subjectId: testSubject.id,
       highestScore: testRating,
       start: testDate,
       length: testLength,
@@ -132,7 +142,7 @@ function TestCreater() {
       questions: questions,
       answers: answers,
     };
-
+    console.log(data)
     dispatch(createTestRequest(data));
   };
 
