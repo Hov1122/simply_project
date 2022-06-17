@@ -25,7 +25,7 @@ function Home() {
 
   if (loading) {
     return <Loading />;
-  }
+  } 
 
   return (
     <div className="Home-Container">
@@ -44,6 +44,7 @@ function Home() {
         <hr />
         <div className="top-students-container">
           {getTopStudents(users).map((user) => {
+            console.log(user)
             return <UserCard {...user} key={user.id} />;
           })}
         </div>

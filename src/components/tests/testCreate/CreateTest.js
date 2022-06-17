@@ -3,19 +3,34 @@ import "./CreateTest.css";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
 import { createTestRequest } from "../../../state-management/tests/requests";
-import MultipleSelect from "./Subjects";
 import { fetchSubjectsRequest } from "../../../state-management/subjects/requests";
 import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { groupsSelector } from "../../../state-management/groups/selectors";
+import Select from 'react-select'
 
 function TestCreater() {
   const [loading] = useState(false);
+  const [selectedSubject, setSelectedSubject] = useState(null)
+  const [selectedGroups, setSelectedGroups] = useState(null)
 
   const { subjects } = useSelector(subjectsSelector);
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
+
+  const subjectSelect = subjects.map(elem => {
+    return {
+      value: elem.id,
+      label: elem.name
+    }
+  })
+  const groupSelect = groups.map(elem => {
+    return {
+      value: elem.id,
+      label: elem.name
+    }
+  })
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
@@ -81,16 +96,6 @@ function TestCreater() {
   // ADD TEST IN DATABASE
   const addTest = () => {
     const testName = document.querySelector('[data-value="testName"]').value;
-    const SubjectsArr = document
-      .querySelector('[data-value="Subject"]')
-      .innerText.split("\nName")
-      .join("")
-      .split(", ");
-    const GroupsArr = document
-      .querySelector('[data-value="Groups"]')
-      .innerText.split("\nName")
-      .join("")
-      .split(", ");
     const testDate = document.querySelector('[data-value="testDate"]').value;
     const testQuestions = document.querySelectorAll('[data-value="questions"]');
     const testAnswers = document.querySelectorAll('[data-value="answer"]');
@@ -101,19 +106,6 @@ function TestCreater() {
 
     const questions = [];
     const answers = [];
-
-
-    console.log(SubjectsArr)
-    console.log(subjects)
-
-    const testSubject = SubjectsArr.map((element) => subjects.find((item) => {
-      console.log(item.id)
-      if (item.name === element) {
-        return item.id
-      }
-    }))[0];
-
-    const testGroup = GroupsArr.map((element) => groups.indexOf(element)); // Backic heto dzel
 
     testAnswers.forEach((element) => {
       const questionNumber =
@@ -134,11 +126,11 @@ function TestCreater() {
     const data = {
       userId: 1, // userId
       name: testName,
-      subjectId: testSubject.id,
+      subjectId: selectedSubject,
       highestScore: testRating,
       start: testDate,
       length: testLength,
-      group: testGroup,
+      group: selectedGroups,
       questions: questions,
       answers: answers,
     };
@@ -150,6 +142,14 @@ function TestCreater() {
     return <Loading />;
   }
 
+  const handleSelectSubject = (e) => {
+    setSelectedSubject(e.value)
+  }
+
+  const handleSelectGroups = (e) => {
+    setSelectedGroups(e.value)
+  }
+
   return (
     <div className="TestCreater-Container">
       <h2>Create Test</h2>
@@ -158,13 +158,8 @@ function TestCreater() {
         <input value="Add test" type="button" onClick={addTest} />
       </div>
       <div className="testInformationData">
-        <MultipleSelect
-          dataName={`Subject`}
-          data={subjects.map((subject) => subject.name)}
-        />
-        <MultipleSelect dataName={`Groups`} 
-          data={groups.map((group) => group.name)} 
-          />
+        <Select options={subjectSelect} placeholder='Subject' onChange={handleSelectSubject}/>
+        <Select options={groupSelect} placeholder='Group' onChange={handleSelectGroups}/>
       </div>
       <div className="testInformationData">
         <input

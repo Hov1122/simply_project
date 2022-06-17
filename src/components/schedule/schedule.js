@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./schedule.css";
 import Loading from "../common/Loading";
+import ScheduleCreater from "./CreateSchedule/CreateSchedule";
 
-function Schedule() {
+function Schedules() {
   const [loading] = useState(false);
 
   if (loading) {
@@ -10,10 +11,10 @@ function Schedule() {
   }
 
   return (
-    <div className={`schedule`}>
-      <h2>Schedule</h2>
+    <div className="Schedule-Container">
+      <ScheduleCreater />
     </div>
   );
 }
 
-export default Schedule;
+export default Schedules;
