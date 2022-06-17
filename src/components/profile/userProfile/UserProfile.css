@@ -1,14 +1,23 @@
 .User-Profile-Container {
+    position: relative;
+    width: 100%;
     display: flex;
+    text-align: center;
     flex-direction: column;
     min-height: fit-content;
     margin: 0 auto;
 }
 
 .User-Profile-Container span {
-    font: bold 16px/1.5 'Open Sans', sans-serif;
+    font: lighter 16px/1.5 sans-serif;
 }
 
-.User-Profile-Container td:first-child {
-    font-weight: bold;
+.User-Profile-Container h3 {
+    margin-bottom: 30px;
+}
+
+.user-profile-go-back {
+    position: absolute;
+    top: 0;
+    left: 0;
 }

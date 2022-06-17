@@ -4,7 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import "./Test.css";
 import { fetchSubjectsRequest } from "../../../state-management/subjects/requests";
 
-const Test = ({ name, subjectId, length, mark, questions }) => {
+const Test = ({
+  name,
+  subjectId,
+  length,
+  mark,
+  questions,
+  createdAt,
+  teacher,
+}) => {
   const { subjects } = useSelector(subjectsSelector);
   const dispatch = useDispatch();
 
@@ -26,10 +34,14 @@ const Test = ({ name, subjectId, length, mark, questions }) => {
           </span>
         )}
         <span>Questions: {questions?.length}</span>
-        {!mark ? (
-          <button className="take-test-button">Take Test</button>
+        {!teacher ? (
+          !mark ? (
+            <button className="take-test-button">Take Test</button>
+          ) : (
+            <button className="check-results-button">Check Results</button>
+          )
         ) : (
-          <button className="check-results-button">Check Results</button>
+          <span>Created: {new Date(createdAt).toLocaleDateString()}</span>
         )}
       </div>
     </div>
