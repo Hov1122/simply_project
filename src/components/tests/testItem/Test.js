@@ -25,7 +25,7 @@ const Test = ({
       <h2>{name}</h2>
       <div className="Test-Main">
         <span>
-          Subject: {subjects.find((sub) => sub.id === subjectId)?.name}
+          Subject: {subjects?.find((sub) => sub.id === subjectId)?.name}
         </span>
         <span>Length: {length} minutes</span>
         {mark && (

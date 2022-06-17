@@ -62,7 +62,6 @@ function Tests() {
                 setInComplete(true);
                 inCompleteRef.current.classList.add("active-link");
                 completedRef.current.classList.remove("active-link");
-                createTestRef.current.classList.remove("active-link");
               }}
             >
               Incomplete
@@ -75,7 +74,6 @@ function Tests() {
                 setCompleted(true);
                 completedRef.current.classList.add("active-link");
                 inCompleteRef.current.classList.remove("active-link");
-                createTestRef.current.classList.remove("active-link");
               }}
             >
               Completed
