@@ -8,7 +8,7 @@ import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { groupsSelector } from "../../../state-management/groups/selectors";
-import Select from "react-select"
+import Select from "react-select";
 
 function ScheduleCreater() {
   const [loading] = useState(false);
@@ -16,47 +16,77 @@ function ScheduleCreater() {
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
   const [scheduleSubjects, setScheduleSubjects] = useState({
-    'Monday' : [],
-    'Tuesday' : [],
-    'Wednesday' : [],
-    'Thursday' : [],
-    'Friday' : []
-  })
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+  });
 
-  const subjectsArr = subjects.map(elem => {
+  const subjectsArr = subjects.map((elem) => {
     return {
       value: elem.id,
-      label: elem.name
-    }
-  })
-  const groupsArr = groups.map(elem => {
+      label: elem.name,
+    };
+  });
+  const groupsArr = groups.map((elem) => {
     return {
       value: elem.id,
-      label: elem.name
-    }
-  })
+      label: elem.name,
+    };
+  });
 
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
-  let day = -1
-  let subjectId = [0,1,2,3]
+  let day = -1;
+  let subjectId = [0, 1, 2, 3];
 
   const daySchedule = (day) => {
-                        return (<div className="Schedule-day" data-value={days[day]}>
-                          <h3>{days[day]}</h3>
-                          <Select options={subjectsArr} placeholder='Subject' key={subjectId[0]} onChange={(e) => {handleChangeSubject(days[day], subjectId[0], e)}} />
-                          <Select options={subjectsArr} placeholder='Subject' key={subjectId[1]} onChange={(e) => {handleChangeSubject(days[day], subjectId[1], e)}} />
-                          <Select options={subjectsArr} placeholder='Subject' key={subjectId[2]} onChange={(e) => {handleChangeSubject(days[day], subjectId[2], e)}} />
-                          <Select options={subjectsArr} placeholder='Subject' key={subjectId[3]} onChange={(e) => {handleChangeSubject(days[day], subjectId[3], e)}} />
-                        </div>)
-                      }
+    return (
+      <div className="Schedule-day" data-value={days[day]}>
+        <h3>{days[day]}</h3>
+        <Select
+          options={subjectsArr}
+          placeholder="Subject"
+          key={subjectId[0]}
+          onChange={(e) => {
+            handleChangeSubject(days[day], subjectId[0], e);
+          }}
+        />
+        <Select
+          options={subjectsArr}
+          placeholder="Subject"
+          key={subjectId[1]}
+          onChange={(e) => {
+            handleChangeSubject(days[day], subjectId[1], e);
+          }}
+        />
+        <Select
+          options={subjectsArr}
+          placeholder="Subject"
+          key={subjectId[2]}
+          onChange={(e) => {
+            handleChangeSubject(days[day], subjectId[2], e);
+          }}
+        />
+        <Select
+          options={subjectsArr}
+          placeholder="Subject"
+          key={subjectId[3]}
+          onChange={(e) => {
+            handleChangeSubject(days[day], subjectId[3], e);
+          }}
+        />
+      </div>
+    );
+  };
 
   const handleChangeSubject = (day, pos, e) => {
-    setScheduleSubjects(elem => {
-      elem[day][pos] = e.value
-      return elem
-    })
-  }
+    setScheduleSubjects((elem) => {
+      elem[day][pos] = e.value;
+      return elem;
+    });
+  };
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
@@ -65,13 +95,10 @@ function ScheduleCreater() {
 
   // ADD SCHEDULE IN DATABASE
   const addSchedule = () => {
-    
-    const data = {
+    console.log(scheduleSubjects);
+    const data = {};
 
-    };
-
-
-    console.log(data)
+    console.log(data);
     dispatch(createScheduleRequest(data));
   };
 
@@ -83,13 +110,13 @@ function ScheduleCreater() {
     <div className="Schedule-Container">
       <div className="Schedule-Container-Header">
         <h2>Create Schedule</h2>
-        <Select options={groupsArr} placeholder='Group' />
+        <Select options={groupsArr} placeholder="Group" />
       </div>
       <div className="Schedule-Container-Main">
         {days.map(() => {
-          day += 1
-          subjectId.forEach(elem => elem+4)
-          return daySchedule(day)
+          day += 1;
+          subjectId.forEach((elem) => elem + 4);
+          return daySchedule(day);
         })}
       </div>
       <div className="Schedule-Container-Foot">

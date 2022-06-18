@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { updateUserRequest } from "../../../state-management/users/requests";
 import { usersSelector } from "../../../state-management/users/selectors";
@@ -16,10 +17,19 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
 
   const {
-    user: { id },
+    user: {
+      id,
+      firstName,
+      lastName,
+      email,
+      avgMark,
+      role: { name },
+    },
   } = useSelector(authSelector);
   const { error } = useSelector(usersSelector);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (newPassword !== repeatPassword) {
@@ -35,7 +45,36 @@ const Profile = () => {
 
   return (
     <div className="Profile-Container">
-      <h2>My Profile</h2>
+      <h2 style={{ marginBottom: 40 }}>My Profile</h2>
+      <button
+        className="go-back-button user-profile-go-back"
+        onClick={() => navigate(-1)}
+      >
+        Go Back
+      </button>
+      <div className="Profile-Info-Container">
+        <div className="User-Profile">
+          <h3>
+            First Name: <span>{firstName}</span>
+          </h3>
+
+          <h3>
+            Last Name: <span>{lastName}</span>
+          </h3>
+
+          <h3>
+            Average Mark: <span>{avgMark}</span>
+          </h3>
+
+          <h3>
+            Email: <span>{email}</span>
+          </h3>
+
+          <h3>
+            Role: <span>{name}</span>
+          </h3>
+        </div>
+      </div>
       <div className="Change-Password-Container">
         <h3>Change Password</h3>
         {success && !requestError && (

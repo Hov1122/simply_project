@@ -1,8 +1,22 @@
 .Profile-Container {
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
     text-align: center;
+    overflow: auto;
+}
+
+.Profile-Info-Container span {
+    font: lighter 16px/1.5 sans-serif;
+}
+
+.Profile-Info-Container h3 {
+    margin-bottom: 30px;
+}
+
+.Profile-Info-Container {
+    margin-bottom: 30px;
 }
 
 .Change-Password-Container {
