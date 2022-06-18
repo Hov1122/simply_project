@@ -102,10 +102,22 @@ function ScheduleCreater() {
   const addSchedule = () => {
     const data = {
       groupId: scheduleGroup,
-      schedules: scheduleSubjects
+      schedule: []
     };
+    
+    scheduleSubjects.forEach((elem, index) => {
+      data.schedule.push({
+        day: index + 1,
+        scheduleSubject: Object.keys(elem).map(item => {
+          return {
+            time: item,
+            subjectId: elem[item]
+          }
+        })
+      })
+    })
 
-    if (Object.values(data.schedules).some(value => Object.values(value).every(item => item != true)) || !data.groupId) {
+    if (Object.values(scheduleSubjects).some(value => Object.values(value).every(item => item != true)) || !data.groupId) {
       console.log('error')
       return 
     } else {
