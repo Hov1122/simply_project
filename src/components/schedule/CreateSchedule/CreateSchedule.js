@@ -15,13 +15,14 @@ function ScheduleCreater() {
   const { subjects } = useSelector(subjectsSelector);
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
-  const [scheduleSubjects, setScheduleSubjects] = useState({
-    Monday: [],
-    Tuesday: [],
-    Wednesday: [],
-    Thursday: [],
-    Friday: [],
-  });
+  const [scheduleGroup, setScheduleGroup] = useState(null)
+  const [scheduleSubjects, setScheduleSubjects] = useState([
+    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
+    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
+    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
+    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
+    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
+  ]);
 
   const subjectsArr = subjects.map((elem) => {
     return {
@@ -50,7 +51,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[0]}
           onChange={(e) => {
-            handleChangeSubject(days[day], subjectId[0], e);
+            handleChangeSubject(day, '9:30', e);
           }}
         />
         <Select
@@ -58,7 +59,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[1]}
           onChange={(e) => {
-            handleChangeSubject(days[day], subjectId[1], e);
+            handleChangeSubject(day, '11:10', e);
           }}
         />
         <Select
@@ -66,7 +67,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[2]}
           onChange={(e) => {
-            handleChangeSubject(days[day], subjectId[2], e);
+            handleChangeSubject(day,  '13:00', e);
           }}
         />
         <Select
@@ -74,7 +75,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[3]}
           onChange={(e) => {
-            handleChangeSubject(days[day], subjectId[3], e);
+            handleChangeSubject(day,  '14:40', e);
           }}
         />
       </div>
@@ -88,6 +89,10 @@ function ScheduleCreater() {
     });
   };
 
+  const handleChangeGroup = (e) => {
+    setScheduleGroup(e.value)
+  }
+
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
     dispatch(fetchGroupsRequest());
@@ -95,11 +100,18 @@ function ScheduleCreater() {
 
   // ADD SCHEDULE IN DATABASE
   const addSchedule = () => {
-    console.log(scheduleSubjects);
-    const data = {};
+    const data = {
+      groupId: scheduleGroup,
+      schedules: scheduleSubjects
+    };
 
-    console.log(data);
-    dispatch(createScheduleRequest(data));
+    if (Object.values(data.schedules).some(value => Object.values(value).every(item => item != true)) || !data.groupId) {
+      console.log('error')
+      return 
+    } else {
+      console.log('success')
+      dispatch(createScheduleRequest(data));
+    }
   };
 
   if (loading) {
@@ -110,7 +122,7 @@ function ScheduleCreater() {
     <div className="Schedule-Container">
       <div className="Schedule-Container-Header">
         <h2>Create Schedule</h2>
-        <Select options={groupsArr} placeholder="Group" />
+        <Select options={groupsArr} placeholder="Group" onChange={handleChangeGroup}/>
       </div>
       <div className="Schedule-Container-Main">
         {days.map(() => {
