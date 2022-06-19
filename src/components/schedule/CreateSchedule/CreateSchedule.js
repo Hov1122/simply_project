@@ -15,13 +15,38 @@ function ScheduleCreater() {
   const { subjects } = useSelector(subjectsSelector);
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
-  const [scheduleGroup, setScheduleGroup] = useState(null)
+  const [scheduleGroup, setScheduleGroup] = useState(null);
   const [scheduleSubjects, setScheduleSubjects] = useState([
-    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
-    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
-    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
-    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
-    {'9:30': undefined, '11:10': undefined, '13:00': undefined, '14:40': undefined},
+    {
+      "9:30": undefined,
+      "11:10": undefined,
+      "13:00": undefined,
+      "14:40": undefined,
+    },
+    {
+      "9:30": undefined,
+      "11:10": undefined,
+      "13:00": undefined,
+      "14:40": undefined,
+    },
+    {
+      "9:30": undefined,
+      "11:10": undefined,
+      "13:00": undefined,
+      "14:40": undefined,
+    },
+    {
+      "9:30": undefined,
+      "11:10": undefined,
+      "13:00": undefined,
+      "14:40": undefined,
+    },
+    {
+      "9:30": undefined,
+      "11:10": undefined,
+      "13:00": undefined,
+      "14:40": undefined,
+    },
   ]);
 
   const subjectsArr = subjects.map((elem) => {
@@ -44,14 +69,14 @@ function ScheduleCreater() {
 
   const daySchedule = (day) => {
     return (
-      <div className="Schedule-day" data-value={days[day]}>
+      <div className="Schedule-day" key={day} data-value={days[day]}>
         <h3>{days[day]}</h3>
         <Select
           options={subjectsArr}
           placeholder="Subject"
           key={subjectId[0]}
           onChange={(e) => {
-            handleChangeSubject(day, '9:30', e);
+            handleChangeSubject(day, "9:30", e);
           }}
         />
         <Select
@@ -59,7 +84,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[1]}
           onChange={(e) => {
-            handleChangeSubject(day, '11:10', e);
+            handleChangeSubject(day, "11:10", e);
           }}
         />
         <Select
@@ -67,7 +92,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[2]}
           onChange={(e) => {
-            handleChangeSubject(day,  '13:00', e);
+            handleChangeSubject(day, "13:00", e);
           }}
         />
         <Select
@@ -75,7 +100,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[3]}
           onChange={(e) => {
-            handleChangeSubject(day,  '14:40', e);
+            handleChangeSubject(day, "14:40", e);
           }}
         />
       </div>
@@ -90,8 +115,8 @@ function ScheduleCreater() {
   };
 
   const handleChangeGroup = (e) => {
-    setScheduleGroup(e.value)
-  }
+    setScheduleGroup(e.value);
+  };
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
@@ -102,26 +127,31 @@ function ScheduleCreater() {
   const addSchedule = () => {
     const data = {
       groupId: scheduleGroup,
-      schedule: []
+      schedule: [],
     };
-    
+
     scheduleSubjects.forEach((elem, index) => {
       data.schedule.push({
         day: index + 1,
-        scheduleSubject: Object.keys(elem).map(item => {
+        scheduleSubject: Object.keys(elem).map((item) => {
           return {
             time: item,
-            subjectId: elem[item]
-          }
-        })
-      })
-    })
+            subjectId: elem[item],
+          };
+        }),
+      });
+    });
 
-    if (Object.values(scheduleSubjects).some(value => Object.values(value).every(item => item != true)) || !data.groupId) {
-      console.log('error')
-      return 
+    if (
+      Object.values(scheduleSubjects).some((value) =>
+        Object.values(value).every((item) => item != true)
+      ) ||
+      !data.groupId
+    ) {
+      console.log("error");
+      return;
     } else {
-      console.log('success')
+      console.log("success");
       dispatch(createScheduleRequest(data));
     }
   };
@@ -134,7 +164,11 @@ function ScheduleCreater() {
     <div className="Schedule-Container">
       <div className="Schedule-Container-Header">
         <h2>Create Schedule</h2>
-        <Select options={groupsArr} placeholder="Group" onChange={handleChangeGroup}/>
+        <Select
+          options={groupsArr}
+          placeholder="Group"
+          onChange={handleChangeGroup}
+        />
       </div>
       <div className="Schedule-Container-Main">
         {days.map(() => {

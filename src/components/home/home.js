@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import Loading from "../common/Loading";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
 import CircularProgress from "@mui/material/CircularProgress";
 import { usersSelector } from "../../state-management/users/selectors";
 import UserCard from "../users/userCard/UserCard";
+import { testsSelector } from "../../state-management/tests/selectors";
+import { fetchUserTestsRequest } from "../../state-management/tests/requests";
 import {
   LineChart,
   YAxis,
@@ -18,8 +20,10 @@ import {
 
 function Home() {
   const [loading] = useState(false);
+  // const [lastExams, setLastExams] = useState([]);
   const {
     user: {
+      id,
       firstName,
       lastName,
       role: { name },
@@ -27,6 +31,13 @@ function Home() {
     },
   } = useSelector(authSelector);
   const { users } = useSelector(usersSelector);
+  const { userTests } = useSelector(testsSelector);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUserTestsRequest(id));
+  }, [dispatch]);
 
   const getTopStudents = (users) => {
     let topStudents = [...users];
@@ -86,7 +97,30 @@ function Home() {
               </ResponsiveContainer>
             </div>
           </div>
-        ) : null}
+        ) : (
+          <div className="Last-Exams-Container">
+            <h3 style={{ marginLeft: 50 }}>Last 3 Exams</h3>
+            <hr />
+            <div className="Last-Exams-Main">
+              {userTests.length
+                ? userTests
+                    .slice(userTests.length - 3)
+                    .map(({ id, name, highestScore, createdAt }) => {
+                      return (
+                        <div className="Last-Exam" key={id}>
+                          <span>{name}</span>
+                          <span>Rating: {highestScore}</span>
+                          <span>
+                            Created at:{" "}
+                            {new Date(createdAt).toLocaleDateString()}
+                          </span>
+                        </div>
+                      );
+                    })
+                : null}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
