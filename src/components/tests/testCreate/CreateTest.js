@@ -8,29 +8,29 @@ import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { groupsSelector } from "../../../state-management/groups/selectors";
-import Select from 'react-select'
+import Select from "react-select";
 
 function TestCreater() {
   const [loading] = useState(false);
-  const [selectedSubject, setSelectedSubject] = useState(null)
-  const [selectedGroups, setSelectedGroups] = useState(null)
+  const [selectedSubject, setSelectedSubject] = useState(null);
+  const [selectedGroups, setSelectedGroups] = useState(null);
 
   const { subjects } = useSelector(subjectsSelector);
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
 
-  const subjectSelect = subjects.map(elem => {
+  const subjectSelect = subjects.map((elem) => {
     return {
       value: elem.id,
-      label: elem.name
-    }
-  })
-  const groupSelect = groups.map(elem => {
+      label: elem.name,
+    };
+  });
+  const groupSelect = groups.map((elem) => {
     return {
       value: elem.id,
-      label: elem.name
-    }
-  })
+      label: elem.name,
+    };
+  });
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
@@ -128,13 +128,13 @@ function TestCreater() {
       name: testName,
       subjectId: selectedSubject,
       highestScore: testRating,
-      start: testDate,
+      start: new Date(testDate).toISOString(),
       length: testLength,
       group: selectedGroups,
       questions: questions,
       answers: answers,
     };
-    console.log(data)
+    console.log(data);
     dispatch(createTestRequest(data));
   };
 
@@ -143,12 +143,12 @@ function TestCreater() {
   }
 
   const handleSelectSubject = (e) => {
-    setSelectedSubject(e.value)
-  }
+    setSelectedSubject(e.value);
+  };
 
   const handleSelectGroups = (e) => {
-    setSelectedGroups(e.value)
-  }
+    setSelectedGroups(e.value);
+  };
 
   return (
     <div className="TestCreater-Container">
@@ -158,8 +158,16 @@ function TestCreater() {
         <input value="Add test" type="button" onClick={addTest} />
       </div>
       <div className="testInformationData">
-        <Select options={subjectSelect} placeholder='Subject' onChange={handleSelectSubject}/>
-        <Select options={groupSelect} placeholder='Group' onChange={handleSelectGroups}/>
+        <Select
+          options={subjectSelect}
+          placeholder="Subject"
+          onChange={handleSelectSubject}
+        />
+        <Select
+          options={groupSelect}
+          placeholder="Group"
+          onChange={handleSelectGroups}
+        />
       </div>
       <div className="testInformationData">
         <input

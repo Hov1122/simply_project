@@ -13,7 +13,7 @@ const TakeTest = () => {
 
   const { state } = useLocation();
 
-  return name === "Student" ? (
+  return name === "Student" && state ? (
     <div className="Take-Test-Container">
       {state?.questions?.map(({ id, name, answers }, index) => {
         return (

@@ -19,7 +19,7 @@ export const fetchSubjectsRequest = () => {
   };
 };
 
-// CREATE USER
+// CREATE SUBJECT
 export const createSubjectRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchSubjectsPending());

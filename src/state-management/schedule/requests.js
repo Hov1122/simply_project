@@ -14,7 +14,7 @@ export const fetchSchedulesRequest = () => {
   return async (dispatch) => {
     dispatch(fetchSchedulePending());
     try {
-      const { data } = await axiosApiInstance.get(`/schedule`);
+      const { data } = await axiosApiInstance.get(`/schedules`);
       dispatch(fetchScheduleSuccess(data));
     } catch (error) {
       dispatch(fetchScheduleFailure(error));
@@ -27,7 +27,10 @@ export const fetchGroupScheduleRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchSchedulePending());
     try {
-      const { data } = await axiosApiInstance.get(`/schedule/schedulesAll`, payload);
+      const { data } = await axiosApiInstance.get(
+        `/schedules/schedulesAll`,
+        payload
+      );
       dispatch(fetchGroupScheduleSuccess(data));
     } catch (error) {
       dispatch(fetchScheduleFailure(error));
@@ -40,7 +43,7 @@ export const createScheduleRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchSchedulePending());
     try {
-      const { data } = await axiosApiInstance.post(`/schedule`, payload);
+      const { data } = await axiosApiInstance.post(`/schedules`, payload);
       dispatch(createScheduleSuccess(data));
     } catch (error) {
       dispatch(fetchScheduleFailure(error));
@@ -53,7 +56,7 @@ export const updateScheduleRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchSchedulePending());
     try {
-      const { data } = await axiosApiInstance.put(`/schedule`, payload);
+      const { data } = await axiosApiInstance.put(`/schedules`, payload);
       dispatch(updateScheduleSuccess(data));
     } catch (error) {
       dispatch(fetchScheduleFailure(error));
@@ -66,7 +69,7 @@ export const deletedScheduleRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchSchedulePending());
     try {
-      const { data } = await axiosApiInstance.delete(`/schedule`, payload);
+      const { data } = await axiosApiInstance.delete(`/schedules`, payload);
       dispatch(deleteScheduleSuccess(data));
     } catch (error) {
       dispatch(fetchScheduleFailure(error));

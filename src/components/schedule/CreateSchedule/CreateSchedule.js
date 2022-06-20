@@ -18,34 +18,34 @@ function ScheduleCreater() {
   const [scheduleGroup, setScheduleGroup] = useState(null);
   const [scheduleSubjects, setScheduleSubjects] = useState([
     {
-      "9:30": undefined,
-      "11:10": undefined,
-      "13:00": undefined,
-      "14:40": undefined,
+      "2022-06-20T09:40:47.418Z": undefined,
+      "2022-06-20T11:10:47.418Z": undefined,
+      "2022-06-20T13:00:47.418Z": undefined,
+      "2022-06-20T14:40:47.418Z": undefined,
     },
     {
-      "9:30": undefined,
-      "11:10": undefined,
-      "13:00": undefined,
-      "14:40": undefined,
+      "2022-06-20T09:40:47.418Z": undefined,
+      "2022-06-20T11:10:47.418Z": undefined,
+      "2022-06-20T13:00:47.418Z": undefined,
+      "2022-06-20T14:40:47.418Z": undefined,
     },
     {
-      "9:30": undefined,
-      "11:10": undefined,
-      "13:00": undefined,
-      "14:40": undefined,
+      "2022-06-20T09:40:47.418Z": undefined,
+      "2022-06-20T11:10:47.418Z": undefined,
+      "2022-06-20T13:00:47.418Z": undefined,
+      "2022-06-20T14:40:47.418Z": undefined,
     },
     {
-      "9:30": undefined,
-      "11:10": undefined,
-      "13:00": undefined,
-      "14:40": undefined,
+      "2022-06-20T09:40:47.418Z": undefined,
+      "2022-06-20T11:10:47.418Z": undefined,
+      "2022-06-20T13:00:47.418Z": undefined,
+      "2022-06-20T14:40:47.418Z": undefined,
     },
     {
-      "9:30": undefined,
-      "11:10": undefined,
-      "13:00": undefined,
-      "14:40": undefined,
+      "2022-06-20T09:40:47.418Z": undefined,
+      "2022-06-20T11:10:47.418Z": undefined,
+      "2022-06-20T13:00:47.418Z": undefined,
+      "2022-06-20T14:40:47.418Z": undefined,
     },
   ]);
 
@@ -76,7 +76,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[0]}
           onChange={(e) => {
-            handleChangeSubject(day, "9:30", e);
+            handleChangeSubject(day, "2022-06-20T09:40:47.418Z", e);
           }}
         />
         <Select
@@ -84,7 +84,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[1]}
           onChange={(e) => {
-            handleChangeSubject(day, "11:10", e);
+            handleChangeSubject(day, "2022-06-20T11:10:47.418Z", e);
           }}
         />
         <Select
@@ -92,7 +92,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[2]}
           onChange={(e) => {
-            handleChangeSubject(day, "13:00", e);
+            handleChangeSubject(day, "2022-06-20T13:00:47.418Z", e);
           }}
         />
         <Select
@@ -100,7 +100,7 @@ function ScheduleCreater() {
           placeholder="Subject"
           key={subjectId[3]}
           onChange={(e) => {
-            handleChangeSubject(day, "14:40", e);
+            handleChangeSubject(day, "2022-06-20T14:40:47.418Z", e);
           }}
         />
       </div>
@@ -151,7 +151,7 @@ function ScheduleCreater() {
       console.log("error");
       return;
     } else {
-      console.log(data)
+      console.log(data);
       console.log("success");
       dispatch(createScheduleRequest(data));
     }
