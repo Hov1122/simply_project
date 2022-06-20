@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import "./schedule.css";
 import Loading from "../common/Loading";
 import ScheduleCreater from "./CreateSchedule/CreateSchedule";
+import { useSelector } from "react-redux";
+import { authSelector } from "../../state-management/auth/selectors";
 
 function Schedules() {
   const [loading] = useState(false);
+
+  const {
+    user: {
+      role: { name },
+    },
+  } = useSelector(authSelector);
 
   if (loading) {
     return <Loading />;
@@ -12,7 +20,7 @@ function Schedules() {
 
   return (
     <div className="Schedule-Container">
-      <ScheduleCreater />
+      {name !== "Student" && <ScheduleCreater />}
     </div>
   );
 }

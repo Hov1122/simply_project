@@ -17,7 +17,8 @@
     min-height: fit-content;
     width: 85%;
     margin-bottom: 20px;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .top-students-title{

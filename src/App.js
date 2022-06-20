@@ -19,6 +19,7 @@ const MyProfile = lazy(() =>
 );
 const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
+const TakeTest = lazy(() => import("./components/tests/takeTest/TakeTest"));
 
 function App() {
   const [showMenu, setShowMenu] = useState(false);
@@ -46,6 +47,8 @@ function App() {
                 <Route path="/userProfile/:id" element={<UserProfile />} />
 
                 <Route path="/changeData" element={<ChangeData />} />
+
+                <Route path="/takeTest" element={<TakeTest />} />
               </Route>
               (// NOT FOUND ROUTE)
               <Route path="*" element={<NotFound />} />

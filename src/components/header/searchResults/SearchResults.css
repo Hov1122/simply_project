@@ -8,6 +8,7 @@
     border-radius: 4px;
     box-shadow: 0px 0px 40px 0px#1f364d;
     margin-top: 10px;
+    z-index: 1;
 }
 
 .Search-Results-Item {
