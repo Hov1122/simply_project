@@ -37,9 +37,11 @@ const UserProfile = () => {
           Last Name: <span>{lastName}</span>
         </h3>
 
-        <h3>
-          Average Mark: <span>{avgMark}</span>
-        </h3>
+        {name !== "Teacher" && (
+          <h3>
+            Average Mark: <span>{avgMark}</span>
+          </h3>
+        )}
 
         <h3>
           Email: <span>{email}</span>

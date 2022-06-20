@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./home.css";
 import Loading from "../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ import {
 } from "recharts";
 
 function Home() {
-  const [loading] = useState(false);
+  const { loading } = useSelector(usersSelector);
   // const [lastExams, setLastExams] = useState([]);
   const {
     user: {

@@ -9,7 +9,6 @@ import Test from "./testItem/Test";
 import { fetchUserTestsRequest } from "../../state-management/tests/requests";
 
 function Tests() {
-  const [loading, setLoading] = useState(false);
   const [createTest, setCreateTest] = useState(false);
   const [inComplete, setInComplete] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -29,10 +28,10 @@ function Tests() {
       id,
       userTest,
     },
+    loading,
   } = useSelector(authSelector);
 
   useEffect(() => {
-    setLoading(true);
     dispatch(fetchUserTestsRequest(id));
     setTimeout(() => {
       if (name === "Student") {
@@ -40,7 +39,6 @@ function Tests() {
       } else {
         setShowTests(true);
       }
-      setLoading(false);
     }, 1000);
   }, [dispatch]);
 

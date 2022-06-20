@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,7 +9,6 @@ import { refreshTokenRequest } from "../../helpers/requests/refreshTokenRequest"
 import { loginSuccess } from "../../state-management/auth/actions";
 
 function LoginPage() {
-  const emailRef = useRef();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
@@ -20,8 +19,6 @@ function LoginPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    emailRef?.current?.focus();
-
     if (!token) {
       (async () => {
         try {
@@ -40,7 +37,9 @@ function LoginPage() {
     }
   }, [dispatch, navigate, state, token]);
 
-  const logHandler = async () => {
+  const logHandler = async (e) => {
+    if (e.key !== "Enter" && e.type === "keydown") return;
+
     setLoading(true);
     dispatch(loginRequest({ email, password }));
 
@@ -66,17 +65,19 @@ function LoginPage() {
     <div className="login-container">
       <h1>Log In</h1>
       <input
-        ref={emailRef}
         type="text"
+        autoFocus
         className="email-login-input"
         placeholder="Enter E-mail"
         onChange={handleEmailChange}
+        onKeyDown={logHandler}
       />
       <input
         type="password"
         className="password-login-input"
         placeholder="Enter Password"
         onChange={handlePasswordChange}
+        onKeyDown={logHandler}
       />
       {error && <span className="login-error">{error}</span>}
       <button disabled={!(email && password)} onClick={logHandler}>
