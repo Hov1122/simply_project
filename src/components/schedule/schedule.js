@@ -4,6 +4,7 @@ import Loading from "../common/Loading";
 import ScheduleCreater from "./CreateSchedule/CreateSchedule";
 import { useSelector } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
+import ShowSchedule from "./ShowSchedule/ShowSchedule";
 
 function Schedules() {
   const [loading] = useState(false);
@@ -20,7 +21,8 @@ function Schedules() {
 
   return (
     <div className="Schedule-Container">
-      {name !== "Student" && <ScheduleCreater />}
+      {name === "Student" && <ScheduleCreater />}
+      {name !== "Student" && <ShowSchedule />}
     </div>
   );
 }

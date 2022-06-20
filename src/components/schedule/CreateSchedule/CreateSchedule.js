@@ -151,6 +151,7 @@ function ScheduleCreater() {
       console.log("error");
       return;
     } else {
+      console.log(data)
       console.log("success");
       dispatch(createScheduleRequest(data));
     }
