@@ -38,7 +38,6 @@ export const fetchUserTestsRequest = (payload) => {
 
 // SUBMIT TEST REQUEST
 export const submitTestRequest = (payload) => {
-  console.log(payload);
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {

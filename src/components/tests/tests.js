@@ -69,7 +69,7 @@ function Tests() {
                 completedRef.current.classList.remove("active-link");
               }}
             >
-              Incomplete
+              Upcoming
             </span>
             <span
               ref={completedRef}
@@ -81,7 +81,7 @@ function Tests() {
                 inCompleteRef.current.classList.remove("active-link");
               }}
             >
-              Completed
+              Finished
             </span>
           </div>
         ) : (

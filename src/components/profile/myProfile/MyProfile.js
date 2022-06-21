@@ -63,7 +63,7 @@ const Profile = () => {
           </h3>
 
           <h3>
-            Average Mark: <span>{avgMark}</span>
+            Average Mark: <span>{avgMark?.toFixed(2)}</span>
           </h3>
 
           <h3>

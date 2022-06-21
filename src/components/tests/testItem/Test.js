@@ -45,7 +45,7 @@ const Test = ({
         <span>Length: {length} minutes</span>
         {mark ? (
           <span style={{ color: `${mark >= 6 ? "lightgreen" : "red"}` }}>
-            Mark: {mark}
+            Mark: {mark?.toFixed(2)}
           </span>
         ) : null}
         <span>Questions: {questions?.length}</span>
