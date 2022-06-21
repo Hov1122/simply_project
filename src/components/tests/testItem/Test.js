@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import "./Test.css";
-import { useNavigate } from "react-router-dom";
 import { fetchSubjectsRequest } from "../../../state-management/subjects/requests";
 import Loading from "../../common/Loading";
 
@@ -14,13 +13,13 @@ const Test = ({
   questions,
   createdAt,
   teacher,
+  setTakeTest,
+  setCurrentQuestions,
 }) => {
   const [loading, setLoading] = useState(true);
 
   const { subjects } = useSelector(subjectsSelector);
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
@@ -52,7 +51,10 @@ const Test = ({
           !mark ? (
             <button
               className="take-test-button"
-              onClick={() => navigate("/takeTest", { state: { questions } })}
+              onClick={() => {
+                setTakeTest(true);
+                setCurrentQuestions(questions);
+              }}
             >
               Take Test
             </button>

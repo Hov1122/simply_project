@@ -17,10 +17,10 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { useLocation } from "react-router-dom";
 
 function Home() {
   const { loading } = useSelector(usersSelector);
-  // const [lastExams, setLastExams] = useState([]);
   const {
     user: {
       id,
@@ -34,6 +34,8 @@ function Home() {
   const { userTests } = useSelector(testsSelector);
 
   const dispatch = useDispatch();
+
+  const { state } = useLocation();
 
   useEffect(() => {
     dispatch(fetchUserTestsRequest(id));
@@ -57,6 +59,9 @@ function Home() {
       <div className="home-title">
         <h1>{`Welcome ${firstName} ${lastName}!`}</h1>
       </div>
+      {state?.testSubmitted && (
+        <span className="test-submitted">Test Submitted Successfully</span>
+      )}
       <div className="hompage-content">
         <div className="top-students-title">
           <h3 style={{ marginRight: "50px" }}>Top 3 Students!</h3>

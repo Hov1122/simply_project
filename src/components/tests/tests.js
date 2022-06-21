@@ -7,12 +7,15 @@ import { testsSelector } from "../../state-management/tests/selectors";
 import TestCreater from "./testCreate/CreateTest";
 import Test from "./testItem/Test";
 import { fetchUserTestsRequest } from "../../state-management/tests/requests";
+import TakeTest from "./takeTest/TakeTest";
 
 function Tests() {
   const [createTest, setCreateTest] = useState(false);
   const [inComplete, setInComplete] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [showTests, setShowTests] = useState(false);
+  const [takeTest, setTakeTest] = useState(false);
+  const [currentQuestions, setCurrentQuestions] = useState([]);
 
   const completedRef = useRef(null);
   const inCompleteRef = useRef(null);
@@ -44,6 +47,10 @@ function Tests() {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (takeTest) {
+    return <TakeTest questions={currentQuestions} />;
   }
 
   return (
@@ -111,7 +118,14 @@ function Tests() {
           <div>
             {userTests?.map((test, index) => {
               if (userTest[index].isComplete === false) {
-                return <Test {...test} key={test.id} />;
+                return (
+                  <Test
+                    {...test}
+                    key={test.id}
+                    setTakeTest={setTakeTest}
+                    setCurrentQuestions={setCurrentQuestions}
+                  />
+                );
               }
             })}
           </div>
@@ -121,7 +135,15 @@ function Tests() {
             {userTests?.map((test, index) => {
               const mark = userTest[index].mark;
               if (userTest[index].isComplete === true) {
-                return <Test {...test} mark={mark} key={test.id} />;
+                return (
+                  <Test
+                    {...test}
+                    mark={mark}
+                    key={test.id}
+                    setTakeTest={setTakeTest}
+                    setCurrentQuestions={setCurrentQuestions}
+                  />
+                );
               }
             })}
           </div>

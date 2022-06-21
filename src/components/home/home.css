@@ -70,3 +70,11 @@
     max-width: 900px;
     height: 400px;
 }
+
+.test-submitted {
+    display: block;
+    color: green;
+    font-size: 30px;
+    width: fit-content;
+    margin: 20px auto;
+}

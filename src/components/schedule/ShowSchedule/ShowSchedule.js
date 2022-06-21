@@ -30,10 +30,10 @@ function ShowSchedule() {
     };
   });
 
-  console.log(data)
-  console.log(scheduleGroup)
-  console.log(subjects,'subjects');
-  console.log(groups,'groups');
+  console.log(data);
+  console.log(scheduleGroup);
+  console.log(subjects, "subjects");
+  console.log(groups, "groups");
   // console.log(schedule,'schedule');
 
   const daySchedule = (day) => {
