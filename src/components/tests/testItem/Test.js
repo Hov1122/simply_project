@@ -6,6 +6,7 @@ import { fetchSubjectsRequest } from "../../../state-management/subjects/request
 import Loading from "../../common/Loading";
 
 const Test = ({
+  id,
   name,
   subjectId,
   length,
@@ -15,6 +16,7 @@ const Test = ({
   teacher,
   setTakeTest,
   setCurrentQuestions,
+  setTestId,
 }) => {
   const [loading, setLoading] = useState(true);
 
@@ -41,11 +43,11 @@ const Test = ({
           Subject: {subjects?.find((sub) => sub.id === subjectId)?.name}
         </span>
         <span>Length: {length} minutes</span>
-        {mark && (
+        {mark ? (
           <span style={{ color: `${mark >= 6 ? "lightgreen" : "red"}` }}>
             Mark: {mark}
           </span>
-        )}
+        ) : null}
         <span>Questions: {questions?.length}</span>
         {!teacher ? (
           !mark ? (
@@ -53,6 +55,7 @@ const Test = ({
               className="take-test-button"
               onClick={() => {
                 setTakeTest(true);
+                setTestId(id);
                 setCurrentQuestions(questions);
               }}
             >

@@ -7,6 +7,7 @@ import {
   updateTestSuccess,
   deleteTestSuccess,
   fetchUserTestsSuccess,
+  submitTestSuccess,
 } from "./actions";
 
 // GET ALL TESTS
@@ -29,6 +30,23 @@ export const fetchUserTestsRequest = (payload) => {
     try {
       const { data } = await axiosApiInstance.get(`/tests/usersAll`, payload);
       dispatch(fetchUserTestsSuccess(data));
+    } catch (error) {
+      dispatch(fetchTestsFailure(error));
+    }
+  };
+};
+
+// SUBMIT TEST REQUEST
+export const submitTestRequest = (payload) => {
+  console.log(payload);
+  return async (dispatch) => {
+    dispatch(fetchTestsPending());
+    try {
+      const { data } = await axiosApiInstance.post(
+        `/users/submitTest`,
+        payload
+      );
+      dispatch(submitTestSuccess(data));
     } catch (error) {
       dispatch(fetchTestsFailure(error));
     }

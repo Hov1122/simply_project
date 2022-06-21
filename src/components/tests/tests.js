@@ -10,6 +10,7 @@ import { fetchUserTestsRequest } from "../../state-management/tests/requests";
 import TakeTest from "./takeTest/TakeTest";
 
 function Tests() {
+  const [testId, setTestId] = useState();
   const [createTest, setCreateTest] = useState(false);
   const [inComplete, setInComplete] = useState(false);
   const [completed, setCompleted] = useState(false);
@@ -29,7 +30,6 @@ function Tests() {
     user: {
       role: { name },
       id,
-      userTest,
     },
     loading,
   } = useSelector(authSelector);
@@ -50,7 +50,7 @@ function Tests() {
   }
 
   if (takeTest) {
-    return <TakeTest questions={currentQuestions} />;
+    return <TakeTest questions={currentQuestions} testId={testId} />;
   }
 
   return (
@@ -116,14 +116,15 @@ function Tests() {
       <div className="Tests-Main-Container">
         {inComplete && (
           <div>
-            {userTests?.map((test, index) => {
-              if (userTest[index].isComplete === false) {
+            {userTests?.map((test) => {
+              if (test.isComplete === false) {
                 return (
                   <Test
                     {...test}
                     key={test.id}
                     setTakeTest={setTakeTest}
                     setCurrentQuestions={setCurrentQuestions}
+                    setTestId={setTestId}
                   />
                 );
               }
@@ -132,9 +133,9 @@ function Tests() {
         )}
         {completed && (
           <div>
-            {userTests?.map((test, index) => {
-              const mark = userTest[index].mark;
-              if (userTest[index].isComplete === true) {
+            {userTests?.map((test) => {
+              const { mark } = test;
+              if (test.isComplete === true) {
                 return (
                   <Test
                     {...test}
@@ -142,6 +143,7 @@ function Tests() {
                     key={test.id}
                     setTakeTest={setTakeTest}
                     setCurrentQuestions={setCurrentQuestions}
+                    setTestId={setTestId}
                   />
                 );
               }

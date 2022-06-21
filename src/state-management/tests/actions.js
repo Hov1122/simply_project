@@ -7,6 +7,9 @@ export const testTypes = {
   // GET CURRENT USER'S TESTS
   FETCH_USER_TESTS_SUCCESS: "FETCH_USER_TESTS_SUCCESS",
 
+  // SUBMIT TEST
+  SUBMIT_TEST_SUCCESS: "SUBMIT_TEST_SUCCESS",
+
   // CREATE TEST
   CREATE_TEST_SUCCESS: "CREATE_TEST_SUCCESS",
 
@@ -28,6 +31,9 @@ export const fetchTestsSuccess = createAction(testTypes.FETCH_TESTS_SUCCESS);
 export const fetchUserTestsSuccess = createAction(
   testTypes.FETCH_USER_TESTS_SUCCESS
 );
+
+// SUBMIT TEST
+export const submitTestSuccess = createAction(testTypes.SUBMIT_TEST_SUCCESS);
 
 // CREATE TEST
 export const createTestSuccess = createAction(testTypes.CREATE_TEST_SUCCESS);

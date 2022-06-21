@@ -1,11 +1,12 @@
 import { Pagination } from "@mui/material";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { authSelector } from "../../../state-management/auth/selectors";
+import { submitTestRequest } from "../../../state-management/tests/requests";
 import "./TakeTest.css";
 
-const TakeTest = ({ questions }) => {
+const TakeTest = ({ questions, testId }) => {
   const [questionCount, setQuestionCount] = useState(5);
   const [answers, setAnswers] = useState([]);
 
@@ -14,6 +15,8 @@ const TakeTest = ({ questions }) => {
       role: { name },
     },
   } = useSelector(authSelector);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -57,7 +60,7 @@ const TakeTest = ({ questions }) => {
         <button
           className="submit-test"
           onClick={() => {
-            console.log(answers);
+            dispatch(submitTestRequest({ answersIds: answers, testId }));
             navigate("/home", { state: { testSubmitted: true } });
           }}
         >
