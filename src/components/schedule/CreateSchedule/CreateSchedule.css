@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.Schedule-Container-Main {
+.Schedule-Container-Main, .Schedule-Container-Main-Element {
     display: flex;
     justify-content: center;
     align-items: center;

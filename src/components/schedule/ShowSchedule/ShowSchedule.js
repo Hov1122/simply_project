@@ -5,28 +5,30 @@ import { useDispatch } from "react-redux";
 import { fetchGroupScheduleRequest } from "../../../state-management/schedule/requests";
 import { useSelector } from "react-redux";
 import { schedulesSelector } from "../../../state-management/schedule/selectors";
+import { authSelector } from "../../../state-management/auth/selectors";
 
 function ShowSchedule() {
   const [loading] = useState(false);
-  const data = useSelector(schedulesSelector);
+  const {groupSchedules} = useSelector(schedulesSelector);
+  const {user : {userGroup}} = useSelector(authSelector)
+  const group = userGroup[0].group.id
   const dispatch = useDispatch();
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
   let day = -1;
 
-  console.log(data,'schedule');
-
   useEffect(() => {
-    dispatch(fetchGroupScheduleRequest(1));
+    dispatch(fetchGroupScheduleRequest(group));
   }, []);
 
   const daySchedule = (day) => {
     return (
       <div className="Schedule-day" key={day} data-value={days[day]}>
         <h3>{days[day]}</h3>
-        {data && data[day].scheduleSubject.map(element => {
-          return <span key={element.subject.id}>element.subject.name</span>
-        })}
+        { groupSchedules[0] &&
+          groupSchedules[day].scheduleSubject.map(item => {
+          return <span key={item.id}>{item.subject.name}</span>
+        })
+        }
       </div>
     );
   };
@@ -41,10 +43,21 @@ function ShowSchedule() {
         <h2>Schedule</h2>
       </div>
       <div className="Schedule-Container-Main">
-        {days.map(() => {
-          day += 1;
-          return daySchedule(day);
-        })}
+        <div className="Schedule-Container-Main-Element">
+        <div className="Schedule-day">
+          <h3>Time</h3>
+          <span className="Schedule-time">9:30</span>
+          <span className="Schedule-time">9:30</span>
+          <span className="Schedule-time">9:30</span>
+          <span className="Schedule-time">9:30</span>
+        </div>
+        </div>
+        <div className="Schedule-Container-Main-Element">
+          {days.map(() => {
+            day += 1;
+            return daySchedule(day);
+          })}
+        </div>
       </div>
     </div>
   );
