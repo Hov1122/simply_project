@@ -60,7 +60,7 @@ function Home() {
         <h1>{`Welcome ${firstName} ${lastName}!`}</h1>
       </div>
       {state?.testSubmitted && (
-        <span className="test-submitted">Test Submitted Successfully</span>
+        <span className="test-submitted">{state?.message}</span>
       )}
       <div className="hompage-content">
         <div className="top-students-title">

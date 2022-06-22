@@ -42,15 +42,15 @@ const Test = ({
         <span>
           Subject: {subjects?.find((sub) => sub.id === subjectId)?.name}
         </span>
-        <span>Length: {length} minutes</span>
-        {mark ? (
+        <span>Duration: {length} minutes</span>
+        {mark !== -1 ? (
           <span style={{ color: `${mark >= 6 ? "lightgreen" : "red"}` }}>
             Mark: {mark?.toFixed(2)}
           </span>
         ) : null}
         <span>Questions: {questions?.length}</span>
         {!teacher ? (
-          !mark ? (
+          mark === -1 ? (
             <button
               className="take-test-button"
               onClick={() => {
