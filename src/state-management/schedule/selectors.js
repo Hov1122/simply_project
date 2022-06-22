@@ -1,1 +1,1 @@
-export const schedulesSelector = (state) => state.schedule;
+export const schedulesSelector = (state) => state.groupSchedules;

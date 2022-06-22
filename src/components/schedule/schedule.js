@@ -21,8 +21,8 @@ function Schedules() {
 
   return (
     <div className="Schedule-Container">
-      {name !== "Student" && <ScheduleCreater />}
-      {name === "Student" && <ShowSchedule />}
+      {name !== "Student" && <ShowSchedule />}
+      {name == "Student" && <ScheduleCreater />}
     </div>
   );
 }

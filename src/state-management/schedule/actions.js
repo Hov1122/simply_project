@@ -25,9 +25,7 @@ export const scheduleTypes = {
 export const fetchScheduleSuccess = createAction(scheduleTypes.FETCH_SCHEDULE_SUCCESS);
 
 // GET CURRENT GROUP'S SCHEDULES
-export const fetchGroupScheduleSuccess = createAction(
-  scheduleTypes.FETCH_GROUP_SCHEDULE_SUCCESS
-);
+export const fetchGroupScheduleSuccess = createAction(scheduleTypes.FETCH_GROUP_SCHEDULE_SUCCESS);
 
 // CREATE SCHEDULE
 export const createScheduleSuccess = createAction(scheduleTypes.CREATE_SCHEDULE_SUCCESS);

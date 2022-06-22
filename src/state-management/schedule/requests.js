@@ -28,8 +28,7 @@ export const fetchGroupScheduleRequest = (payload) => {
     dispatch(fetchSchedulePending());
     try {
       const { data } = await axiosApiInstance.get(
-        `/schedules/schedulesAll`,
-        payload
+        `/schedules/group/` + payload
       );
       dispatch(fetchGroupScheduleSuccess(data));
     } catch (error) {

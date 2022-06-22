@@ -6,6 +6,7 @@ import groupsReducer from "./groups/reducer";
 import testsReducer from "./tests/reducer";
 import usersReducer from "./users/reducer";
 import subjectsReducer from "./subjects/reducer";
+import scheduleReducer from "./schedule/reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   tests: testsReducer,
   groups: groupsReducer,
   subjects: subjectsReducer,
+  schedules: scheduleReducer
 });
 
 const store = configureStore({
