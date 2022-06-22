@@ -4,19 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { submitTestRequest } from "../../../state-management/tests/requests";
-import { testsSelector } from "../../../state-management/tests/selectors";
 import { motion } from "framer-motion";
 import "./TakeTest.css";
 
-const TakeTest = ({ questions, testId }) => {
+const TakeTest = ({ questions, testId, testDuration: length }) => {
   const {
     user: {
       role: { name },
     },
   } = useSelector(authSelector);
-
-  const { userTests } = useSelector(testsSelector);
-  const { length } = userTests.find((test) => test.id === testId);
 
   const [questionCount, setQuestionCount] = useState(5);
   const [answers, setAnswers] = useState([]);
@@ -36,6 +32,8 @@ const TakeTest = ({ questions, testId }) => {
       setSeconds((prevSec) => prevSec - 1);
     }, 1000);
 
+    submitTestHandler("Time Expired, Test Submitted");
+
     return () => clearInterval(intervalId);
   }, []);
 
@@ -50,6 +48,7 @@ const TakeTest = ({ questions, testId }) => {
       if (minutes <= 0 && hours <= 0) {
         submitTestHandler("Time Expired, Test Submitted");
       }
+
       setSeconds(59);
       return;
     }

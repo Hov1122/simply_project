@@ -17,6 +17,7 @@ function Tests() {
   const [showTests, setShowTests] = useState(false);
   const [takeTest, setTakeTest] = useState(false);
   const [currentQuestions, setCurrentQuestions] = useState([]);
+  const [testDuration, setTestDuration] = useState({});
 
   const completedRef = useRef(null);
   const inCompleteRef = useRef(null);
@@ -50,7 +51,13 @@ function Tests() {
   }
 
   if (takeTest) {
-    return <TakeTest questions={currentQuestions} testId={testId} />;
+    return (
+      <TakeTest
+        questions={currentQuestions}
+        testId={testId}
+        testDuration={testDuration[testId]}
+      />
+    );
   }
 
   return (
@@ -125,6 +132,7 @@ function Tests() {
                     setTakeTest={setTakeTest}
                     setCurrentQuestions={setCurrentQuestions}
                     setTestId={setTestId}
+                    setTestDuration={setTestDuration}
                   />
                 );
               }
@@ -144,6 +152,7 @@ function Tests() {
                     setTakeTest={setTakeTest}
                     setCurrentQuestions={setCurrentQuestions}
                     setTestId={setTestId}
+                    setTestDuration={setTestDuration}
                   />
                 );
               }
