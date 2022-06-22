@@ -14,17 +14,26 @@ const Test = ({
   questions,
   createdAt,
   teacher,
+  start,
   setTakeTest,
   setCurrentQuestions,
   setTestId,
 }) => {
   const [loading, setLoading] = useState(true);
+  const [testStarted, setTestStarted] = useState(false);
 
   const { subjects } = useSelector(subjectsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
+
+    setInterval(() => {
+      console.log(new Date().toUTCString() - new Date(start).toUTCString());
+      new Date().toUTCString() - new Date(start).toUTCString() > 0
+        ? setTestStarted(true)
+        : null;
+    }, 60000);
 
     setTimeout(() => {
       setLoading(false);
@@ -49,7 +58,9 @@ const Test = ({
           </span>
         ) : null}
         <span>Questions: {questions?.length}</span>
-        {!teacher ? (
+        {!testStarted ? (
+          <span>Starts At: {new Date(start).toUTCString()}</span>
+        ) : !teacher ? (
           mark === -1 ? (
             <button
               className="take-test-button"
