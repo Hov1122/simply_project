@@ -7,6 +7,9 @@ import Loading from "../common/Loading";
 import { loginRequest } from "../../state-management/auth/requests";
 import { refreshTokenRequest } from "../../helpers/requests/refreshTokenRequest";
 import { loginSuccess } from "../../state-management/auth/actions";
+import TextField from '@mui/material/TextField';
+import { Alert } from "@mui/material";
+
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -62,27 +65,46 @@ function LoginPage() {
   }
 
   return (
-    <div className="login-container">
-      <h1>Log In</h1>
-      <input
-        type="text"
-        autoFocus
-        className="email-login-input"
-        placeholder="Enter E-mail"
-        onChange={handleEmailChange}
-        onKeyDown={logHandler}
-      />
-      <input
-        type="password"
-        className="password-login-input"
-        placeholder="Enter Password"
-        onChange={handlePasswordChange}
-        onKeyDown={logHandler}
-      />
-      {error && <span className="login-error">{error}</span>}
-      <button disabled={!(email && password)} onClick={logHandler}>
-        Log In
-      </button>
+    <div className="login-page">
+      <div className="login-container">
+        <h1>Log In</h1>
+        {error && 
+          <>
+            <Alert variant="outlined" severity="error">
+              {error}
+            </Alert>
+            <br/>
+          </>
+        }
+
+        <TextField
+          variant="outlined"
+          id="outlined-basic"
+          label="Email"
+          type="text"
+          autoFocus
+          sx={{ width: 350 }}
+          className="email-login-input"
+          onChange={handleEmailChange}
+          onKeyDown={logHandler}
+        />
+        <br/>
+        <TextField
+          variant="outlined"
+          id="outlined-basic"
+          label="Password"
+          type="password"
+          autoFocus
+          sx={{ width: 350 }}
+          className="password-login-input"
+          onChange={handlePasswordChange}
+          onKeyDown={logHandler}
+        />
+       
+        <button disabled={!(email && password)} onClick={logHandler}>
+          Log In
+        </button>
+      </div>
     </div>
   );
 }
