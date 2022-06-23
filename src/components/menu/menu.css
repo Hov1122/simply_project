@@ -16,8 +16,12 @@
 
 .Main-Container {
     background-color: white;
-    height: calc(100vh - 72px);
+    height: calc(100vh);
 }   
+
+.login {
+    height: calc(100vh - 72px);
+}
 
 .menu button {
     background-color: inherit;

@@ -16,7 +16,7 @@ const UserCard = ({ id, firstName, lastName, avgMark }) => {
         <span>Last Name: {lastName}</span>
       </div>
       <span className="user-card-mark">
-        Average Mark: {+avgMark?.toFixed(2)}
+        Average Mark: {+avgMark?.toFixed(2) ? +avgMark?.toFixed(2) : 0}
       </span>
     </div>
   );
