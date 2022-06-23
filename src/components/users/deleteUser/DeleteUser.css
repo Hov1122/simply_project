@@ -1,3 +1,30 @@
+.Delete-User-Container input[type=text]{
+    background-color: inherit;
+    border-radius: 20px;
+    width: 200px;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-bottom: 0.5px solid black;
+}
+
 .Delete-User-Container {
-    
+    display: flex;
+    gap:20px;
+    flex-direction: column;
+}
+
+.Delete-User-Container input[type=button]{
+    width: 200px;
+    border-radius: 30px;
+    padding: 5px;
+    border: none;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    color: white;
+}
+
+.Delete-User-Constainer-Form {
+    margin: 0 auto;
+    width: 200px;
+    text-align: left;
 }
