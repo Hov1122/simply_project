@@ -162,7 +162,17 @@ function Tests() {
         {showTests && (
           <div>
             {userTests?.map((test) => {
-              return <Test {...test} key={test.id} teacher />;
+              return (
+                <Test
+                  {...test}
+                  key={test.id}
+                  setTakeTest={setTakeTest}
+                  setCurrentQuestions={setCurrentQuestions}
+                  setTestId={setTestId}
+                  setTestDuration={setTestDuration}
+                  teacher
+                />
+              );
             })}
           </div>
         )}
