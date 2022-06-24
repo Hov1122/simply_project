@@ -1,5 +1,9 @@
 .Main-Container {
     display: flex;
     background-color: rgb(224, 220, 220);
-    overflow: hidden;
+    height: calc(100vh - 72px);
+}
+
+.login {
+    height: calc(100vh);
 }

@@ -2,6 +2,7 @@
     background-color: #10333E;
     display: inline-block;
     min-width: 150px;
+    min-height: 100vh;
     max-width: 150px;
     height: 100%;
     display: flex;
@@ -10,17 +11,7 @@
     justify-content: center;
     padding: 10px 0 10px 10px;
     border-right: 2px solid #ffff;
-    animation: menu .8s ease
-}
-
-
-.Main-Container {
-    background-color: white;
-    height: calc(100vh);
-}   
-
-.login {
-    height: calc(100vh - 72px);
+    animation: menu .8s ease;
 }
 
 .menu button {

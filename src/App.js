@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from "react";
+import React, { lazy, Suspense, useState, useRef } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -22,12 +22,13 @@ const Schedule = lazy(() => import("./components/schedule/schedule"));
 
 function App() {
   const [showMenu, setShowMenu] = useState(false);
+  const MainElement = useRef(null)
 
   return (
     <div className="App">
       <ErrorBoundary>
         <Header setShowMenu={setShowMenu} />
-        <Main>
+        <Main ref={MainElement}>
           <Menu showMenu={showMenu} />
           <Suspense fallback={<Loading />}>
             <Routes>
