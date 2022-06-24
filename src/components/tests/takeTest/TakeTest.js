@@ -32,7 +32,9 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
       setSeconds((prevSec) => prevSec - 1);
     }, 1000);
 
-    submitTestHandler("Time Expired, Test Submitted");
+    if (length <= 0) {
+      submitTestHandler("Time Expired, Test Submitted");
+    }
 
     return () => clearInterval(intervalId);
   }, []);
