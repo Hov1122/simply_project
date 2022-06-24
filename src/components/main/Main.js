@@ -14,9 +14,7 @@ const Main = (props) => {
       mainContainer.current.classList.remove('login')
     }
   }, [location.pathname])
-  
 
-  console.log(location.pathname)
 
   return (
     <div ref={mainContainer} className={'Main-Container'}>
