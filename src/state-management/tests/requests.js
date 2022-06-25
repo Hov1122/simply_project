@@ -25,10 +25,15 @@ export const fetchTestsRequest = () => {
 
 // GET CURRENT USER'S TESTS
 export const fetchUserTestsRequest = (payload) => {
+  const { skip, isComplete, id } = payload;
+  let url = `/tests/usersAll?isComplete=${isComplete}&take=5`;
+
+  skip !== 1 && skip ? (url += `&skip=${skip}`) : null;
+
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {
-      const { data } = await axiosApiInstance.get(`/tests/usersAll`, payload);
+      const { data } = await axiosApiInstance.get(url, id);
       dispatch(fetchUserTestsSuccess(data));
     } catch (error) {
       dispatch(fetchTestsFailure(error));

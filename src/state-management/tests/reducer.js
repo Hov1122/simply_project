@@ -12,6 +12,7 @@ import {
 const initialState = {
   userTests: [],
   tests: [],
+  count: 0,
   loading: false,
   error: null,
 };
@@ -25,11 +26,22 @@ const testsReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     // GET CURRENT USER'S TESTS
-    .addCase(fetchUserTestsSuccess, (state, { payload }) => {
-      state.userTests = payload.data;
-      state.loading = false;
-      state.error = null;
-    })
+    .addCase(
+      fetchUserTestsSuccess,
+      (
+        state,
+        {
+          payload: {
+            data: { count, allTests },
+          },
+        }
+      ) => {
+        state.userTests = allTests;
+        state.count = count._count;
+        state.loading = false;
+        state.error = null;
+      }
+    )
     // CREATE TEST
     .addCase(createTestSuccess, (state, { payload }) => {
       state.tests.push(payload.createdTest);

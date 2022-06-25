@@ -8,6 +8,7 @@ import TestCreater from "./testCreate/CreateTest";
 import Test from "./testItem/Test";
 import { fetchUserTestsRequest } from "../../state-management/tests/requests";
 import TakeTest from "./takeTest/TakeTest";
+import { Pagination } from "@mui/material";
 
 function Tests() {
   const [testId, setTestId] = useState();
@@ -18,13 +19,14 @@ function Tests() {
   const [takeTest, setTakeTest] = useState(false);
   const [currentQuestions, setCurrentQuestions] = useState([]);
   const [testDuration, setTestDuration] = useState({});
+  const [skip, setSkip] = useState(1);
 
   const completedRef = useRef(null);
   const inCompleteRef = useRef(null);
   const createTestRef = useRef(null);
   const showTestsRef = useRef(null);
 
-  const { userTests } = useSelector(testsSelector);
+  const { userTests, count } = useSelector(testsSelector);
   const dispatch = useDispatch();
 
   const {
@@ -36,7 +38,7 @@ function Tests() {
   } = useSelector(authSelector);
 
   useEffect(() => {
-    dispatch(fetchUserTestsRequest(id));
+    dispatch(fetchUserTestsRequest({ isComplete: completed, id }));
     setTimeout(() => {
       if (name === "Student") {
         setInComplete(true);
@@ -45,6 +47,10 @@ function Tests() {
       }
     }, 1000);
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchUserTestsRequest({ skip, isComplete: completed, id }));
+  }, [skip, completed]);
 
   if (loading) {
     return <Loading />;
@@ -178,6 +184,15 @@ function Tests() {
         )}
         {createTest && <TestCreater />}
       </div>
+      <Pagination
+        count={Math.ceil(count / 5)}
+        variant="outlined"
+        shape="rounded"
+        size="large"
+        onChange={(e, value) => {
+          setSkip(value);
+        }}
+      />
     </div>
   );
 }
