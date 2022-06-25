@@ -28,7 +28,7 @@ export const fetchUserTestsRequest = (payload) => {
   const { skip, isComplete, id } = payload;
   let url = `/tests/usersAll?isComplete=${isComplete}&take=5`;
 
-  skip !== 1 && skip ? (url += `&skip=${skip}`) : null;
+  skip ? (url += `&skip=${skip}`) : null;
 
   return async (dispatch) => {
     dispatch(fetchTestsPending());

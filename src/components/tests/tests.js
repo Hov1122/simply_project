@@ -19,7 +19,7 @@ function Tests() {
   const [takeTest, setTakeTest] = useState(false);
   const [currentQuestions, setCurrentQuestions] = useState([]);
   const [testDuration, setTestDuration] = useState({});
-  const [skip, setSkip] = useState(1);
+  const [skip, setSkip] = useState(0);
 
   const completedRef = useRef(null);
   const inCompleteRef = useRef(null);
@@ -190,7 +190,7 @@ function Tests() {
         shape="rounded"
         size="large"
         onChange={(e, value) => {
-          setSkip(value);
+          setSkip((value - 1) * 5);
         }}
       />
     </div>
