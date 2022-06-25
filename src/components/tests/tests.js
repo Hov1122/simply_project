@@ -19,7 +19,8 @@ function Tests() {
   const [takeTest, setTakeTest] = useState(false);
   const [currentQuestions, setCurrentQuestions] = useState([]);
   const [testDuration, setTestDuration] = useState({});
-  const [skip, setSkip] = useState(0);
+  const [skipInComplete, setSkipInComplete] = useState(0);
+  const [skipCompleted, setSkipCompleted] = useState(0);
 
   const completedRef = useRef(null);
   const inCompleteRef = useRef(null);
@@ -49,8 +50,10 @@ function Tests() {
   }, [dispatch]);
 
   useEffect(() => {
+    const skip = completed ? skipCompleted : skipInComplete;
+
     dispatch(fetchUserTestsRequest({ skip, isComplete: completed, id }));
-  }, [skip, completed]);
+  }, [skipInComplete, skipCompleted, completed]);
 
   if (loading) {
     return <Loading />;
@@ -190,7 +193,9 @@ function Tests() {
         shape="rounded"
         size="large"
         onChange={(e, value) => {
-          setSkip((value - 1) * 5);
+          const skip = (value - 1) * 5;
+
+          completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
         }}
       />
     </div>
