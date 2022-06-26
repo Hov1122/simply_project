@@ -5,6 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { submitTestRequest } from "../../../state-management/tests/requests";
 import { motion } from "framer-motion";
+import { useBlocker } from "../../../helpers/hooks/useBlocker";
 import "./TakeTest.css";
 
 const TakeTest = ({ questions, testId, testDuration: length }) => {
@@ -14,6 +15,8 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
     },
   } = useSelector(authSelector);
 
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [blocking, setBlocking] = useState(true);
   const [questionCount, setQuestionCount] = useState(5);
   const [answers, setAnswers] = useState([]);
   const [answerValues, setAnswerValues] = useState({});
@@ -27,7 +30,28 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
 
   const navigate = useNavigate();
 
+  useBlocker(() => {
+    setConfirmOpen(true);
+
+    const yes = window.confirm(
+      "Are you sure you want to leave this page? Your test will be submitted!"
+    );
+
+    if (!yes) {
+      setConfirmOpen(false);
+      return;
+    }
+
+    setBlocking(false);
+
+    setTimeout(() => {
+      submitTestHandler("You left the page, Test submitted!");
+    }, 500);
+  }, blocking);
+
   useEffect(() => {
+    document.addEventListener("visibilitychange", tabChange);
+
     const intervalId = setInterval(() => {
       setSeconds((prevSec) => prevSec - 1);
     }, 1000);
@@ -36,7 +60,10 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
       submitTestHandler("Time Expired, Test Submitted");
     }
 
-    return () => clearInterval(intervalId);
+    return () => {
+      document.removeEventListener("visibilitychange", tabChange);
+      clearInterval(intervalId);
+    };
   }, []);
 
   useEffect(() => {
@@ -55,6 +82,16 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
       return;
     }
   }, [seconds]);
+
+  const tabChange = () => {
+    if (document.visibilityState !== "visible" && !confirmOpen) {
+      setBlocking(false);
+
+      setTimeout(() => {
+        submitTestHandler("You left the page, Test submitted!");
+      }, 500);
+    }
+  };
 
   const submitTestHandler = (message) => {
     dispatch(submitTestRequest({ answersIds: answers, testId }));
@@ -123,7 +160,13 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
       {questions.length <= questionCount && (
         <button
           className="submit-test"
-          onClick={() => submitTestHandler("Test Submitted Successfully")}
+          onClick={() => {
+            setBlocking(false);
+
+            setTimeout(() => {
+              submitTestHandler("Test Submitted Successfully");
+            }, 500);
+          }}
         >
           Submit Test
         </button>
