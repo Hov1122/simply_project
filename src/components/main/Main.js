@@ -15,10 +15,9 @@ const Main = (props) => {
     }
   }, [location.pathname])
 
-
-  return (
-    <div ref={mainContainer} className={'Main-Container'}>
-        {props.children}
+    return (
+    <div ref={mainContainer} className={'Main-Container'} >
+      {props.children}
     </div>
   )
 }

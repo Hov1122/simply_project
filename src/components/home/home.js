@@ -3,9 +3,7 @@ import "./home.css";
 import Loading from "../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
-import CircularProgress from "@mui/material/CircularProgress";
 import { usersSelector } from "../../state-management/users/selectors";
-import UserCard from "../users/userCard/UserCard";
 import { testsSelector } from "../../state-management/tests/selectors";
 import { fetchUserTestsRequest } from "../../state-management/tests/requests";
 import {
@@ -18,6 +16,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useLocation } from "react-router-dom";
+import { Avatar, CircularProgress } from "@mui/material";
 
 function Home() {
   const { loading } = useSelector(usersSelector);
@@ -54,29 +53,17 @@ function Home() {
     return <Loading />;
   }
 
+ 
   return (
     <div className="Home-Container">
+      <div style={{height: "75px"}}></div>
       <div className="home-title">
-        <h1>{`Welcome ${firstName} ${lastName}!`}</h1>
+        <h1>{`Welcome back ${firstName} ${lastName}!`}</h1>
       </div>
       {state?.testSubmitted && (
         <span className="test-submitted">{state?.message}</span>
       )}
       <div className="hompage-content">
-        <div className="top-students-title">
-          <h3 style={{ marginRight: "50px" }}>Top 3 Students!</h3>
-          <CircularProgress
-            style={{ marginTop: 10 }}
-            variant="determinate"
-            value={50}
-          />
-        </div>
-        <hr />
-        <div className="top-students-container">
-          {getTopStudents(users).map((user) => {
-            return <UserCard {...user} key={user.id} />;
-          })}
-        </div>
         {name === "Student" ? (
           <div className="Marks-Chart-Container">
             <h3 style={{ marginLeft: 50 }}>Last 5 Marks Chart</h3>
@@ -126,6 +113,42 @@ function Home() {
             </div>
           </div>
         )}
+      <div className="top-students-bar">
+          <div className="top-students-title">
+            <h3 style={{ marginRight: "50px" }}>Top 3 Students!</h3>
+          </div>
+          <div className="top-students-container">
+            {getTopStudents(users).map((user) => {
+              return (
+                <div className="card-top-user" key={user.id}>
+                  <Avatar
+                  sx={{ bgcolor: "#2596be",marginTop: "10px" }}
+                  variant="rounded"
+                  >
+                    {console.log(user)}
+                  </Avatar>
+                  <div className="top-users-name">
+                    <p><b>{user.firstName}</b></p>
+                    <p><b>{user.lastName}</b></p>
+                  </div>
+                  <div style={{position: "relative"}}>
+                    <CircularProgress             
+                      variant="determinate"
+                      value={100} 
+                      sx={{color: "green", position: "absolute"}}
+                    />
+                    <CircularProgress             
+                      variant="determinate"
+                      value={user.avgMark} 
+                      sx={{color: "red",padding: "5px"}}
+                    />
+                  </div>
+                </div> )
+              // return <UserCard {...user} key={user.id} />;
+            })}
+          </div>
+        </div>
+
       </div>
     </div>
   );

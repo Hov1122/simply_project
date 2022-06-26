@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useRef } from "react";
+import React, { lazy, Suspense, useRef } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -21,38 +21,41 @@ const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
 
 function App() {
-  const [showMenu, setShowMenu] = useState(false);
   const MainElement = useRef(null)
 
   return (
     <div className="App">
       <ErrorBoundary>
-        <Header setShowMenu={setShowMenu} />
-        <Main ref={MainElement}>
-          <Menu showMenu={showMenu} />
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              (// PUBLIC ROUTES)
-              <Route path="/" element={<Login />} />
-              (// PROTECTED ROUTES)
-              <Route element={<RequireAuth />}>
-                <Route path="/home" element={<Home />} />
+        <div style={{display:"flex", backgroundColor: "#eff0f1"}}>
+          <Menu />
+          <div style={{width:"100%" , height:"100%"}}>
+            <Header />
+            <Main ref={MainElement}>
+              <Suspense fallback={<Loading />}>
+                <Routes>
+                  (// PUBLIC ROUTES)
+                  <Route path="/" element={<Login />} />
+                  (// PROTECTED ROUTES)
+                  <Route element={<RequireAuth />}>
+                    <Route path="/home" element={<Home />} />
 
-                <Route path="/schedule" element={<Schedule />} />
+                    <Route path="/schedule" element={<Schedule />} />
 
-                <Route path="/tests" element={<Tests />} />
+                    <Route path="/tests" element={<Tests />} />
 
-                <Route path="/myProfile" element={<MyProfile />} />
+                    <Route path="/myProfile" element={<MyProfile />} />
 
-                <Route path="/userProfile/:id" element={<UserProfile />} />
+                    <Route path="/userProfile/:id" element={<UserProfile />} />
 
-                <Route path="/changeData" element={<ChangeData />} />
-              </Route>
-              (// NOT FOUND ROUTE)
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </Main>
+                    <Route path="/changeData" element={<ChangeData />} />
+                  </Route>
+                  (// NOT FOUND ROUTE)
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </Main>
+          </div>
+        </div>
       </ErrorBoundary>
     </div>
   );

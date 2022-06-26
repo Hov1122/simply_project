@@ -4,12 +4,16 @@ import Loading from "../common/Loading";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { authSelector } from "../../state-management/auth/selectors";
-import { AnimatePresence, motion } from "framer-motion";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function Menu({ showMenu }) {
+// import { AnimatePresence, motion } from "framer-motion";
+
+function Menu() {
   const [loading, setLoading] = useState(true);
   const { user, token } = useSelector(authSelector);
-
+  const [showMenuActive, setShowMenu] = useState(true)
+  
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -19,35 +23,76 @@ function Menu({ showMenu }) {
   }
 
   return token ? (
-    <AnimatePresence>
-      {showMenu && (
-        <motion.div
-          className={`menu`}
-          key="menu"
-          initial={{ x: "-10vw" }}
-          animate={{ x: 0, transition: { ease: "easeInOut", duration: 0.5 } }}
-          exit={{ x: "-10vw", transition: { ease: "easeIn", duration: 0.5 } }}
-        >
-          <NavLink to="/home">
-            <button>Home</button>
-          </NavLink>
+    <div className="menu">
+        <div className="menu-container">
+            <nav className={showMenuActive ? 'sidebar close' : 'sidebar'}>
+                <header>
+                    <div className="image-text">
+                      <FontAwesomeIcon
+                        icon={faBars}
+                        aria-hidden="true"
+                        className="menu-icon"
+                        onClick={() => {
+                          setShowMenu(!showMenuActive)
+                        }}
+                      />
+                        <div className="text logo-text">
+                            <span className="name">{"Students's"}</span>
+                            <span className="name">dashboard</span>
+                        </div>
+                    </div>
+                </header>
+                <div className="menu-bar">
+                    <div className="menu">
+                        <li >
+                        </li>
 
-          <NavLink to="/schedule">
-            <button>Schedule</button>
-          </NavLink>
+                        <ul className="menu-links">
+                            <li className="nav-link">
+                                <NavLink to="/home">
+                                    <i className='bx bx-home-alt icon' ></i>
+                                    <span className="text nav-text">Home</span>
+                                </NavLink>
+                            </li>
 
-          <NavLink to="/tests">
-            <button>Tests</button>
-          </NavLink>
+                            <li className="nav-link">
+                                <NavLink to="/schedule">
+                                    <i className='bx bx-calendar icon' ></i>
+                                    <span className="text nav-text">Schedule</span>
+                                </NavLink>
+                            </li>
 
-          {user.role.name === "Admin" && (
-            <NavLink to="/changeData">
-              <button>Change Data</button>
-            </NavLink>
-          )}
-        </motion.div>
-      )}
-    </AnimatePresence>
+                            <li className="nav-link">
+                                <NavLink to="/tests">
+                                    <i className='bx bx-receipt icon'></i>
+                                    <span className="text nav-text">Tests</span>
+                                </NavLink>
+                            </li>
+
+                            {user.role.name === "Admin" && (
+                              <li className="nav-link">
+                                <NavLink to="/changeData">
+                                  <i className='bx bx-user-plus icon' ></i>
+                                  <span className="text nav-text">changeData</span>
+                                </NavLink>
+                              </li>
+                            )}
+                        </ul>
+                    </div>
+
+                    <div className="bottom-content">
+                        <li className="">
+                            <a>
+                                <i className='bx bx-log-out icon' ></i>
+                                <span className="text nav-text">Logout</span>
+                            </a>
+                        </li>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </div>
   ) : null;
 }
 

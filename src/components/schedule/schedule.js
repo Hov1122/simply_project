@@ -20,17 +20,22 @@ function Schedules() {
   }
 
   return (
-    <div className="Schedule-Container">
-      {name === "Student" ? (
-        <ShowSchedule />
-      ) : name === "Teacher" ? (
-        <div>
-          <ScheduleCreater />
-          <ShowSchedule />
+    <div className="Schedule">
+      <div style={{height: "75px"}}></div>
+      <div className="Schedule-bar">
+        <div className="Schedule-Container">
+          {name === "Student" ? (
+            <ShowSchedule />
+          ) : name === "Teacher" ? (
+            <div>
+              <ScheduleCreater />
+              <ShowSchedule />
+            </div>
+          ) : (
+            <ScheduleCreater />
+          )}
         </div>
-      ) : (
-        <ScheduleCreater />
-      )}
+      </div>
     </div>
   );
 }
