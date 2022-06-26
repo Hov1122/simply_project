@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useRef } from "react";
+import React, { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import ErrorBoundary from "./components/common/ErrorBoundary";
@@ -24,7 +24,7 @@ const CheckResults = lazy(() =>
 );
 
 function App() {
-  const MainElement = useRef(null)
+
 
   return (
     <div className="App">
@@ -33,7 +33,7 @@ function App() {
           <Menu />
           <div style={{width:"100%" , height:"100%"}}>
             <Header />
-            <Main ref={MainElement}>
+            <Main >
               <Suspense fallback={<Loading />}>
                 <Routes>
                   (// PUBLIC ROUTES)

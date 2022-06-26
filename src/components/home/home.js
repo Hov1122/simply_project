@@ -16,7 +16,8 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useLocation } from "react-router-dom";
-import { Avatar, CircularProgress } from "@mui/material";
+import { Avatar,  } from "@mui/material";
+// import { CircularProgress } from "@mui/material";
 
 function Home() {
   const { loading } = useSelector(usersSelector);
@@ -65,28 +66,29 @@ function Home() {
       )}
       <div className="hompage-content">
         {name === "Student" ? (
-          <div className="Marks-Chart-Container">
-            <h3 style={{ marginLeft: 50 }}>Last 5 Marks Chart</h3>
-            <hr />
-            <div className="Marks-Chart">
-              <ResponsiveContainer width="70%" height="100%">
-                <LineChart
-                  data={userTest.map((test, index) => {
-                    if (index !== 5) {
-                      return {
-                        mark: test.mark,
-                        index: index + 1,
-                      };
-                    }
-                  })}
-                >
-                  <XAxis dataKey="index" tick={{ fontSize: 20 }} />
-                  <YAxis dataKey="mark" tick={{ fontSize: 20 }} />
-                  <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-                  <Line type="monotone" dataKey="mark" stroke="#8884d8" />
-                  <Tooltip />
-                </LineChart>
-              </ResponsiveContainer>
+          <div style={{padding: "10px", width: "80%", height: "250px"}}>
+            <div className="Marks-Chart-Container">
+              <h3 style={{ marginLeft: 50 }}>Last 5 Marks Chart</h3>
+              <div className="Marks-Chart">
+                <ResponsiveContainer width="70%" height="50%">
+                  <LineChart
+                    data={userTest.map((test, index) => {
+                      if (index !== 5) {
+                        return {
+                          mark: test.mark,
+                          index: index + 1,
+                        };
+                      }
+                    })}
+                  >
+                    <XAxis dataKey="index" tick={{ fontSize: 20 }} />
+                    <YAxis dataKey="mark" tick={{ fontSize: 20 }} />
+                    <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+                    <Line type="monotone" dataKey="mark" stroke="#8884d8" />
+                    <Tooltip />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
         ) : (
@@ -125,13 +127,12 @@ function Home() {
                   sx={{ bgcolor: "#2596be",marginTop: "10px" }}
                   variant="rounded"
                   >
-                    {console.log(user)}
                   </Avatar>
                   <div className="top-users-name">
                     <p><b>{user.firstName}</b></p>
                     <p><b>{user.lastName}</b></p>
                   </div>
-                  <div style={{position: "relative"}}>
+                  {/* <div style={{position: "relative"}}>
                     <CircularProgress             
                       variant="determinate"
                       value={100} 
@@ -142,7 +143,7 @@ function Home() {
                       value={user.avgMark} 
                       sx={{color: "red",padding: "5px"}}
                     />
-                  </div>
+                  </div> */}
                 </div> )
               // return <UserCard {...user} key={user.id} />;
             })}
