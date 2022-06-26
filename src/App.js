@@ -19,6 +19,9 @@ const MyProfile = lazy(() =>
 );
 const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
+const CheckResults = lazy(() =>
+  import("./components/tests/checkResults/CheckResults")
+);
 
 function App() {
   const MainElement = useRef(null)
@@ -46,6 +49,8 @@ function App() {
                     <Route path="/myProfile" element={<MyProfile />} />
 
                     <Route path="/userProfile/:id" element={<UserProfile />} />
+
+                    <Route path="/checkResults" element={<CheckResults />} />
 
                     <Route path="/changeData" element={<ChangeData />} />
                   </Route>

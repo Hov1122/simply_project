@@ -3,6 +3,7 @@ import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { useSelector, useDispatch } from "react-redux";
 import "./Test.css";
 import { fetchSubjectsRequest } from "../../../state-management/subjects/requests";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../common/Loading";
 
 const Test = ({
@@ -26,6 +27,8 @@ const Test = ({
 
   const { subjects } = useSelector(subjectsSelector);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
@@ -101,7 +104,14 @@ const Test = ({
               Take Test
             </button>
           ) : (
-            <button className="check-results-button">Check Results</button>
+            <button
+              className="check-results-button"
+              onClick={() =>
+                navigate("/checkResults", { state: { testId: id } })
+              }
+            >
+              Check Results
+            </button>
           )
         ) : (
           <span>Created: {new Date(createdAt).toLocaleDateString()}</span>

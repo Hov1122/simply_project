@@ -4,11 +4,17 @@ export const testTypes = {
   // GET ALL TESTS
   FETCH_TESTS_SUCCESS: "FETCH_TESTS_SUCCESS",
 
+  // GET TEST BY ID
+  FETCH_TEST_BY_ID_SUCCESS: "FETCH_TEST_BY_ID_SUCCESS",
+
   // GET CURRENT USER'S TESTS
   FETCH_USER_TESTS_SUCCESS: "FETCH_USER_TESTS_SUCCESS",
 
   // SUBMIT TEST
   SUBMIT_TEST_SUCCESS: "SUBMIT_TEST_SUCCESS",
+
+  // GET CURRENT TEST RESULTS
+  FETCH_TEST_RESULTS_SUCCESS: "FETCH_TEST_RESULTS_SUCCESS",
 
   // CREATE TEST
   CREATE_TEST_SUCCESS: "CREATE_TEST_SUCCESS",
@@ -22,10 +28,17 @@ export const testTypes = {
   // FETCH PENDING AND FAILURE
   FETCH_TESTS_PENDING: "FETCH_TESTS_PENDING",
   FETCH_TESTS_FAILURE: "FETCH_TESTS_FAILURE",
+
+  SORT_TEST: "SORT_TEST",
 };
 
 // GET ALL TESTS
 export const fetchTestsSuccess = createAction(testTypes.FETCH_TESTS_SUCCESS);
+
+// GET TEST BY ID
+export const fetchTestByIdSuccess = createAction(
+  testTypes.FETCH_TEST_BY_ID_SUCCESS
+);
 
 // GET CURRENT USER'S TESTS
 export const fetchUserTestsSuccess = createAction(
@@ -34,6 +47,11 @@ export const fetchUserTestsSuccess = createAction(
 
 // SUBMIT TEST
 export const submitTestSuccess = createAction(testTypes.SUBMIT_TEST_SUCCESS);
+
+// GET TEST RESULT
+export const fetchTestResultsSuccess = createAction(
+  testTypes.FETCH_TEST_RESULTS_SUCCESS
+);
 
 // CREATE TEST
 export const createTestSuccess = createAction(testTypes.CREATE_TEST_SUCCESS);

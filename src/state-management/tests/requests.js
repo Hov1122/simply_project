@@ -8,6 +8,8 @@ import {
   deleteTestSuccess,
   fetchUserTestsSuccess,
   submitTestSuccess,
+  fetchTestResultsSuccess,
+  fetchTestByIdSuccess,
 } from "./actions";
 
 // GET ALL TESTS
@@ -23,12 +25,32 @@ export const fetchTestsRequest = () => {
   };
 };
 
-// GET CURRENT USER'S TESTS
-export const fetchUserTestsRequest = (payload) => {
+// GET TEST BY ID
+export const fetchTestById = ({ id }) => {
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {
-      const { data } = await axiosApiInstance.get(`/tests/usersAll`, payload);
+      const { data } = await axiosApiInstance.get(`/tests/${id}`, { id });
+      dispatch(fetchTestByIdSuccess(data));
+    } catch (error) {
+      dispatch(fetchTestsFailure(error));
+    }
+  };
+};
+
+// GET CURRENT USER'S TESTS
+export const fetchUserTestsRequest = (payload) => {
+  const { skip, isComplete, id, filterBy } = payload;
+  let url = `/tests/usersAll?isComplete=${isComplete}&take=5`;
+
+  skip ? (url += `&skip=${skip}`) : null;
+
+  if (filterBy && !filterBy["all"])
+    url += `&subjectId=${filterBy["subjectId"]}`;
+  return async (dispatch) => {
+    dispatch(fetchTestsPending());
+    try {
+      const { data } = await axiosApiInstance.get(url, id);
       dispatch(fetchUserTestsSuccess(data));
     } catch (error) {
       dispatch(fetchTestsFailure(error));
@@ -46,6 +68,21 @@ export const submitTestRequest = (payload) => {
         payload
       );
       dispatch(submitTestSuccess(data));
+    } catch (error) {
+      dispatch(fetchTestsFailure(error));
+    }
+  };
+};
+
+// FETCH TEST RESULTS
+export const fetchTestResults = ({ userId, testId }) => {
+  return async (dispatch) => {
+    dispatch(fetchTestsPending());
+    try {
+      const { data } = await axiosApiInstance.get(
+        `/users/testResults/${userId}/${testId}`
+      );
+      dispatch(fetchTestResultsSuccess(data));
     } catch (error) {
       dispatch(fetchTestsFailure(error));
     }
