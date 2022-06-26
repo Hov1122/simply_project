@@ -71,7 +71,7 @@ const testsReducer = createReducer(initialState, (builder) => {
     .addCase(fetchTestsFailure, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    });
+    })
 });
 
 export default testsReducer;
