@@ -7,10 +7,12 @@ import {
   createTestSuccess,
   updateTestSuccess,
   deleteTestSuccess,
+  fetchTestResultsSuccess,
 } from "./actions";
 
 const initialState = {
   userTests: [],
+  testResults: {},
   tests: [],
   count: 0,
   loading: false,
@@ -42,6 +44,10 @@ const testsReducer = createReducer(initialState, (builder) => {
         state.error = null;
       }
     )
+    // TEST RESULTS
+    .addCase(fetchTestResultsSuccess, (state, { payload: { data } }) => {
+      state.testResults = data;
+    })
     // CREATE TEST
     .addCase(createTestSuccess, (state, { payload }) => {
       state.tests.push(payload.createdTest);
