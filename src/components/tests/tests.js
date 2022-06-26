@@ -10,6 +10,9 @@ import { fetchUserTestsRequest } from "../../state-management/tests/requests";
 import TakeTest from "./takeTest/TakeTest";
 import { Pagination } from "@mui/material";
 
+import { subjectsSelector } from "../../state-management/subjects/selectors";
+import { fetchSubjectsRequest } from "../../state-management/subjects/requests";
+
 function Tests() {
   const [testId, setTestId] = useState();
   const [createTest, setCreateTest] = useState(false);
@@ -21,6 +24,7 @@ function Tests() {
   const [testDuration, setTestDuration] = useState({});
   const [skipInComplete, setSkipInComplete] = useState(0);
   const [skipCompleted, setSkipCompleted] = useState(0);
+  const [filterBy, setFilterBy] = useState({"all": true});
 
   const completedRef = useRef(null);
   const inCompleteRef = useRef(null);
@@ -29,6 +33,11 @@ function Tests() {
 
   const { userTests, count } = useSelector(testsSelector);
   const dispatch = useDispatch();
+  const { subjects } = useSelector(subjectsSelector);
+  useEffect(() => {
+    dispatch(fetchSubjectsRequest());
+  }, [])
+ 
 
   const {
     user: {
@@ -39,7 +48,8 @@ function Tests() {
   } = useSelector(authSelector);
 
   useEffect(() => {
-    dispatch(fetchUserTestsRequest({ isComplete: completed, id }));
+    const skip = 0;
+    dispatch(fetchUserTestsRequest({ isComplete: completed, id, filterBy, skip }));
     setTimeout(() => {
       if (name === "Student") {
         setInComplete(true);
@@ -47,13 +57,13 @@ function Tests() {
         setShowTests(true);
       }
     }, 1000);
-  }, [dispatch]);
+  }, [dispatch, filterBy]);
 
   useEffect(() => {
     const skip = completed ? skipCompleted : skipInComplete;
 
-    dispatch(fetchUserTestsRequest({ skip, isComplete: completed, id }));
-  }, [skipInComplete, skipCompleted, completed]);
+    dispatch(fetchUserTestsRequest({ skip, isComplete: completed, id, filterBy }));
+  }, [skipInComplete, skipCompleted, completed, filterBy]);
 
   if (loading) {
     return <Loading />;
@@ -69,8 +79,23 @@ function Tests() {
     );
   }
 
+const filterTest= ({target}) => {
+  if (target.value === 'all') {
+    setFilterBy({all: true})
+    return
+  }
+  setFilterBy({'subjectId': target.value})
+} 
   return (
     <div className="Tests-Container">
+      <select onChange={(e) => filterTest(e)}>
+        <option value="all">All</option>
+        <optgroup label='Subjects'>
+       { subjects.map((subject) => {
+          return <option key = {subject.id} value={subject.id}>{subject.name}</option>
+        })}
+       </optgroup>
+      </select>
       <div className="Tests-Nav">
         {name === "Student" ? (
           <div className="Student-Nav">
@@ -194,7 +219,7 @@ function Tests() {
         size="large"
         onChange={(e, value) => {
           const skip = (value - 1) * 5;
-
+          
           completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
         }}
       />

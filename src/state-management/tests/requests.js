@@ -26,11 +26,13 @@ export const fetchTestsRequest = () => {
 
 // GET CURRENT USER'S TESTS
 export const fetchUserTestsRequest = (payload) => {
-  const { skip, isComplete, id } = payload;
+  const { skip, isComplete, id , filterBy} = payload;
   let url = `/tests/usersAll?isComplete=${isComplete}&take=5`;
 
   skip ? (url += `&skip=${skip}`) : null;
 
+  if (filterBy && !filterBy['all']) url += `&subjectId=${filterBy['subjectId']}`;
+  console.log(url)
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {
