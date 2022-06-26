@@ -4,6 +4,9 @@ export const testTypes = {
   // GET ALL TESTS
   FETCH_TESTS_SUCCESS: "FETCH_TESTS_SUCCESS",
 
+  // GET TEST BY ID
+  FETCH_TEST_BY_ID_SUCCESS: "FETCH_TEST_BY_ID_SUCCESS",
+
   // GET CURRENT USER'S TESTS
   FETCH_USER_TESTS_SUCCESS: "FETCH_USER_TESTS_SUCCESS",
 
@@ -27,11 +30,15 @@ export const testTypes = {
   FETCH_TESTS_FAILURE: "FETCH_TESTS_FAILURE",
 
   SORT_TEST: "SORT_TEST",
-
 };
 
 // GET ALL TESTS
 export const fetchTestsSuccess = createAction(testTypes.FETCH_TESTS_SUCCESS);
+
+// GET TEST BY ID
+export const fetchTestByIdSuccess = createAction(
+  testTypes.FETCH_TEST_BY_ID_SUCCESS
+);
 
 // GET CURRENT USER'S TESTS
 export const fetchUserTestsSuccess = createAction(

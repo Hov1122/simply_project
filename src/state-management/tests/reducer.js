@@ -8,11 +8,13 @@ import {
   updateTestSuccess,
   deleteTestSuccess,
   fetchTestResultsSuccess,
+  fetchTestByIdSuccess,
 } from "./actions";
 
 const initialState = {
   userTests: [],
   testResults: {},
+  currentTest: {},
   tests: [],
   count: 0,
   loading: false,
@@ -24,6 +26,12 @@ const testsReducer = createReducer(initialState, (builder) => {
     // GET ALL TESTS
     .addCase(fetchTestsSuccess, (state, { payload }) => {
       state.tests = payload.tests;
+      state.loading = false;
+      state.error = null;
+    })
+    // GET TEST BY ID
+    .addCase(fetchTestByIdSuccess, (state, { payload: { data } }) => {
+      state.currentTest = data;
       state.loading = false;
       state.error = null;
     })
@@ -47,6 +55,8 @@ const testsReducer = createReducer(initialState, (builder) => {
     // TEST RESULTS
     .addCase(fetchTestResultsSuccess, (state, { payload: { data } }) => {
       state.testResults = data;
+      state.loading = false;
+      state.error = null;
     })
     // CREATE TEST
     .addCase(createTestSuccess, (state, { payload }) => {
@@ -77,7 +87,7 @@ const testsReducer = createReducer(initialState, (builder) => {
     .addCase(fetchTestsFailure, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    })
+    });
 });
 
 export default testsReducer;
