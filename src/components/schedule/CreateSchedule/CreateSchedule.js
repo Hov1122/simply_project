@@ -178,7 +178,7 @@ function ScheduleCreater() {
         })}
       </div>
       <div className="Schedule-Container-Foot">
-        <input value="Add Schedule" type="button" onClick={addSchedule} />
+        <button className="create-schedule-button" onClick={addSchedule}>{"Create Schedule"}</button>
       </div>
     </div>
   );

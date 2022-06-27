@@ -3,7 +3,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: auto;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 15px;
+    padding: 20px;
 }
 
 .Tests-Main-Container {
@@ -31,4 +34,11 @@
     margin-right: 20px;
     font-size: 18px;
     font: bold 18px/18px 'Roboto', sans-serif;
+}
+
+.tests {
+    width:100%;
+    height: 100%;
+    padding: 40px 70px 40px 40px;
+    overflow: auto;
 }

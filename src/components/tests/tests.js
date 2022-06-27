@@ -87,78 +87,117 @@ const filterTest= ({target}) => {
   setFilterBy({'subjectId': target.value})
 } 
   return (
-    <div className="Tests-Container">
-      <select onChange={(e) => filterTest(e)}>
-        <option value="all">All</option>
-        <optgroup label='Subjects'>
-       { subjects.map((subject) => {
-          return <option key = {subject.id} value={subject.id}>{subject.name}</option>
-        })}
-       </optgroup>
-      </select>
-      <div className="Tests-Nav">
-        {name === "Student" ? (
-          <div className="Student-Nav">
-            <span
-              ref={inCompleteRef}
-              className="active-link"
-              onClick={() => {
-                setCompleted(false);
-                setCreateTest(false);
-                setInComplete(true);
-                inCompleteRef.current.classList.add("active-link");
-                completedRef.current.classList.remove("active-link");
-              }}
-            >
-              Upcoming
-            </span>
-            <span
-              ref={completedRef}
-              onClick={() => {
-                setCreateTest(false);
-                setInComplete(false);
-                setCompleted(true);
-                completedRef.current.classList.add("active-link");
-                inCompleteRef.current.classList.remove("active-link");
-              }}
-            >
-              Finished
-            </span>
-          </div>
-        ) : (
-          <div className="Teacher-Nav">
-            <span
-              className="active-link"
-              ref={showTestsRef}
-              onClick={() => {
-                setShowTests(true);
-                setCreateTest(false);
-                showTestsRef.current.classList.add("active-link");
-                createTestRef.current.classList.remove("active-link");
-              }}
-            >
-              Tests
-            </span>
-            <span
-              ref={createTestRef}
-              onClick={() => {
-                setShowTests(false);
-                setCreateTest(true);
-                createTestRef.current.classList.add("active-link");
-                showTestsRef.current.classList.remove("active-link");
-              }}
-            >
-              Create
-            </span>
-          </div>
-        )}
-      </div>
+    <div className="tests">
+      <div style={{height: "75px"}}></div>
+      <div className="Tests-Container">
+        <select onChange={(e) => filterTest(e)}>
+          <option value="all">All</option>
+          <optgroup label='Subjects'>
+        { subjects.map((subject) => {
+            return <option key = {subject.id} value={subject.id}>{subject.name}</option>
+          })}
+        </optgroup>
+        </select>
+        <div className="Tests-Nav">
+          {name === "Student" ? (
+            <div className="Student-Nav">
+              <span
+                ref={inCompleteRef}
+                className="active-link"
+                onClick={() => {
+                  setCompleted(false);
+                  setCreateTest(false);
+                  setInComplete(true);
+                  inCompleteRef.current.classList.add("active-link");
+                  completedRef.current.classList.remove("active-link");
+                }}
+              >
+                Upcoming
+              </span>
+              <span
+                ref={completedRef}
+                onClick={() => {
+                  setCreateTest(false);
+                  setInComplete(false);
+                  setCompleted(true);
+                  completedRef.current.classList.add("active-link");
+                  inCompleteRef.current.classList.remove("active-link");
+                }}
+              >
+                Finished
+              </span>
+            </div>
+          ) : (
+            <div className="Teacher-Nav">
+              <span
+                className="active-link"
+                ref={showTestsRef}
+                onClick={() => {
+                  setShowTests(true);
+                  setCreateTest(false);
+                  showTestsRef.current.classList.add("active-link");
+                  createTestRef.current.classList.remove("active-link");
+                }}
+              >
+                Tests
+              </span>
+              <span
+                ref={createTestRef}
+                onClick={() => {
+                  setShowTests(false);
+                  setCreateTest(true);
+                  createTestRef.current.classList.add("active-link");
+                  showTestsRef.current.classList.remove("active-link");
+                }}
+              >
+                Create
+              </span>
+            </div>
+          )}
+        </div>
 
-      <div className="Tests-Main-Container">
-        {inComplete && (
-          <div>
-            {userTests?.map((test) => {
-              if (test.isComplete === false) {
+        <div className="Tests-Main-Container">
+          {inComplete && (
+            <div>
+              {userTests?.map((test) => {
+                if (test.isComplete === false) {
+                  return (
+                    <Test
+                      {...test}
+                      key={test.id}
+                      setTakeTest={setTakeTest}
+                      setCurrentQuestions={setCurrentQuestions}
+                      setTestId={setTestId}
+                      setTestDuration={setTestDuration}
+                    />
+                  );
+                }
+              })}
+            </div>
+          )}
+          {completed && (
+            <div>
+              {userTests?.map((test) => {
+                const { mark } = test;
+                if (test.isComplete === true) {
+                  return (
+                    <Test
+                      {...test}
+                      mark={mark}
+                      key={test.id}
+                      setTakeTest={setTakeTest}
+                      setCurrentQuestions={setCurrentQuestions}
+                      setTestId={setTestId}
+                      setTestDuration={setTestDuration}
+                    />
+                  );
+                }
+              })}
+            </div>
+          )}
+          {showTests && (
+            <div>
+              {userTests?.map((test) => {
                 return (
                   <Test
                     {...test}
@@ -167,62 +206,26 @@ const filterTest= ({target}) => {
                     setCurrentQuestions={setCurrentQuestions}
                     setTestId={setTestId}
                     setTestDuration={setTestDuration}
+                    teacher
                   />
                 );
-              }
-            })}
-          </div>
-        )}
-        {completed && (
-          <div>
-            {userTests?.map((test) => {
-              const { mark } = test;
-              if (test.isComplete === true) {
-                return (
-                  <Test
-                    {...test}
-                    mark={mark}
-                    key={test.id}
-                    setTakeTest={setTakeTest}
-                    setCurrentQuestions={setCurrentQuestions}
-                    setTestId={setTestId}
-                    setTestDuration={setTestDuration}
-                  />
-                );
-              }
-            })}
-          </div>
-        )}
-        {showTests && (
-          <div>
-            {userTests?.map((test) => {
-              return (
-                <Test
-                  {...test}
-                  key={test.id}
-                  setTakeTest={setTakeTest}
-                  setCurrentQuestions={setCurrentQuestions}
-                  setTestId={setTestId}
-                  setTestDuration={setTestDuration}
-                  teacher
-                />
-              );
-            })}
-          </div>
-        )}
-        {createTest && <TestCreater />}
+              })}
+            </div>
+          )}
+          {createTest && <TestCreater />}
+        </div>
+        <Pagination
+          count={Math.ceil(count / 5)}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          onChange={(e, value) => {
+            const skip = (value - 1) * 5;
+            
+            completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
+          }}
+        />
       </div>
-      <Pagination
-        count={Math.ceil(count / 5)}
-        variant="outlined"
-        shape="rounded"
-        size="large"
-        onChange={(e, value) => {
-          const skip = (value - 1) * 5;
-          
-          completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
-        }}
-      />
     </div>
   );
 }
