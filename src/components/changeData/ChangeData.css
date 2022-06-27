@@ -45,3 +45,17 @@
     border-bottom: 4px solid gray;
     padding: 5px;
 }
+
+.Change-Data-Container-parrent {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 15px;
+    padding: 20px 10px 10px 10px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.Change-Data-bar {
+    padding: 70px 70px 70px 70px;
+    margin-top: 50px;
+    width: 100%;
+}
