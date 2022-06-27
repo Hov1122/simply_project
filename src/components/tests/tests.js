@@ -30,6 +30,8 @@ function Tests() {
   const inCompleteRef = useRef(null);
   const createTestRef = useRef(null);
   const showTestsRef = useRef(null);
+  const hideFilter = useRef(null);
+  const hidePagination = useRef(null);
 
   const { userTests, count } = useSelector(testsSelector);
   const dispatch = useDispatch();
@@ -87,17 +89,10 @@ const filterTest= ({target}) => {
   setFilterBy({'subjectId': target.value})
 } 
   return (
-    <div className="tests">
+    <div className="Tests">
       <div style={{height: "75px"}}></div>
+      <div className="Tests-bar"></div>
       <div className="Tests-Container">
-        <select onChange={(e) => filterTest(e)}>
-          <option value="all">All</option>
-          <optgroup label='Subjects'>
-        { subjects.map((subject) => {
-            return <option key = {subject.id} value={subject.id}>{subject.name}</option>
-          })}
-        </optgroup>
-        </select>
         <div className="Tests-Nav">
           {name === "Student" ? (
             <div className="Student-Nav">
@@ -126,6 +121,14 @@ const filterTest= ({target}) => {
               >
                 Finished
               </span>
+              <select ref={hideFilter} className='filter-tests' onChange={(e) => filterTest(e)}>
+                <option value="all">All</option>
+                  <optgroup label='Subjects'>
+                { subjects.map((subject) => {
+                    return <option key = {subject.id} value={subject.id}>{subject.name}</option>
+                  })}
+                </optgroup>
+              </select>
             </div>
           ) : (
             <div className="Teacher-Nav">
@@ -137,6 +140,8 @@ const filterTest= ({target}) => {
                   setCreateTest(false);
                   showTestsRef.current.classList.add("active-link");
                   createTestRef.current.classList.remove("active-link");
+                  hideFilter.current.style.display = "inline-block";
+                  hidePagination.current.style.display = "inline-block";
                 }}
               >
                 Tests
@@ -148,10 +153,20 @@ const filterTest= ({target}) => {
                   setCreateTest(true);
                   createTestRef.current.classList.add("active-link");
                   showTestsRef.current.classList.remove("active-link");
+                  hideFilter.current.style.display = "none";
+                  hidePagination.current.style.display = "none";
                 }}
               >
                 Create
               </span>
+              <select ref={hideFilter} className='filter-tests' onChange={(e) => filterTest(e)}>
+                  <option value="all">All</option>
+                  <optgroup label='Subjects'>
+                { subjects.map((subject) => {
+                    return <option key = {subject.id} value={subject.id}>{subject.name}</option>
+                  })}
+                </optgroup>
+              </select>
             </div>
           )}
         </div>
@@ -214,6 +229,7 @@ const filterTest= ({target}) => {
           )}
           {createTest && <TestCreater />}
         </div>
+        <div ref={hidePagination}>
         <Pagination
           count={Math.ceil(count / 5)}
           variant="outlined"
@@ -225,6 +241,7 @@ const filterTest= ({target}) => {
             completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
           }}
         />
+        </div>
       </div>
     </div>
   );
