@@ -1,4 +1,5 @@
 .Take-Test-Container {
+    background-color: #ffff;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -6,6 +7,7 @@
     margin: auto auto;
     width: 90%;
     height: 90%;
+    padding: 25px;
     overflow-y: auto;
     overflow-x: hidden;
 }
