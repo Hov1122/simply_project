@@ -24,7 +24,7 @@ function Tests() {
   const [testDuration, setTestDuration] = useState({});
   const [skipInComplete, setSkipInComplete] = useState(0);
   const [skipCompleted, setSkipCompleted] = useState(0);
-  const [filterBy, setFilterBy] = useState({"all": true});
+  const [filterBy, setFilterBy] = useState({ all: true });
 
   const completedRef = useRef(null);
   const inCompleteRef = useRef(null);
@@ -38,8 +38,7 @@ function Tests() {
   const { subjects } = useSelector(subjectsSelector);
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
-  }, [])
- 
+  }, []);
 
   const {
     user: {
@@ -51,20 +50,22 @@ function Tests() {
 
   useEffect(() => {
     const skip = 0;
-    dispatch(fetchUserTestsRequest({ isComplete: completed, id, filterBy, skip }));
-    setTimeout(() => {
-      if (name === "Student") {
-        setInComplete(true);
-      } else {
-        setShowTests(true);
-      }
-    }, 1000);
+    dispatch(
+      fetchUserTestsRequest({ isComplete: completed, id, filterBy, skip })
+    );
+    if (name === "Student") {
+      setInComplete(true);
+    } else {
+      setShowTests(true);
+    }
   }, [dispatch, filterBy]);
 
   useEffect(() => {
     const skip = completed ? skipCompleted : skipInComplete;
 
-    dispatch(fetchUserTestsRequest({ skip, isComplete: completed, id, filterBy }));
+    dispatch(
+      fetchUserTestsRequest({ skip, isComplete: completed, id, filterBy })
+    );
   }, [skipInComplete, skipCompleted, completed, filterBy]);
 
   if (loading) {
@@ -81,16 +82,16 @@ function Tests() {
     );
   }
 
-const filterTest= ({target}) => {
-  if (target.value === 'all') {
-    setFilterBy({all: true})
-    return
-  }
-  setFilterBy({'subjectId': target.value})
-} 
+  const filterTest = ({ target }) => {
+    if (target.value === "all") {
+      setFilterBy({ all: true });
+      return;
+    }
+    setFilterBy({ subjectId: target.value });
+  };
   return (
     <div className="Tests">
-      <div style={{height: "75px"}}></div>
+      <div style={{ height: "75px" }}></div>
       <div className="Tests-bar"></div>
       <div className="Tests-Container">
         <div className="Tests-Nav">
@@ -121,11 +122,19 @@ const filterTest= ({target}) => {
               >
                 Finished
               </span>
-              <select ref={hideFilter} className='filter-tests' onChange={(e) => filterTest(e)}>
+              <select
+                ref={hideFilter}
+                className="filter-tests"
+                onChange={(e) => filterTest(e)}
+              >
                 <option value="all">All</option>
-                  <optgroup label='Subjects'>
-                { subjects.map((subject) => {
-                    return <option key = {subject.id} value={subject.id}>{subject.name}</option>
+                <optgroup label="Subjects">
+                  {subjects.map((subject) => {
+                    return (
+                      <option key={subject.id} value={subject.id}>
+                        {subject.name}
+                      </option>
+                    );
                   })}
                 </optgroup>
               </select>
@@ -159,11 +168,19 @@ const filterTest= ({target}) => {
               >
                 Create
               </span>
-              <select ref={hideFilter} className='filter-tests' onChange={(e) => filterTest(e)}>
-                  <option value="all">All</option>
-                  <optgroup label='Subjects'>
-                { subjects.map((subject) => {
-                    return <option key = {subject.id} value={subject.id}>{subject.name}</option>
+              <select
+                ref={hideFilter}
+                className="filter-tests"
+                onChange={(e) => filterTest(e)}
+              >
+                <option value="all">All</option>
+                <optgroup label="Subjects">
+                  {subjects.map((subject) => {
+                    return (
+                      <option key={subject.id} value={subject.id}>
+                        {subject.name}
+                      </option>
+                    );
                   })}
                 </optgroup>
               </select>
@@ -230,17 +247,17 @@ const filterTest= ({target}) => {
           {createTest && <TestCreater />}
         </div>
         <div ref={hidePagination}>
-        <Pagination
-          count={Math.ceil(count / 5)}
-          variant="outlined"
-          shape="rounded"
-          size="large"
-          onChange={(e, value) => {
-            const skip = (value - 1) * 5;
-            
-            completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
-          }}
-        />
+          <Pagination
+            count={Math.ceil(count / 5)}
+            variant="outlined"
+            shape="rounded"
+            size="large"
+            onChange={(e, value) => {
+              const skip = (value - 1) * 5;
+
+              completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
+            }}
+          />
         </div>
       </div>
     </div>

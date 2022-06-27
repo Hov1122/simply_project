@@ -15,8 +15,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useLocation } from "react-router-dom";
-import { Avatar,  } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Avatar } from "@mui/material";
 // import { CircularProgress } from "@mui/material";
 
 function Home() {
@@ -36,6 +36,7 @@ function Home() {
   const dispatch = useDispatch();
 
   const { state } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUserTestsRequest(id));
@@ -49,7 +50,7 @@ function Home() {
     if (topStudents.length >= 3) {
       return [topStudents[0], topStudents[1], topStudents[2]];
     } else {
-      return [...topStudents]
+      return [...topStudents];
     }
   };
 
@@ -57,10 +58,9 @@ function Home() {
     return <Loading />;
   }
 
- 
   return (
     <div className="Home-Container">
-      <div style={{height: "75px"}}></div>
+      <div style={{ height: "75px" }}></div>
       <div className="home-title">
         <h1>{`Welcome back ${firstName} ${lastName}!`}</h1>
       </div>
@@ -69,11 +69,11 @@ function Home() {
       )}
       <div className="hompage-content">
         {name === "Student" ? (
-          <div style={{padding: "10px", width: "80%", height: "250px"}}>
+          <div style={{ padding: "10px", width: "80%", height: "340px" }}>
             <div className="Marks-Chart-Container">
               <h3 style={{ marginLeft: 50 }}>Last 5 Marks Chart</h3>
               <div className="Marks-Chart">
-                <ResponsiveContainer width="70%" height="50%">
+                <ResponsiveContainer width="70%" height="70%">
                   <LineChart
                     data={userTest.map((test, index) => {
                       if (index !== 5) {
@@ -118,41 +118,36 @@ function Home() {
             </div>
           </div>
         )}
-      <div className="top-students-bar">
+        <div className="top-students-bar">
           <div className="top-students-title">
             <h3 style={{ marginRight: "50px" }}>Top 3 Students!</h3>
           </div>
           <div className="top-students-container">
             {getTopStudents(users).map((user) => {
               return (
-                <div className="card-top-user" key={user.id}>
+                <div
+                  className="card-top-user"
+                  key={user.id}
+                  onClick={() => navigate(`/userProfile/${user.id}`)}
+                >
                   <Avatar
-                  sx={{ bgcolor: "#2596be",marginTop: "10px" }}
-                  variant="rounded"
-                  >
-                  </Avatar>
+                    sx={{ bgcolor: "#2596be", marginTop: "10px" }}
+                    variant="rounded"
+                  ></Avatar>
                   <div className="top-users-name">
-                    <p><b>{user.firstName}</b></p>
-                    <p><b>{user.lastName}</b></p>
+                    <p>
+                      <b>{user.firstName}</b>
+                    </p>
+                    <p>
+                      <b>{user.lastName}</b>
+                    </p>
                   </div>
-                  {/* <div style={{position: "relative"}}>
-                    <CircularProgress             
-                      variant="determinate"
-                      value={100} 
-                      sx={{color: "green", position: "absolute"}}
-                    />
-                    <CircularProgress             
-                      variant="determinate"
-                      value={user.avgMark} 
-                      sx={{color: "red",padding: "5px"}}
-                    />
-                  </div> */}
-                </div> )
+                </div>
+              );
               // return <UserCard {...user} key={user.id} />;
             })}
           </div>
         </div>
-
       </div>
     </div>
   );
