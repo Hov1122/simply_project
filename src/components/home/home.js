@@ -47,8 +47,11 @@ function Home() {
     topStudents.sort((a, b) =>
       a.avgMark < b.avgMark ? 1 : a.avgMark > b.avgMark ? -1 : 0
     );
-
-    return [topStudents[0], topStudents[1], topStudents[2]];
+    if (topStudents.length >= 3) {
+      return [topStudents[0], topStudents[1], topStudents[2]];
+    } else {
+      return [...topStudents];
+    }
   };
 
   if (loading) {
@@ -139,18 +142,6 @@ function Home() {
                       <b>{user.lastName}</b>
                     </p>
                   </div>
-                  {/* <div style={{position: "relative"}}>
-                    <CircularProgress             
-                      variant="determinate"
-                      value={100} 
-                      sx={{color: "green", position: "absolute"}}
-                    />
-                    <CircularProgress             
-                      variant="determinate"
-                      value={user.avgMark} 
-                      sx={{color: "red",padding: "5px"}}
-                    />
-                  </div> */}
                 </div>
               );
               // return <UserCard {...user} key={user.id} />;

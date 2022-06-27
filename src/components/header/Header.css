@@ -75,6 +75,7 @@
     justify-content: space-between;
     margin: auto;
     text-align: center;
+    width: 140px;
 }
 
 .header-page-part {
@@ -109,20 +110,23 @@
 
 .profile-dropdown {
     display: flex;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     flex-direction: column;
     margin-top: 15px;
-    z-index: 1;
-    background-color: #292D39;
-    color: white;
+    z-index: 1100;
+    color: #344767;
+    background-color: #f8f9fa;
 }
 
 .profile-dropdown span {
+    font-size: 13px;
     cursor: pointer;
     padding: 15px 30px;
 }
 
 .profile-dropdown span:hover {
-    background-color: rgb(203, 198, 198);
+    background-color: rgb(233, 233, 233);
 }
 
 .menu-icon {
@@ -137,9 +141,9 @@
 }
 
 .Search-Loading {
-    position: absolute;
-    right: 80px;
-    top: 5px;
+    position: relative;
+    left: 250px;
+    top: -8px;
 }
 
 .first-line-header {
