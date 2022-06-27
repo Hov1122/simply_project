@@ -46,8 +46,11 @@ function Home() {
     topStudents.sort((a, b) =>
       a.avgMark < b.avgMark ? 1 : a.avgMark > b.avgMark ? -1 : 0
     );
-
-    return [topStudents[0], topStudents[1], topStudents[2]];
+    if (topStudents.length >= 3) {
+      return [topStudents[0], topStudents[1], topStudents[2]];
+    } else {
+      return [...topStudents]
+    }
   };
 
   if (loading) {
