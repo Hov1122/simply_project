@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./menu.css";
 import Loading from "../common/Loading";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { authSelector } from "../../state-management/auth/selectors";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { logoutRequest } from "../../state-management/auth/requests";
 
 // import { AnimatePresence, motion } from "framer-motion";
 
@@ -17,6 +18,8 @@ function Menu() {
   useEffect(() => {
     setLoading(false);
   }, []);
+
+  const dispatch = useDispatch();
 
   if (loading) {
     return <Loading />;
@@ -81,7 +84,7 @@ function Menu() {
                     </div>
 
                     <div className="bottom-content">
-                        <li className="">
+                        <li onClick={() => {dispatch(logoutRequest());}}>
                             <a>
                                 <i className='bx bx-log-out icon' ></i>
                                 <span className="text nav-text">Logout</span>
