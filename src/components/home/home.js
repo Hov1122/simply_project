@@ -17,7 +17,6 @@ import {
 } from "recharts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar } from "@mui/material";
-// import { CircularProgress } from "@mui/material";
 
 function Home() {
   const { loading } = useSelector(usersSelector);
@@ -96,25 +95,28 @@ function Home() {
           </div>
         ) : (
           <div className="Last-Exams-Container">
-            <h3 style={{ marginLeft: 50 }}>Last 3 Exams</h3>
+            {userTests.length ? (
+              <h3 style={{ marginLeft: 50 }}>Last 4 Exams</h3>
+            ) : null}
             <hr />
             <div className="Last-Exams-Main">
-              {userTests.length
-                ? userTests
-                    .slice(userTests.length - 3)
-                    .map(({ id, name, highestScore, createdAt }) => {
-                      return (
-                        <div className="Last-Exam" key={id}>
-                          <span>{name}</span>
-                          <span>Rating: {highestScore}</span>
-                          <span>
-                            Created at:{" "}
-                            {new Date(createdAt).toLocaleDateString()}
-                          </span>
-                        </div>
-                      );
-                    })
-                : null}
+              {userTests.length ? (
+                userTests
+                  .slice(userTests.length - 4)
+                  .map(({ id, name, highestScore, createdAt }) => {
+                    return (
+                      <div className="Last-Exam" key={id}>
+                        <span>{name}</span>
+                        <span>Rating: {highestScore}</span>
+                        <span>
+                          Created at: {new Date(createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    );
+                  })
+              ) : (
+                <span>You Dont have any Tests</span>
+              )}
             </div>
           </div>
         )}
@@ -144,7 +146,6 @@ function Home() {
                   </div>
                 </div>
               );
-              // return <UserCard {...user} key={user.id} />;
             })}
           </div>
         </div>

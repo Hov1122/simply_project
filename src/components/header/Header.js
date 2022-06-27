@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
 import { useNavigate } from "react-router-dom";
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import "./Header.css";
 import { filterUsersByInput, randomColor } from "../../helpers/helpers";
 import { Avatar } from "@mui/material";
@@ -45,16 +45,26 @@ const Header = () => {
   };
 
   return token ? (
-    <div style={{position: "relative", marginLeft: "25px", marginTop: "15px"}}>
-      <div className="Header-Container blure">
+    <div
+      style={{ position: "relative", marginLeft: "25px", marginTop: "15px" }}
+    >
+      <div className="Header-Container blur">
         <HeaderPagePart />
-        <div style={{display: "flex", justifyContent: "space-between"}}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "45%",
+          }}
+        >
           <div className="search-bar-container">
             <div className="searchField">
-              <SearchOutlinedIcon style={{margin:'auto', marginLeft:"5px"}}/>
+              <SearchOutlinedIcon
+                style={{ margin: "auto", marginLeft: "5px" }}
+              />
               {loading && (
                 <div className="Search-Loading">
-                  <Loading width={"16px"} height={"16px"}/>
+                  <Loading width={"16px"} height={"16px"} />
                 </div>
               )}
               <input
@@ -85,7 +95,7 @@ const Header = () => {
                   <b>{firstName}</b>
                 </div>
                 <Avatar
-                  sx={{ bgcolor: color, height:"40px",width: "40px" }}
+                  sx={{ bgcolor: color, height: "40px", width: "40px" }}
                   className="profile-picture"
                   onClick={(e) => {
                     e.stopPropagation();
