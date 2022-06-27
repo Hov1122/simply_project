@@ -132,18 +132,6 @@ function Home() {
                     <p><b>{user.firstName}</b></p>
                     <p><b>{user.lastName}</b></p>
                   </div>
-                  {/* <div style={{position: "relative"}}>
-                    <CircularProgress             
-                      variant="determinate"
-                      value={100} 
-                      sx={{color: "green", position: "absolute"}}
-                    />
-                    <CircularProgress             
-                      variant="determinate"
-                      value={user.avgMark} 
-                      sx={{color: "red",padding: "5px"}}
-                    />
-                  </div> */}
                 </div> )
               // return <UserCard {...user} key={user.id} />;
             })}

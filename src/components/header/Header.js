@@ -54,7 +54,7 @@ const Header = () => {
               <SearchOutlinedIcon style={{margin:'auto', marginLeft:"5px"}}/>
               {loading && (
                 <div className="Search-Loading">
-                  <Loading width={"16px"} height={"16px"} />
+                  <Loading width={"16px"} height={"16px"}/>
                 </div>
               )}
               <input
