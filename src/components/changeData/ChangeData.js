@@ -23,69 +23,74 @@ const ChangeData = () => {
   } = useSelector(authSelector);
 
   return name === "Admin" ? (
-    <div className="Change-Data-Container">
-      <div className="Change-Data-Header">
-        <div>
-          <span
-            className="active-link"
-            ref={usersRef}
-            onClick={() => {
-              setShowUsers(true);
-              usersRef.current.classList.add("active-link");
-              groupsRef.current.classList.remove("active-link");
-            }}
-          >
-            Users
-          </span>
-          <span
-            ref={groupsRef}
-            onClick={() => {
-              setShowUsers(false);
-              groupsRef.current.classList.add("active-link");
-              usersRef.current.classList.remove("active-link");
-            }}
-          >
-            Groups
-          </span>
-        </div>
+    <div className="Change-Data-bar">
+        <div className="Change-Data-Container-parrent">
+        <div className="Change-Data-Container">
+          <div className="Change-Data-Header">
+            <div>
+              <span
+                className="active-link"
+                ref={usersRef}
+                onClick={() => {
+                  setShowUsers(true);
+                  usersRef.current.classList.add("active-link");
+                  groupsRef.current.classList.remove("active-link");
+                }}
+              >
+                Users
+              </span>
+              <span
+                ref={groupsRef}
+                onClick={() => {
+                  setShowUsers(false);
+                  groupsRef.current.classList.add("active-link");
+                  usersRef.current.classList.remove("active-link");
+                }}
+              >
+                Groups
+              </span>
+            </div>
 
-        <div>
-          <span
-            className="active-link"
-            ref={createRef}
-            onClick={() => {
-              setShowCreate(true);
-              createRef.current.classList.add("active-link");
-              deleteRef.current.classList.remove("active-link");
-            }}
-          >
-            Create
-          </span>
-          <span
-            ref={deleteRef}
-            onClick={() => {
-              setShowCreate(false);
-              deleteRef.current.classList.add("active-link");
-              createRef.current.classList.remove("active-link");
-            }}
-          >
-            Delete
-          </span>
-        </div>
-      </div>
+            <div>
+              <span
+                className="active-link"
+                ref={createRef}
+                onClick={() => {
+                  setShowCreate(true);
+                  createRef.current.classList.add("active-link");
+                  deleteRef.current.classList.remove("active-link");
+                }}
+              >
+                Create
+              </span>
+              <span
+                ref={deleteRef}
+                onClick={() => {
+                  setShowCreate(false);
+                  deleteRef.current.classList.add("active-link");
+                  createRef.current.classList.remove("active-link");
+                }}
+              >
+                Delete
+              </span>
+            </div>
+          </div>
 
-      <div className="Change-Data-Main">
-        {showCreate ? (
-          showUsers ? (
-            <CreateUser />
-          ) : (
-            <CreateGroup />
-          )
-        ) : showUsers ? (
-          <DeleteUser />
-        ) : (
-          <DeleteGroup />
-        )}
+          <div className="Change-Data-Main">
+            {showCreate ? (
+              showUsers ? (
+                <CreateUser />
+              ) : (
+                <CreateGroup />
+              )
+            ) : showUsers ? (
+              <DeleteUser />
+            ) : (
+              <DeleteGroup />
+            )}
+          </div>
+        </div>
+        
       </div>
     </div>
   ) : (
