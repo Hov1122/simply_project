@@ -1,3 +1,40 @@
-.Chat-Container {
-    
+.chat {
+    padding: 20px 70px 40px 70px; 
+    height: 90%;
+
+}
+
+.chatSection {
+    width: 100%;
+    height: 70vh;
+}
+.borderRight500 {
+    border-right: 1px solid #e0e0e0;
+}
+
+.messageArea {
+    max-height: 55vh;
+    overflow-Y: auto;
+    scroll-snap-type: reverse;
+}
+
+.header-message {
+    color: #344767;
+}
+
+.active-chat {
+    background-color: rgb(211, 210, 210);
+}
+
+.group-chats {
+    overflow: auto;
+}
+
+.message-bar {
+    position: relative;
+}
+
+.write-message-bar {
+    position: absolute;
+    bottom: 0;
 }
