@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CreateSchedule.css";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
@@ -13,8 +13,11 @@ import Select from "react-select";
 function ScheduleCreater() {
   const [loading] = useState(false);
   const { subjects } = useSelector(subjectsSelector);
+  const [requestError, setRequestError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
+  const container = useRef(null)
   const [scheduleGroup, setScheduleGroup] = useState(null);
   const [scheduleSubjects, setScheduleSubjects] = useState([
     {
@@ -148,10 +151,12 @@ function ScheduleCreater() {
       ) ||
       !data.groupId
     ) {
-      console.log('error');
-      return;
+      setRequestError('Something get wrong');
+      setSuccess('')
     } else {
-      console.log("success");
+      setSuccess('Schedule added')
+      setRequestError('')
+      console.log(data)
       dispatch(createScheduleRequest(data));
     }
   };
@@ -162,8 +167,14 @@ function ScheduleCreater() {
 
   return (
     <div className="Schedule-Container">
-      <div className="Schedule-Container-Header">
+      <div ref={container} className="Schedule-Container-Header">
         <h2>Create Schedule</h2>
+        {success && !requestError && (
+          <h3 style={{ color: "green", fontSize: 20, textAlign: "center" }}>{success}</h3>
+        )}
+        {requestError && (
+          <h3 style={{ color: "red", fontSize: 20, textAlign: "center" }}>{requestError}</h3>
+        )}
         <Select
           options={groupsArr}
           placeholder="Group"
