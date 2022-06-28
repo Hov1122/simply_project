@@ -150,6 +150,10 @@ function Home() {
           </div>
         </div>
       </div>
+      <div className="Today-Schedule">
+        <h3 style={{ marginLeft: 50 }}>{"Today's Schedule"}</h3>
+      </div>
+      <hr />
     </div>
   );
 }

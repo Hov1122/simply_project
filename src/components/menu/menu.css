@@ -144,9 +144,8 @@ header .image-text {
     background-color: #bfbec9;
 }
 
-.sidebar li a:hover .icon,
-.sidebar li a:hover .text{
-    color: #FFF;
+.sidebar li a:hover .icon{
+    background-color: #bfbec9;
 }
 
 .sidebar .menu-bar{

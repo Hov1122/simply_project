@@ -41,9 +41,10 @@ export const fetchTestById = ({ id }) => {
 // GET CURRENT USER'S TESTS
 export const fetchUserTestsRequest = (payload) => {
   const { skip, isComplete, id, filterBy } = payload;
-  let url = `/tests/usersAll?`;
+  let url = `/tests/usersAll?take=5`;
 
-  skip ? (url += `&skip=${skip}&isComplete=${isComplete}&take=5`) : null;
+  skip ? (url += `&skip=${skip}`) : null;
+  isComplete ? (url += `&isComplete=${isComplete}`) : null;
 
   if (filterBy && !filterBy["all"])
     url += `&subjectId=${filterBy["subjectId"]}`;
