@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./CreateUser.css";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
@@ -6,6 +6,9 @@ import { createUserRequest } from "../../../state-management/users/requests";
 
 function CreateUser() {
   const [loading] = useState(false);
+  const rowContainer = useRef(null);
+  const rowDefaultElement = useRef(null);
+
 
   const dispatch = useDispatch();
 
@@ -22,6 +25,12 @@ function CreateUser() {
       headers.forEach((element, index) => {
         element.innerText = `${index + 1}`
       })
+    
+    return (
+      <div>
+
+      </div>
+    )
   };
 
   // ADD USER IN DATABASE
@@ -79,11 +88,9 @@ function CreateUser() {
         <div className="UserCreater-Table-Body">
           <div data-value='firstChild'>
             <div>
-              {/* <span>ID</span> */}
               <span data-value="id">1</span>
             </div>
             <div>
-              {/* <span>FirstName</span> */}
               <input
                 type={`text`}
                 placeholder={"Enter FirstName"}
@@ -91,7 +98,6 @@ function CreateUser() {
               />
             </div>
             <div>
-              {/* <span>LastName</span> */}
               <input
                 type={`text`}
                 placeholder={"Enter LastName"}
@@ -99,7 +105,6 @@ function CreateUser() {
               />
             </div>
             <div>
-              {/* <span>E-mail</span> */}
               <input
                 type={`text`}
                 placeholder={"Enter E-mail"}
@@ -107,7 +112,6 @@ function CreateUser() {
               />
             </div>
             <div>
-              {/* <span>Password</span> */}
               <input
                 type={`password`}
                 placeholder={"Enter Password"}
@@ -115,7 +119,6 @@ function CreateUser() {
               />
             </div>
             <div>
-              {/* <span>Role</span> */}
               <select data-value="role">
                 <option value="1">Admin</option>
                 <option value="2">Teacher</option>
