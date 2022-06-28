@@ -143,7 +143,7 @@ function ScheduleCreater() {
     });
 
     if (
-      !Object.values(scheduleSubjects).some((value) =>
+      Object.values(scheduleSubjects).some((value) =>
         Object.values(value).every((item) => item != true)
       ) ||
       !data.groupId

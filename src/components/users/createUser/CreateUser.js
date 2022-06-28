@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {  useState } from "react";
 import "./CreateUser.css";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
@@ -6,8 +6,8 @@ import { createUserRequest } from "../../../state-management/users/requests";
 
 function CreateUser() {
   const [loading] = useState(false);
-  const rowContainer = useRef(null);
-  const rowDefaultElement = useRef(null);
+  // const rowContainer = useRef(null);
+  // const rowDefaultElement = useRef(null);
 
 
   const dispatch = useDispatch();
@@ -26,11 +26,6 @@ function CreateUser() {
         element.innerText = `${index + 1}`
       })
     
-    return (
-      <div>
-
-      </div>
-    )
   };
 
   // ADD USER IN DATABASE
