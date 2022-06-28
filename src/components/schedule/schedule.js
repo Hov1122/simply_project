@@ -21,7 +21,6 @@ function Schedules() {
 
   return (
     <div className="Schedule">
-      <div style={{height: "75px"}}></div>
       <div className="Schedule-bar">
         <div className="Schedule-Container-parrent">
           {name === "Student" ? (

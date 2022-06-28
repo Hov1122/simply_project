@@ -6,7 +6,7 @@
 .Main-Container {
     display: flex;
     background-color: #eff0f1;
-    height: 100vh;
+    height: 86vh;
     overflow: auto;
 }
 

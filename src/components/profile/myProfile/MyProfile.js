@@ -1,3 +1,4 @@
+import { CircularProgress, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -5,7 +6,10 @@ import { authSelector } from "../../../state-management/auth/selectors";
 import { updateUserRequest } from "../../../state-management/users/requests";
 import { usersSelector } from "../../../state-management/users/selectors";
 import Loading from "../../common/Loading";
+import Divider from "@material-ui/core/Divider";
 import "./MyProfile.css";
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Alert } from "@mui/material";
 
 const Profile = () => {
   const [passwordError, setPasswordError] = useState(null);
@@ -42,80 +46,99 @@ const Profile = () => {
   if (loading) {
     return <Loading />;
   }
-
   return (
     <div className="Profile-Container">
-      <h2 style={{ marginBottom: 40 }}>My Profile</h2>
-      <button
+      <h2 style={
+        { 
+          marginBottom: 40, 
+          display: "flex",
+          justifyContent: "space-between",
+          color: "#344767",
+          width: "12%"
+        }
+        }>
+          <SettingsIcon style={{margin: 'auto'}}/>
+          Settings
+        </h2>
+        {console.log(navigate)}
+      {/* <button
         className="go-back-button user-profile-go-back"
         onClick={() => navigate(-1)}
       >
         Go Back
-      </button>
+      </button> */}
       <div className="Profile-Info-Container">
         <div className="User-Profile">
-          <h3>
-            First Name: <span>{firstName}</span>
-          </h3>
-
-          <h3>
-            Last Name: <span>{lastName}</span>
-          </h3>
-
-          <h3>
-            Average Mark: <span>{avgMark?.toFixed(2)}</span>
-          </h3>
-
-          <h3>
-            Email: <span>{email}</span>
-          </h3>
-
-          <h3>
-            Role: <span>{name}</span>
-          </h3>
+          <div className="disabled-info">
+            <h4>Profile information</h4>
+            <Divider />
+            <div className="row">
+              <TextField id="outlined-basic" label="First name" disabled={"disabled"}
+              size="small" value={firstName} variant="outlined" className="disabled-textfield"/>
+              <TextField id="outlined-basic" label="Last name" disabled={"disabled"}
+              size="small" value={lastName} variant="outlined" className="disabled-textfield"/>
+            </div>
+            <div className="row">
+              <TextField id="outlined-basic" label="Role" disabled={"disabled"}
+                size="small" value={name} variant="outlined" className="disabled-textfield"/>
+              <TextField id="outlined-basic" label="Email" disabled={"disabled"}
+              size="small" value={email} variant="outlined" className="disabled-textfield"/>
+            </div>
+          </div>
+          <div style={{margin: 'auto'}}>
+            <div style={{position: 'relative'}}>
+              <h4>Average mark</h4>
+              <span style={
+                {
+                  position: 'absolute',
+                  top: '60px',
+                  fontSize: "15px",
+                  left: '40px'
+                }}>{avgMark?.toFixed(2)}/100</span>
+              <CircularProgress variant="determinate" value={avgMark?.toFixed(2) || 100} 
+              size={100} 
+              style={
+                { 
+                  color: (avgMark?.toFixed(2) < 60) ? "#03590a" : ((avgMark?.toFixed(2) > 40 ) ? "#d9c725" : "#c40014")
+                }
+              }/>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="Change-Password-Container">
-        <h3>Change Password</h3>
+
+      <div className="Profile-Info-Container">
+        <h4>Change password</h4>
+        <Divider />
         {success && !requestError && (
-          <p style={{ color: "green", fontSize: 20 }}>{success}</p>
+          <Alert severity="success">Your password successfully changed!</Alert>
         )}
         {requestError && (
           <p style={{ color: "red", fontSize: 20 }}>{requestError}</p>
         )}
-        <input
-          type="password"
-          className="old-password"
-          placeholder="Old Password"
-          value={oldPassword}
+        <div className="password-bar">
+          <TextField id="outlined-basic" label="Old password..." type="password"
+          size="small" variant="outlined"  
           onInput={(e) => {
             setOldPassword(e.target.value);
-          }}
-        />
-        <input
-          type="password"
-          className="new-password"
-          placeholder="New Password"
-          value={newPassword}
+          }}/>
+          <TextField id="outlined-basic" label="New password..." type="password"
+          size="small" variant="outlined"  
           onInput={(e) => {
             setNewPassword(e.target.value);
-          }}
-        />
-        <input
-          type="password"
-          className="new-password"
-          placeholder="Repeat New Password"
-          value={repeatPassword}
+          }}/>
+          <TextField id="outlined-basic" label="Repeat new password..." type="password"
+          size="small" variant="outlined"  
           onInput={(e) => {
             setRepeatPassword(e.target.value);
-          }}
-        />
-        {passwordError && <p className="password-error">{passwordError}</p>}
+          }}/>
+        </div>
+        {passwordError && <Alert severity="error">{passwordError}</Alert>}
         <button
           disabled={
             !(oldPassword && newPassword && repeatPassword && !passwordError)
           }
-          className="change-password-button"
+          className="save-changes"
           onClick={async () => {
             setLoading(true);
             dispatch(

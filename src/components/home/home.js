@@ -59,7 +59,6 @@ function Home() {
 
   return (
     <div className="Home-Container">
-      <div style={{ height: "75px" }}></div>
       <div className="home-title">
         <h1>{`Welcome back ${firstName} ${lastName}!`}</h1>
       </div>

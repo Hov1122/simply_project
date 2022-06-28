@@ -91,7 +91,6 @@ function Tests() {
   };
   return (
     <div className="Tests">
-      <div style={{ height: "75px" }}></div>
       <div className="Tests-bar"></div>
       <div className="Tests-Container">
         <div className="Tests-Nav">
