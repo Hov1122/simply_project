@@ -8,8 +8,6 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { logoutRequest } from "../../state-management/auth/requests";
 
-// import { AnimatePresence, motion } from "framer-motion";
-
 function Menu() {
   const [loading, setLoading] = useState(true);
   const { user, token } = useSelector(authSelector);
@@ -40,8 +38,14 @@ function Menu() {
                 }}
               />
               <div className="text logo-text">
-                <span className="name">{"Students's"}</span>
-                <span className="name">dashboard</span>
+                <span className="name">
+                  {user?.role?.name === "Student"
+                    ? "Student's "
+                    : user?.role?.name === "Teacher"
+                    ? "Teacher's "
+                    : "Admin's "}
+                </span>
+                <span className="name">Dashboard</span>
               </div>
             </div>
           </header>
@@ -71,7 +75,14 @@ function Menu() {
                   </NavLink>
                 </li>
 
-                {user.role.name === "Admin" && (
+                <li className="nav-link">
+                  <NavLink to="/chat">
+                    <i className="bx bx-message-detail icon"></i>
+                    <span className="text nav-text">Chat</span>
+                  </NavLink>
+                </li>
+
+                {user?.role?.name === "Admin" && (
                   <li className="nav-link">
                     <NavLink to="/changeData">
                       <i className="bx bx-user-plus icon"></i>

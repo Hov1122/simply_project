@@ -22,18 +22,17 @@ const Schedule = lazy(() => import("./components/schedule/schedule"));
 const CheckResults = lazy(() =>
   import("./components/tests/checkResults/CheckResults")
 );
+const Chat = lazy(() => import("./components/chat/Chat"));
 
 function App() {
-
-
   return (
     <div className="App">
       <ErrorBoundary>
-        <div style={{display:"flex", backgroundColor: "#eff0f1"}}>
+        <div style={{ display: "flex", backgroundColor: "#eff0f1" }}>
           <Menu />
-          <div style={{width:"100%" , height:"100%"}}>
+          <div style={{ width: "100%", height: "100%" }}>
             <Header />
-            <Main >
+            <Main>
               <Suspense fallback={<Loading />}>
                 <Routes>
                   (// PUBLIC ROUTES)
@@ -53,6 +52,8 @@ function App() {
                     <Route path="/checkResults" element={<CheckResults />} />
 
                     <Route path="/changeData" element={<ChangeData />} />
+
+                    <Route path="/chat" element={<Chat />} />
                   </Route>
                   (// NOT FOUND ROUTE)
                   <Route path="*" element={<NotFound />} />
