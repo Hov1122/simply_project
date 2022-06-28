@@ -1,7 +1,7 @@
 .chat {
     padding: 20px 70px 40px 70px; 
-    height: 90%;
-
+    height: 100%;
+    width: 100%;
 }
 
 .chatSection {
@@ -20,6 +20,7 @@
 
 .header-message {
     color: #344767;
+    font-size: 20px;
 }
 
 .active-chat {

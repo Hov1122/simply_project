@@ -55,28 +55,48 @@ function Menu() {
 
               <ul className="menu-links">
                 <li className="nav-link">
-                  <NavLink to="/home">
+                  <NavLink
+                    to="/home"
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                    })}
+                  >
                     <i className="bx bx-home-alt icon"></i>
                     <span className="text nav-text">Home</span>
                   </NavLink>
                 </li>
 
                 <li className="nav-link">
-                  <NavLink to="/schedule">
+                  <NavLink
+                    to="/schedule"
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                    })}
+                  >
                     <i className="bx bx-calendar icon"></i>
                     <span className="text nav-text">Schedule</span>
                   </NavLink>
                 </li>
 
                 <li className="nav-link">
-                  <NavLink to="/tests">
+                  <NavLink
+                    to="/tests"
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                    })}
+                  >
                     <i className="bx bx-receipt icon"></i>
                     <span className="text nav-text">Tests</span>
                   </NavLink>
                 </li>
 
                 <li className="nav-link">
-                  <NavLink to="/chat">
+                  <NavLink
+                    to="/chat"
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? "#bfbec9" : "",
+                    })}
+                  >
                     <i className="bx bx-message-detail icon"></i>
                     <span className="text nav-text">Chat</span>
                   </NavLink>
@@ -84,7 +104,12 @@ function Menu() {
 
                 {user?.role?.name === "Admin" && (
                   <li className="nav-link">
-                    <NavLink to="/changeData">
+                    <NavLink
+                      to="/changeData"
+                      style={({ isActive }) => ({
+                        backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                      })}
+                    >
                       <i className="bx bx-user-plus icon"></i>
                       <span className="text nav-text">changeData</span>
                     </NavLink>

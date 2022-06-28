@@ -95,7 +95,11 @@ const Header = () => {
                   <b>{firstName}</b>
                 </div>
                 <Avatar
-                  sx={{ bgcolor: color, height: "40px", width: "40px" }}
+                  sx={{
+                    bgcolor: color,
+                    height: "40px",
+                    width: "40px",
+                  }}
                   className="profile-picture"
                   onClick={(e) => {
                     e.stopPropagation();
