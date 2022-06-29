@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import io from "socket.io-client";
 
-//=============
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-// import Box from '@material-ui/core/Box';
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
@@ -27,10 +25,10 @@ const socket = io.connect("http://localhost:5000");
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");
   const [showUsers, setShowUsers] = useState(false);
-  const {
-    user: { userGroup, id },
-  } = useSelector(authSelector);
-  const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.id);
+  const { user } = useSelector(authSelector);
+  const { userGroup } = user;
+
+  const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
 
   const messageAreaRef = useRef(null);
 
@@ -40,18 +38,15 @@ const Chat = () => {
   useEffect(() => {
     messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
 
-    userGroup.forEach((el) => {
-      dispatch(fetchGroupUsers(el.group.id));
+    userGroup.forEach(({ group }) => {
+      dispatch(fetchGroupUsers(group.id));
+      socket.emit("join_chat", { groupId: group.id });
     });
   }, []);
 
   useEffect(() => {
-    socket.emit("join_chat", currentGroup);
-  }, [currentGroup]);
-
-  useEffect(() => {
     socket.on("receive_message", (data) => {
-      alert(data.message);
+      if (data) alert(data.text);
     });
 
     socket.on("message_sent", (data) => {
@@ -61,9 +56,9 @@ const Chat = () => {
 
   const sendMessage = () => {
     socket.emit("send_message", {
-      message: messageValue,
-      chat: currentGroup,
-      senderId: id,
+      text: messageValue,
+      groupId: currentGroup,
+      senderId: user.id,
     });
   };
 
