@@ -26,9 +26,11 @@ const socket = io.connect("http://localhost:5000");
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");
   const {
-    user: { userGroup },
+    user,
   } = useSelector(authSelector);
-  const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.id);
+  const {userGroup} = user
+  
+  const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
 
   const messageAreaRef = useRef(null);
 
@@ -37,18 +39,26 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    socket.emit("join_chat", { chatId: currentGroup });
-  }, [currentGroup]);
+    userGroup.forEach(({group}) => {
+      console.log('a')
+      socket.emit("join_chat", { groupId: group.id });
+    })
+    // if (currentGroup)
+    //   socket.emit("join_chat", { groupId: currentGroup });
+  }, []);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      alert(data.message);
+      if (data)
+        alert(data.text);
     });
   }, [socket]);
 
   const sendMessage = () => {
     socket.emit("send_message", {
-      message: messageValue,
+      text: messageValue,
+      groupId: currentGroup,
+      senderId: user.id
     });
   };
 
