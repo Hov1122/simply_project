@@ -2,48 +2,51 @@ import React, { useEffect, useRef, useState } from "react";
 import "./Chat.css";
 import io from "socket.io-client";
 
-//=============
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-// import Box from '@material-ui/core/Box';
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-// import Avatar from '@material-ui/core/Avatar';
 import Fab from "@material-ui/core/Fab";
 import GroupIcon from "@mui/icons-material/Group";
 import SendIcon from "@mui/icons-material/Send";
 
-//==============
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
+import { groupsSelector } from "../../state-management/groups/selectors";
+import { fetchGroupUsers } from "../../state-management/groups/requests";
+import UsersDropDown from "./usersDropDown/UsersDropDown";
 
 const socket = io.connect("http://localhost:5000");
 
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");
-  const {
-    user,
-  } = useSelector(authSelector);
-  const {userGroup} = user
-  
+  const [showUsers, setShowUsers] = useState(false);
+  const { user } = useSelector(authSelector);
+  const { userGroup } = user;
+
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
   const [messages, setMessages] = useState([]);
   const [userMessages, setUserMessages] = useState([]);
 
   const messageAreaRef = useRef(null);
 
-  useEffect(() => {
-    messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
-  }, []);
+  const dispatch = useDispatch();
+  const { groupUsers } = useSelector(groupsSelector);
 
   useEffect(() => {
     userGroup.forEach(({group}) => {
       socket.emit("join_chat", { groupId: group.id });
     })
+    messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
+
+    userGroup.forEach(({ group }) => {
+      dispatch(fetchGroupUsers(group.id));
+      socket.emit("join_chat", { groupId: group.id });
+    });
   }, []);
 
   useEffect(() => {
@@ -55,10 +58,13 @@ const Chat = () => {
     });
     socket.on("message_sent", (data) => {
       if (data) {
-        console.log(userMessages)
         setUserMessages((userMessages) => [...userMessages, data])
         // setUserMessages([...userMessages, data]);
       }
+    });
+
+    socket.on("message_sent", (data) => {
+      console.log(data);
     });
   }, [socket]);
 
@@ -66,12 +72,18 @@ const Chat = () => {
     socket.emit("send_message", {
       text: messageValue,
       groupId: currentGroup,
-      senderId: user.id
+      senderId: user.id,
     });
   };
 
   return (
     <div className="chat">
+      {showUsers && (
+        <UsersDropDown
+          users={groupUsers[currentGroup]}
+          setShowUsers={setShowUsers}
+        />
+      )}
       <h5 className="header-message">
         {" "}
         <b>Chat</b>
@@ -93,9 +105,11 @@ const Chat = () => {
               {userGroup.map((el, index) => {
                 return (
                   <ListItem
+                    sx={{ overflow: "auto" }}
                     button
                     key={el.group.id}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setCurrentGroup(el.group.id);
                     }}
                     className={!index ? "active-chat" : ""}
@@ -104,6 +118,13 @@ const Chat = () => {
                       <GroupIcon />
                     </ListItemIcon>
                     <ListItemText primary={el.group.name}></ListItemText>
+                    <ListItemText
+                      sx={{ display: "flex", marginLeft: "10px" }}
+                      onClick={() => setShowUsers(true)}
+                    >
+                      <GroupIcon sx={{ fontSize: "15px" }} />
+                      {groupUsers[el.group.id]?.length}
+                    </ListItemText>
                   </ListItem>
                 );
               })}

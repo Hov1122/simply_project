@@ -5,6 +5,7 @@ import {
   fetchGroupsPending,
   fetchGroupsSuccess,
   createGroupSuccess,
+  fetchGroupUsersSuccess,
 } from "./actions";
 
 // GET ALL GROUPS
@@ -14,6 +15,19 @@ export const fetchGroupsRequest = () => {
     try {
       const { data } = await axiosApiInstance.get(`/groups`);
       dispatch(fetchGroupsSuccess(data));
+    } catch (error) {
+      dispatch(fetchGroupsFailure(error));
+    }
+  };
+};
+
+// GET ALL USERS FOR GROUP
+export const fetchGroupUsers = (payload) => {
+  return async (dispatch) => {
+    dispatch(fetchGroupsPending());
+    try {
+      const { data } = await axiosApiInstance.get(`/groups/${payload}/users`);
+      dispatch(fetchGroupUsersSuccess(data));
     } catch (error) {
       dispatch(fetchGroupsFailure(error));
     }
