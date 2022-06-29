@@ -32,7 +32,8 @@ export const updateUserRequest = (payload) => {
     return async (dispatch) => {
         dispatch(fetchUsersPending());
         try {
-            const { data } = await axiosApiInstance.put(`/users`, payload);
+            const data = await axiosApiInstance.put(`/users`, payload);
+            console.log(data)
             dispatch(updateUserSuccess(data));
         } catch(error) {
             dispatch(fetchUsersFailure(error));

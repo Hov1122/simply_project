@@ -29,10 +29,10 @@ const usersReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     // UPDATE USER
-    .addCase(updateUserSuccess, (state, { payload }) => {
+    .addCase(updateUserSuccess, (state, { payload:{data:{data}} }) => {
       state.users = state.users.map((user) => {
-        if (user.id === payload.updatedUser.id) {
-          return payload.updatedUser;
+        if (user.id === data.updatedUser.id) {
+          return data.updatedUser;
         }
         return user;
       });

@@ -6,14 +6,19 @@ import { usersSelector } from "../../../state-management/users/selectors";
 import { useSelector } from "react-redux";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
+import { groupsSelector } from "../../../state-management/groups/selectors";
+import { Alert } from "@mui/material";
+import { TextField } from "@material-ui/core";
 
 
 
 const CreateGroup = () => {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [group, setGroup] = useState(null)
   const [groupUsers, setGroupUsers] = useState([])
   const {users} = useSelector(usersSelector)
+  const {error} = useSelector(groupsSelector)
   const dispatch = useDispatch();
 
   const UserJSX = ({id, firstName, lastName}) => { 
@@ -47,16 +52,21 @@ const CreateGroup = () => {
 
     const data = {
       name: group,
-      users: groupUsers
     }
+    setLoading(true);
+    dispatch(
+      createGroupRequest(data)
+    );
 
-    if (!data.users[0] || !data.name) {
-      console.log('error')
-      return 
-    } else {
-      console.log('success')
-      dispatch(createGroupRequest(data));
-    } 
+    setTimeout(() => {
+      error
+        ? setSuccess("")
+        : setSuccess("Password changed successfully");
+      setLoading(false);
+    }, 2000);
+
+    setGroup("");
+
   }
 
   if (loading) {
@@ -66,12 +76,18 @@ const CreateGroup = () => {
   return (
     <div className="Create-Group-Container">
       <div className="Create-Group-Container-Header">
-        <h2>Create Group</h2>
-        <input type='text' placeholder="Group Name" onChange={handleChangeGroup} />
+        <h2 style={{marginBottom: "20px"}}>Create Group</h2>
+        {success && !error && (
+          <Alert severity="success">Group created successfully!</Alert>
+        )}
+        {error && (
+           <Alert severity="error">Creating group faild!</Alert>
+        )}
+        <TextField id="outlined-basic" label="Group name" variant="outlined"  onChange={handleChangeGroup} />
       </div>
       <div className="Create-Group-Container-Main">
       {users.map((elem) => {
-        if (elem.role.name === 'Student')
+        if (elem?.role?.name === 'Student')
           return UserJSX(elem);
         })}
       </div>

@@ -47,9 +47,9 @@ function ShowSchedule() {
         <div className="Schedule-day">
           <h3>Time</h3>
           <span className="Schedule-time">9:30</span>
-          <span className="Schedule-time">9:30</span>
-          <span className="Schedule-time">9:30</span>
-          <span className="Schedule-time">9:30</span>
+          <span className="Schedule-time">11:10</span>
+          <span className="Schedule-time">13:00</span>
+          <span className="Schedule-time">14:40</span>
         </div>
         </div>
         <div className="Schedule-Container-Main-Element">

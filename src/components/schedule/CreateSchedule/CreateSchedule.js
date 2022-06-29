@@ -19,38 +19,6 @@ function ScheduleCreater() {
   const dispatch = useDispatch();
   const container = useRef(null)
   const [scheduleGroup, setScheduleGroup] = useState(null);
-  const [scheduleSubjects, setScheduleSubjects] = useState([
-    {
-      "2022-06-20T09:40:47.418Z": undefined,
-      "2022-06-20T11:10:47.418Z": undefined,
-      "2022-06-20T13:00:47.418Z": undefined,
-      "2022-06-20T14:40:47.418Z": undefined,
-    },
-    {
-      "2022-06-20T09:40:47.418Z": undefined,
-      "2022-06-20T11:10:47.418Z": undefined,
-      "2022-06-20T13:00:47.418Z": undefined,
-      "2022-06-20T14:40:47.418Z": undefined,
-    },
-    {
-      "2022-06-20T09:40:47.418Z": undefined,
-      "2022-06-20T11:10:47.418Z": undefined,
-      "2022-06-20T13:00:47.418Z": undefined,
-      "2022-06-20T14:40:47.418Z": undefined,
-    },
-    {
-      "2022-06-20T09:40:47.418Z": undefined,
-      "2022-06-20T11:10:47.418Z": undefined,
-      "2022-06-20T13:00:47.418Z": undefined,
-      "2022-06-20T14:40:47.418Z": undefined,
-    },
-    {
-      "2022-06-20T09:40:47.418Z": undefined,
-      "2022-06-20T11:10:47.418Z": undefined,
-      "2022-06-20T13:00:47.418Z": undefined,
-      "2022-06-20T14:40:47.418Z": undefined,
-    },
-  ]);
 
   const subjectsArr = subjects.map((elem) => {
     return {
@@ -58,6 +26,40 @@ function ScheduleCreater() {
       label: elem.name,
     };
   });
+  const [scheduleSubjects, setScheduleSubjects] = useState([
+    {
+      "2022-06-20T09:30:47.418Z": 1,
+      "2022-06-20T11:10:47.418Z": 1,
+      "2022-06-20T13:00:47.418Z": 1,
+      "2022-06-20T14:40:47.418Z": 1,
+    },
+    {
+      "2022-06-20T09:30:47.418Z": 1,
+      "2022-06-20T11:10:47.418Z": 1,
+      "2022-06-20T13:00:47.418Z": 1,
+      "2022-06-20T14:40:47.418Z": 1,
+    },
+    {
+      "2022-06-20T09:30:47.418Z": 1,
+      "2022-06-20T11:10:47.418Z": 1,
+      "2022-06-20T13:00:47.418Z": 1,
+      "2022-06-20T14:40:47.418Z": 1,
+    },
+    {
+      "2022-06-20T09:30:47.418Z": 1,
+      "2022-06-20T11:10:47.418Z": 1,
+      "2022-06-20T13:00:47.418Z": 1,
+      "2022-06-20T14:40:47.418Z": 1,
+    },
+    {
+      "2022-06-20T09:30:47.418Z": 1,
+      "2022-06-20T11:10:47.418Z": 1,
+      "2022-06-20T13:00:47.418Z": 1,
+      "2022-06-20T14:40:47.418Z": 1,
+    },
+  ]);
+
+
   const groupsArr = groups.map((elem) => {
     return {
       value: elem.id,
@@ -76,15 +78,15 @@ function ScheduleCreater() {
         <h3>{days[day]}</h3>
         <Select
           options={subjectsArr}
-          placeholder="Subject"
+          defaultValue={{ label: "Azat jam", value: 1 }}
           key={subjectId[0]}
           onChange={(e) => {
-            handleChangeSubject(day, "2022-06-20T09:40:47.418Z", e);
+            handleChangeSubject(day, "2022-06-20T09:30:47.418Z", e);
           }}
         />
         <Select
           options={subjectsArr}
-          placeholder="Subject"
+          defaultValue={{ label: "Azat jam", value: 1 }}
           key={subjectId[1]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T11:10:47.418Z", e);
@@ -92,7 +94,7 @@ function ScheduleCreater() {
         />
         <Select
           options={subjectsArr}
-          placeholder="Subject"
+          defaultValue={{ label: "Azat jam", value: 1 }}
           key={subjectId[2]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T13:00:47.418Z", e);
@@ -100,7 +102,7 @@ function ScheduleCreater() {
         />
         <Select
           options={subjectsArr}
-          placeholder="Subject"
+          defaultValue={{ label: "Azat jam", value: 1 }}
           key={subjectId[3]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T14:40:47.418Z", e);

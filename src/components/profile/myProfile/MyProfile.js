@@ -1,7 +1,6 @@
 import { CircularProgress, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { updateUserRequest } from "../../../state-management/users/requests";
 import { usersSelector } from "../../../state-management/users/selectors";
@@ -13,7 +12,6 @@ import { Alert } from "@mui/material";
 
 const Profile = () => {
   const [passwordError, setPasswordError] = useState(null);
-  const [requestError, setRequestError] = useState(null);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -33,7 +31,6 @@ const Profile = () => {
   const { error } = useSelector(usersSelector);
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (newPassword !== repeatPassword) {
@@ -60,13 +57,6 @@ const Profile = () => {
           <SettingsIcon style={{margin: 'auto'}}/>
           Settings
         </h2>
-        {console.log(navigate)}
-      {/* <button
-        className="go-back-button user-profile-go-back"
-        onClick={() => navigate(-1)}
-      >
-        Go Back
-      </button> */}
       <div className="Profile-Info-Container">
         <div className="User-Profile">
           <div className="disabled-info">
@@ -110,11 +100,11 @@ const Profile = () => {
       <div className="Profile-Info-Container">
         <h4>Change password</h4>
         <Divider />
-        {success && !requestError && (
+        {success && !error && (
           <Alert severity="success">Your password successfully changed!</Alert>
         )}
-        {requestError && (
-          <p style={{ color: "red", fontSize: 20 }}>{requestError}</p>
+        {error && (
+           <Alert severity="error">Password is not correct!</Alert>
         )}
         <div className="password-bar">
           <TextField id="outlined-basic" label="Old password..." type="password"
@@ -146,7 +136,6 @@ const Profile = () => {
             );
 
             setTimeout(() => {
-              setRequestError(error);
               error
                 ? setSuccess("")
                 : setSuccess("Password changed successfully");
