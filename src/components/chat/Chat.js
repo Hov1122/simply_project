@@ -31,6 +31,8 @@ const Chat = () => {
   const {userGroup} = user
   
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
+  const [messages, setMessages] = useState([]);
+  const [userMessages, setUserMessages] = useState([]);
 
   const messageAreaRef = useRef(null);
 
@@ -40,17 +42,23 @@ const Chat = () => {
 
   useEffect(() => {
     userGroup.forEach(({group}) => {
-      console.log('a')
       socket.emit("join_chat", { groupId: group.id });
     })
-    // if (currentGroup)
-    //   socket.emit("join_chat", { groupId: currentGroup });
   }, []);
 
   useEffect(() => {
+    
     socket.on("receive_message", (data) => {
-      if (data)
-        alert(data.text);
+      if (data) {
+        setMessages((messages) => [...messages, data]);
+      }
+    });
+    socket.on("message_sent", (data) => {
+      if (data) {
+        console.log(userMessages)
+        setUserMessages((userMessages) => [...userMessages, data])
+        // setUserMessages([...userMessages, data]);
+      }
     });
   }, [socket]);
 
@@ -104,85 +112,41 @@ const Chat = () => {
         </Grid>
         <Grid item xs={9} className="message-bar">
           <List className="messageArea" ref={messageAreaRef}>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-
-            <ListItem key="2">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="left"
-                    primary="MESSAGE FROM"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="left" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
+            {messages.map((msg) => {
+              return (
+                <ListItem key={msg.id}>
+                   <Grid container>
+                      <Grid item xs={12}>
+                        <ListItemText
+                          align="left"
+                          primary={msg.text}
+                        ></ListItemText>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <ListItemText align="left" secondary={msg.createdAt}></ListItemText>
+                      </Grid>
+                  </Grid>
+                </ListItem>
+              );
+            })}
+{userMessages.map((msg) => {
+              return (
+                <ListItem key={msg.id}>
+                   <Grid container>
+                      <Grid item xs={12}>
+                        <ListItemText
+                          align="right"
+                          primary={msg.text}
+                        ></ListItemText>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <ListItemText align="right" secondary={msg.createdAt}></ListItemText>
+                      </Grid>
+                  </Grid>
+                </ListItem>
+              );
+            })}
+           
           </List>
           <Divider />
           <Grid
