@@ -12,48 +12,69 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-// import Avatar from '@material-ui/core/Avatar';
 import Fab from "@material-ui/core/Fab";
 import GroupIcon from "@mui/icons-material/Group";
 import SendIcon from "@mui/icons-material/Send";
 
-//==============
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
+import { groupsSelector } from "../../state-management/groups/selectors";
+import { fetchGroupUsers } from "../../state-management/groups/requests";
+import UsersDropDown from "./usersDropDown/UsersDropDown";
 
 const socket = io.connect("http://localhost:5000");
 
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");
+  const [showUsers, setShowUsers] = useState(false);
   const {
-    user: { userGroup },
+    user: { userGroup, id },
   } = useSelector(authSelector);
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.id);
 
   const messageAreaRef = useRef(null);
 
+  const dispatch = useDispatch();
+  const { groupUsers } = useSelector(groupsSelector);
+
   useEffect(() => {
     messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
+
+    userGroup.forEach((el) => {
+      dispatch(fetchGroupUsers(el.group.id));
+    });
   }, []);
 
   useEffect(() => {
-    socket.emit("join_chat", { chatId: currentGroup });
+    socket.emit("join_chat", currentGroup);
   }, [currentGroup]);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
       alert(data.message);
     });
+
+    socket.on("message_sent", (data) => {
+      console.log(data);
+    });
   }, [socket]);
 
   const sendMessage = () => {
     socket.emit("send_message", {
       message: messageValue,
+      chat: currentGroup,
+      senderId: id,
     });
   };
 
   return (
     <div className="chat">
+      {showUsers && (
+        <UsersDropDown
+          users={groupUsers[currentGroup]}
+          setShowUsers={setShowUsers}
+        />
+      )}
       <h5 className="header-message">
         {" "}
         <b>Chat</b>
@@ -75,9 +96,11 @@ const Chat = () => {
               {userGroup.map((el, index) => {
                 return (
                   <ListItem
+                    sx={{ overflow: "auto" }}
                     button
                     key={el.group.id}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setCurrentGroup(el.group.id);
                     }}
                     className={!index ? "active-chat" : ""}
@@ -86,6 +109,13 @@ const Chat = () => {
                       <GroupIcon />
                     </ListItemIcon>
                     <ListItemText primary={el.group.name}></ListItemText>
+                    <ListItemText
+                      sx={{ display: "flex", marginLeft: "10px" }}
+                      onClick={() => setShowUsers(true)}
+                    >
+                      <GroupIcon sx={{ fontSize: "15px" }} />
+                      {groupUsers[el.group.id]?.length}
+                    </ListItemText>
                   </ListItem>
                 );
               })}
@@ -94,58 +124,6 @@ const Chat = () => {
         </Grid>
         <Grid item xs={9} className="message-bar">
           <List className="messageArea" ref={messageAreaRef}>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
-            <ListItem key="1">
-              <Grid container>
-                <Grid item xs={12}>
-                  <ListItemText
-                    align="right"
-                    primary="MESSAGE TO"
-                  ></ListItemText>
-                </Grid>
-                <Grid item xs={12}>
-                  <ListItemText align="right" secondary="TIME"></ListItemText>
-                </Grid>
-              </Grid>
-            </ListItem>
             <ListItem key="1">
               <Grid container>
                 <Grid item xs={12}>

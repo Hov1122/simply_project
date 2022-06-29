@@ -5,10 +5,12 @@ import {
   fetchGroupsFailure,
   createGroupSuccess,
   deleteGroupSuccess,
+  fetchGroupUsersSuccess,
 } from "./actions";
 
 const initialState = {
   groups: [],
+  groupUsers: {},
   loading: false,
   error: null,
 };
@@ -16,8 +18,14 @@ const initialState = {
 const groupsReducer = createReducer(initialState, (builder) => {
   builder
     // GET ALL GROUPS
-    .addCase(fetchGroupsSuccess, (state, { payload: { data }}) => {
+    .addCase(fetchGroupsSuccess, (state, { payload: { data } }) => {
       state.groups = data.groups;
+      state.loading = false;
+      state.error = null;
+    })
+    // GET ALL GROUPS
+    .addCase(fetchGroupUsersSuccess, (state, { payload: { data } }) => {
+      state.groupUsers[data.id] = data.users;
       state.loading = false;
       state.error = null;
     })
