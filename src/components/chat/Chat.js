@@ -16,8 +16,11 @@ import SendIcon from "@mui/icons-material/Send";
 
 import { useSelector, useDispatch } from "react-redux";
 import { authSelector } from "../../state-management/auth/selectors";
+import { messagesSelector } from "../../state-management/chat/selectors";
 import { groupsSelector } from "../../state-management/groups/selectors";
 import { fetchGroupUsers } from "../../state-management/groups/requests";
+import { fetchGroupsMessages } from "../../state-management/chat/requests";
+import { addUserMessage } from "../../state-management/chat/actions";
 import UsersDropDown from "./usersDropDown/UsersDropDown";
 
 const socket = io.connect("http://localhost:5000");
@@ -29,8 +32,9 @@ const Chat = () => {
   const { userGroup } = user;
 
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
-  const [messages, setMessages] = useState([]);
-
+  // const [messages, setMessages] = useState([]);
+  const { messages, loading, hasMore, error } = useSelector(messagesSelector);
+  console.log(loading, hasMore, error);
   const messageAreaRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -51,7 +55,8 @@ const Chat = () => {
   useEffect(() => {
     socket.on("receive_message", (data) => {
       if (data) {
-        setMessages((messages) => [...messages, { data, user: false }]);
+        dispatch(addUserMessage({ data, user: false }));
+
         setTimeout(() => {
           messageAreaRef.current.scrollTop =
             messageAreaRef.current.scrollHeight;
@@ -60,7 +65,7 @@ const Chat = () => {
     });
     socket.on("message_sent", (data) => {
       if (data) {
-        setMessages((messages) => [...messages, { data, user: true }]);
+        dispatch(addUserMessage({ data, user: true }));
         setTimeout(() => {
           messageAreaRef.current.scrollTop =
             messageAreaRef.current.scrollHeight;
@@ -70,37 +75,24 @@ const Chat = () => {
   }, [socket]);
 
   useEffect(() => {
-    setMessages(() => []);
-    currentGroup &&
-      socket.emit("get_group_messages", {
-        groupId: currentGroup,
-        userId: user.id,
-      });
-
-    socket.on("recieve_group_messages", (data) => {
-      if (data.length) {
-        setMessages((messages) => [...data, ...messages]);
-        setTimeout(() => {
-          messageAreaRef.current.scrollTop =
-            messageAreaRef.current.scrollHeight;
-        }, 0);
-      }
-    });
+    dispatch(fetchGroupsMessages({ groupId: currentGroup, initialise: true }));
+    setTimeout(() => {
+      messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
+    }, 100);
   }, [currentGroup]);
 
   const loadOnScroll = () => {
     if (messageAreaRef.current.scrollTop === 0 && messages.length) {
-      socket.emit("get_group_messages", {
-        groupId: currentGroup,
-        userId: user.id,
-        skip: messages.length,
-      });
+      const prevHeight = messageAreaRef.current.scrollHeight;
+      dispatch(
+        fetchGroupsMessages({ groupId: currentGroup, skip: messages.length })
+      );
+      setTimeout(() => {
+        messageAreaRef.current.scrollTop =
+          messageAreaRef.current.scrollHeight - prevHeight - 100;
+      }, 100);
     }
   };
-
-  useEffect(() => {
-    messageAreaRef.current.addEventListener("scroll", loadOnScroll);
-  }, [messageAreaRef, messages]);
 
   const sendMessage = () => {
     socket.emit("send_message", {
@@ -134,6 +126,7 @@ const Chat = () => {
             />
           </Grid>
           <Divider />
+
           <List>
             <div className="group-chats">
               {userGroup.map((el, index) => {
@@ -166,21 +159,26 @@ const Chat = () => {
           </List>
         </Grid>
         <Grid item xs={9} className="message-bar">
-          <List className="messageArea" ref={messageAreaRef}>
-            {messages.map(({ data, user }) => {
+          <List
+            className="messageArea"
+            ref={messageAreaRef}
+            onScroll={loadOnScroll}
+          >
+            {messages?.map(({ data, user }) => {
               const date = new Date(data?.createdAt);
               const time = date.toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               });
-              console.log(date.toLocaleDateString()); // to do add day on top
+              // console.log(date.toLocaleDateString()); // to do add day on top
+
               return (
                 <ListItem key={data.id}>
                   <Grid container>
                     <Grid item xs={12}>
                       <ListItemText
                         align={user ? "right" : "left"}
-                        secondary={`${data.sender?.firstName} ${data.sender?.lastName}`}
+                        secondary={`${data.sender?.firstName} ${data.sender?.lastName} ${data.sender?.role.name}`}
                       ></ListItemText>
                     </Grid>
                     <Grid item xs={12}>
@@ -193,12 +191,6 @@ const Chat = () => {
                       <ListItemText
                         align={user ? "right" : "left"}
                         secondary={time}
-                      ></ListItemText>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <ListItemText
-                        align={user ? "right" : "left"}
-                        secondary={`${data.sender?.role.name}`}
                       ></ListItemText>
                     </Grid>
                   </Grid>

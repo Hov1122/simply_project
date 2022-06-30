@@ -7,6 +7,7 @@ import testsReducer from "./tests/reducer";
 import usersReducer from "./users/reducer";
 import subjectsReducer from "./subjects/reducer";
 import scheduleReducer from "./schedule/reducer";
+import chatsReducer from "./chat/reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   tests: testsReducer,
   groups: groupsReducer,
   subjects: subjectsReducer,
-  schedules: scheduleReducer
+  schedules: scheduleReducer,
+  chats: chatsReducer,
 });
 
 const store = configureStore({
