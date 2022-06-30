@@ -48,6 +48,8 @@ export const fetchUserTestsRequest = (payload) => {
 
   if (filterBy && !filterBy["all"])
     url += `&subjectId=${filterBy["subjectId"]}`;
+
+  console.log(url);
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {
