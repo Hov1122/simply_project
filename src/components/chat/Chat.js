@@ -30,7 +30,6 @@ const Chat = () => {
 
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
   const [messages, setMessages] = useState([]);
-  const [userMessages, setUserMessages] = useState([]);
 
   const messageAreaRef = useRef(null);
 
@@ -38,9 +37,9 @@ const Chat = () => {
   const { groupUsers } = useSelector(groupsSelector);
 
   useEffect(() => {
-    userGroup.forEach(({group}) => {
-      socket.emit("join_chat", { groupId: group.id });
-    })
+    userGroup.forEach(({ group }) => {
+      socket.emit("join_chat", { groupId: group.id, userId: user.id });
+    });
     messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
 
     userGroup.forEach(({ group }) => {
@@ -50,23 +49,58 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    
     socket.on("receive_message", (data) => {
       if (data) {
-        setMessages((messages) => [...messages, data]);
+        setMessages((messages) => [...messages, { data, user: false }]);
+        setTimeout(() => {
+          messageAreaRef.current.scrollTop =
+            messageAreaRef.current.scrollHeight;
+        }, 0);
       }
     });
     socket.on("message_sent", (data) => {
       if (data) {
-        setUserMessages((userMessages) => [...userMessages, data])
-        // setUserMessages([...userMessages, data]);
+        setMessages((messages) => [...messages, { data, user: true }]);
+        setTimeout(() => {
+          messageAreaRef.current.scrollTop =
+            messageAreaRef.current.scrollHeight;
+        }, 0);
       }
     });
-
-    socket.on("message_sent", (data) => {
-      console.log(data);
-    });
   }, [socket]);
+
+  useEffect(() => {
+    setMessages(() => []);
+    currentGroup &&
+      socket.emit("get_group_messages", {
+        groupId: currentGroup,
+        userId: user.id,
+      });
+
+    socket.on("recieve_group_messages", (data) => {
+      if (data.length) {
+        setMessages((messages) => [...data, ...messages]);
+        setTimeout(() => {
+          messageAreaRef.current.scrollTop =
+            messageAreaRef.current.scrollHeight;
+        }, 0);
+      }
+    });
+  }, [currentGroup]);
+
+  const loadOnScroll = () => {
+    if (messageAreaRef.current.scrollTop === 0 && messages.length) {
+      socket.emit("get_group_messages", {
+        groupId: currentGroup,
+        userId: user.id,
+        skip: messages.length,
+      });
+    }
+  };
+
+  useEffect(() => {
+    messageAreaRef.current.addEventListener("scroll", loadOnScroll);
+  }, [messageAreaRef, messages]);
 
   const sendMessage = () => {
     socket.emit("send_message", {
@@ -133,41 +167,44 @@ const Chat = () => {
         </Grid>
         <Grid item xs={9} className="message-bar">
           <List className="messageArea" ref={messageAreaRef}>
-            {messages.map((msg) => {
+            {messages.map(({ data, user }) => {
+              const date = new Date(data?.createdAt);
+              const time = date.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+              console.log(date.toLocaleDateString()); // to do add day on top
               return (
-                <ListItem key={msg.id}>
-                   <Grid container>
-                      <Grid item xs={12}>
-                        <ListItemText
-                          align="left"
-                          primary={msg.text}
-                        ></ListItemText>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <ListItemText align="left" secondary={msg.createdAt}></ListItemText>
-                      </Grid>
+                <ListItem key={data.id}>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={user ? "right" : "left"}
+                        secondary={`${data.sender?.firstName} ${data.sender?.lastName}`}
+                      ></ListItemText>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={user ? "right" : "left"}
+                        primary={data.text}
+                      ></ListItemText>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={user ? "right" : "left"}
+                        secondary={time}
+                      ></ListItemText>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <ListItemText
+                        align={user ? "right" : "left"}
+                        secondary={`${data.sender?.role.name}`}
+                      ></ListItemText>
+                    </Grid>
                   </Grid>
                 </ListItem>
               );
             })}
-{userMessages.map((msg) => {
-              return (
-                <ListItem key={msg.id}>
-                   <Grid container>
-                      <Grid item xs={12}>
-                        <ListItemText
-                          align="right"
-                          primary={msg.text}
-                        ></ListItemText>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <ListItemText align="right" secondary={msg.createdAt}></ListItemText>
-                      </Grid>
-                  </Grid>
-                </ListItem>
-              );
-            })}
-           
           </List>
           <Divider />
           <Grid
@@ -181,6 +218,7 @@ const Chat = () => {
                 label="Type Something..."
                 fullWidth
                 variant="outlined"
+                inputProps={{ autoFocus: true }}
                 value={messageValue}
                 onKeyDown={(e) => {
                   if (e.key !== "Enter" && e.type === "keydown") return;
