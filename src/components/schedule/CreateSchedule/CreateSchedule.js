@@ -7,7 +7,7 @@ import { fetchSubjectsRequest } from "../../../state-management/subjects/request
 import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
-import { groupsSelector } from "../../../state-management/groups/selectors";
+import { authSelector } from "../../../state-management/auth/selectors";
 import Select from "react-select";
 
 function ScheduleCreater() {
@@ -15,9 +15,11 @@ function ScheduleCreater() {
   const { subjects } = useSelector(subjectsSelector);
   const [requestError, setRequestError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const { groups } = useSelector(groupsSelector);
+  const {
+    user: { userGroup },
+  } = useSelector(authSelector);
   const dispatch = useDispatch();
-  const container = useRef(null)
+  const container = useRef(null);
   const [scheduleGroup, setScheduleGroup] = useState(null);
 
   const subjectsArr = subjects.map((elem) => {
@@ -59,11 +61,10 @@ function ScheduleCreater() {
     },
   ]);
 
-
-  const groupsArr = groups.map((elem) => {
+  const groupsArr = userGroup.map(({ group }) => {
     return {
-      value: elem.id,
-      label: elem.name,
+      value: group.id,
+      label: group.name,
     };
   });
 
@@ -78,7 +79,7 @@ function ScheduleCreater() {
         <h3>{days[day]}</h3>
         <Select
           options={subjectsArr}
-          defaultValue={{ label: "Azat jam", value: 1 }}
+          defaultValue={{ label: "Free class", value: 1 }}
           key={subjectId[0]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T09:30:47.418Z", e);
@@ -86,7 +87,7 @@ function ScheduleCreater() {
         />
         <Select
           options={subjectsArr}
-          defaultValue={{ label: "Azat jam", value: 1 }}
+          defaultValue={{ label: "Free class", value: 1 }}
           key={subjectId[1]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T11:10:47.418Z", e);
@@ -94,7 +95,7 @@ function ScheduleCreater() {
         />
         <Select
           options={subjectsArr}
-          defaultValue={{ label: "Azat jam", value: 1 }}
+          defaultValue={{ label: "Free class", value: 1 }}
           key={subjectId[2]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T13:00:47.418Z", e);
@@ -102,7 +103,7 @@ function ScheduleCreater() {
         />
         <Select
           options={subjectsArr}
-          defaultValue={{ label: "Azat jam", value: 1 }}
+          defaultValue={{ label: "Free class", value: 1 }}
           key={subjectId[3]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T14:40:47.418Z", e);
@@ -153,12 +154,12 @@ function ScheduleCreater() {
       ) ||
       !data.groupId
     ) {
-      setRequestError('Something get wrong');
-      setSuccess('')
+      setRequestError("Something went wrong");
+      setSuccess("");
     } else {
-      setSuccess('Schedule added')
-      setRequestError('')
-      console.log(data)
+      setSuccess("Schedule added");
+      setRequestError("");
+      console.log(data);
       dispatch(createScheduleRequest(data));
     }
   };
@@ -172,10 +173,14 @@ function ScheduleCreater() {
       <div ref={container} className="Schedule-Container-Header">
         <h2>Create Schedule</h2>
         {success && !requestError && (
-          <h3 style={{ color: "green", fontSize: 20, textAlign: "center" }}>{success}</h3>
+          <h3 style={{ color: "green", fontSize: 20, textAlign: "center" }}>
+            {success}
+          </h3>
         )}
         {requestError && (
-          <h3 style={{ color: "red", fontSize: 20, textAlign: "center" }}>{requestError}</h3>
+          <h3 style={{ color: "red", fontSize: 20, textAlign: "center" }}>
+            {requestError}
+          </h3>
         )}
         <Select
           options={groupsArr}
@@ -191,7 +196,9 @@ function ScheduleCreater() {
         })}
       </div>
       <div className="Schedule-Container-Foot">
-        <button className="create-schedule-button" onClick={addSchedule}>{"Create Schedule"}</button>
+        <button className="create-schedule-button" onClick={addSchedule}>
+          {"Create Schedule"}
+        </button>
       </div>
     </div>
   );
