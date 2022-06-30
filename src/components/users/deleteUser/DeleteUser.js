@@ -8,24 +8,23 @@ import { usersSelector } from "../../../state-management/users/selectors";
 import { useSelector } from "react-redux";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
+import { TextField } from "@material-ui/core";
+import { filterUsersByInput } from "../../../helpers/helpers";
 
 const DeleteUser = () => {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const { users } = useSelector(usersSelector);
   const dispatch = useDispatch();
+  const [filteredUsers, setfilteredUsers] = useState(users);
 
-  const userJSX = ({ id, firstName, lastName, group }) => {
+  const userJSX = ({ id, firstName, email,lastName, group }) => {
+    console.log(group)
     return (
-      <div key={id} className={`Delete-User-Constainer-Form`}>
-        <input
-          type="checkbox"
-          id={id}
-          value={id}
-          onChange={handleChangeUsers}
-        />
-        <label htmlFor={id}>{`${firstName} ${lastName}`}</label>
-        <span>{group}</span>
+      <div id="checklist" key={id}>
+        <input id={id} type="checkbox" value={id} onChange={handleChangeUsers} />
+          <label htmlFor={id}><b>{`${firstName} ${lastName}`}<span className="user-email-span">{email}</span></b></label>
       </div>
     );
   };
@@ -57,19 +56,29 @@ const DeleteUser = () => {
     }
   };
 
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div className="Delete-User-Container">
       <div className="Delete-User-Container-Header">
-        <h2>Delete Users</h2>
+        <h2 style={{marginBottom: "25px"}}>Delete Users</h2>
+        <div className="search-field-container">
+        <TextField id="outlined-basic" label="Search user..." variant="outlined" value={searchKeyword} onChange={(e) => {
+            setSearchKeyword(e.target.value)
+            setLoading(true);
+            setTimeout(() => {
+              setfilteredUsers(filterUsersByInput(users, e.target.value));
+              setLoading(false)
+            }, 500)  
+          }}/>
+          <div className="loading-search-bar">{ loading &&  <Loading width="20px" height="20px"/>}</div>
+          </div>
       </div>
       <div className="Delete-User-Container-Main">
-        {users.map((elem) => {
-          return userJSX(elem);
-        })}
+        <div className="delete-table-wrapper">
+            {filteredUsers.map((elem) => {
+              return userJSX(elem);
+            })}
+        </div>
       </div>
       <div className="Delete-User-Container-Foot">
         <input value="Delete Users" type="button" onClick={handleDeleteUser} />
