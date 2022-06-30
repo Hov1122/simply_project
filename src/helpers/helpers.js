@@ -18,3 +18,14 @@ export const filterUsersByInput = (users, input) => {
     );
   });
 };
+
+// Add time
+export function addTime(startTime, addMinutes) {
+  const time = startTime.split(":");
+
+  time[1] = +time[1] + addMinutes;
+  time[0] = +time[0] + Math.floor(time[1] / 60);
+  time[1] %= 60;
+
+  return `${time[0]}:${time[1] < 10 ? "0" + time[1] : time[1]}`;
+}

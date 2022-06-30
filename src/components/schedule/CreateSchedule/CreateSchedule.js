@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { authSelector } from "../../../state-management/auth/selectors";
 import Select from "react-select";
+import { Alert } from "@mui/material";
 
 function ScheduleCreater() {
   const [loading] = useState(false);
@@ -34,30 +35,35 @@ function ScheduleCreater() {
       "2022-06-20T11:10:47.418Z": 1,
       "2022-06-20T13:00:47.418Z": 1,
       "2022-06-20T14:40:47.418Z": 1,
+      "2022-06-20T16:20:47.418Z": 1,
     },
     {
       "2022-06-20T09:30:47.418Z": 1,
       "2022-06-20T11:10:47.418Z": 1,
       "2022-06-20T13:00:47.418Z": 1,
       "2022-06-20T14:40:47.418Z": 1,
+      "2022-06-20T16:20:47.418Z": 1,
     },
     {
       "2022-06-20T09:30:47.418Z": 1,
       "2022-06-20T11:10:47.418Z": 1,
       "2022-06-20T13:00:47.418Z": 1,
       "2022-06-20T14:40:47.418Z": 1,
+      "2022-06-20T16:20:47.418Z": 1,
     },
     {
       "2022-06-20T09:30:47.418Z": 1,
       "2022-06-20T11:10:47.418Z": 1,
       "2022-06-20T13:00:47.418Z": 1,
       "2022-06-20T14:40:47.418Z": 1,
+      "2022-06-20T16:20:47.418Z": 1,
     },
     {
       "2022-06-20T09:30:47.418Z": 1,
       "2022-06-20T11:10:47.418Z": 1,
       "2022-06-20T13:00:47.418Z": 1,
       "2022-06-20T14:40:47.418Z": 1,
+      "2022-06-20T16:20:47.418Z": 1,
     },
   ]);
 
@@ -107,6 +113,14 @@ function ScheduleCreater() {
           key={subjectId[3]}
           onChange={(e) => {
             handleChangeSubject(day, "2022-06-20T14:40:47.418Z", e);
+          }}
+        />
+        <Select
+          options={subjectsArr}
+          defaultValue={{ label: "Free class", value: 1 }}
+          key={subjectId[4]}
+          onChange={(e) => {
+            handleChangeSubject(day, "2022-06-20T16:20:47.418Z", e);
           }}
         />
       </div>
@@ -159,7 +173,6 @@ function ScheduleCreater() {
     } else {
       setSuccess("Schedule added");
       setRequestError("");
-      console.log(data);
       dispatch(createScheduleRequest(data));
     }
   };
@@ -173,15 +186,9 @@ function ScheduleCreater() {
       <div ref={container} className="Schedule-Container-Header">
         <h2>Create Schedule</h2>
         {success && !requestError && (
-          <h3 style={{ color: "green", fontSize: 20, textAlign: "center" }}>
-            {success}
-          </h3>
+          <Alert severity="success">{success}</Alert>
         )}
-        {requestError && (
-          <h3 style={{ color: "red", fontSize: 20, textAlign: "center" }}>
-            {requestError}
-          </h3>
-        )}
+        {requestError && <Alert severity="error">{requestError}</Alert>}
         <Select
           options={groupsArr}
           placeholder="Group"

@@ -19,7 +19,7 @@ function TestCreater() {
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
 
-  const subjectSelect = subjects.map((elem) => {
+  const subjectSelect = subjects.slice(1).map((elem) => {
     return {
       value: elem.id,
       label: elem.name,
@@ -134,7 +134,6 @@ function TestCreater() {
       questions: questions,
       answers: answers,
     };
-    console.log(data);
     dispatch(createTestRequest(data));
   };
 

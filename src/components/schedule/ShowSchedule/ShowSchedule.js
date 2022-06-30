@@ -6,30 +6,45 @@ import { fetchGroupScheduleRequest } from "../../../state-management/schedule/re
 import { useSelector } from "react-redux";
 import { schedulesSelector } from "../../../state-management/schedule/selectors";
 import { authSelector } from "../../../state-management/auth/selectors";
+import { addTime, randomColor } from "../../../helpers/helpers";
 
 function ShowSchedule() {
   const [loading] = useState(false);
-  const {groupSchedules} = useSelector(schedulesSelector);
-  const {user : {userGroup}} = useSelector(authSelector)
-  const group = userGroup[0].group.id
+  const { groupSchedules } = useSelector(schedulesSelector);
+  const {
+    user: { userGroup },
+  } = useSelector(authSelector);
+  const group = userGroup[0].group.id;
   const dispatch = useDispatch();
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  let day = -1;
+  const times = ["9:30", "11:10", "13:00", "14:40", "16:20"];
 
   useEffect(() => {
     dispatch(fetchGroupScheduleRequest(group));
   }, []);
 
-  const daySchedule = (day) => {
+  const daySchedule = (index) => {
     return (
-      <div className="Schedule-day" key={day} data-value={days[day]}>
-        <h3>{days[day]}</h3>
-        { groupSchedules[0] &&
-          groupSchedules[day].scheduleSubject.map(item => {
-          return <span key={item.id}>{item.subject.name}</span>
-        })
-        }
-      </div>
+      <tr key={index}>
+        <td className="align-middle">{times[index]}</td>
+        {groupSchedules.map(({ scheduleSubject }) => {
+          if (scheduleSubject[index].subject.name == "Free class")
+            return <td style={{ backgroundColor: "#f7f7f7" }}></td>;
+          return (
+            <td key={scheduleSubject[index].subject.id}>
+              <span
+                style={{ backgroundColor: randomColor(), color: "#ffff" }}
+                className="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
+              >
+                {scheduleSubject[index].subject.name}
+              </span>
+              <div className="margin-10px-top font-size14">
+                {times[index]}-{addTime(times[index], 90)}
+              </div>
+            </td>
+          );
+        })}
+      </tr>
     );
   };
 
@@ -39,25 +54,24 @@ function ShowSchedule() {
 
   return (
     <div className="Schedule-Container">
-      <div className="Schedule-Container-Header">
-        <h2>Schedule</h2>
-      </div>
-      <div className="Schedule-Container-Main">
-        <div className="Schedule-Container-Main-Element">
-        <div className="Schedule-day">
-          <h3>Time</h3>
-          <span className="Schedule-time">9:30</span>
-          <span className="Schedule-time">11:10</span>
-          <span className="Schedule-time">13:00</span>
-          <span className="Schedule-time">14:40</span>
-        </div>
-        </div>
-        <div className="Schedule-Container-Main-Element">
-          {days.map(() => {
-            day += 1;
-            return daySchedule(day);
-          })}
-        </div>
+      <div className="table-responsive">
+        <table className="table table-bordered text-center">
+          <thead>
+            <tr className="bg-light-gray">
+              <th className="text-uppercase">Time</th>
+              <th className="text-uppercase">Monday</th>
+              <th className="text-uppercase">Tuesday</th>
+              <th className="text-uppercase">Wednesday</th>
+              <th className="text-uppercase">Thursday</th>
+              <th className="text-uppercase">Friday</th>
+            </tr>
+          </thead>
+          <tbody>
+            {days.map((el, index) => {
+              return daySchedule(index);
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );
