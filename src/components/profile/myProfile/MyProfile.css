@@ -19,6 +19,17 @@
     padding: 20px 70px 20px 70px;
 }
 
+.Average-Mark-Container {
+    position: relative;
+}
+
+.average-mark-profile {
+    position: absolute;
+    top: 60px;
+    font-size: 15px;
+    left: 2%;
+}
+
 .User-Profile {
     display: flex;
     justify-content: space-between;
@@ -34,6 +45,7 @@
 
 .password-bar {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 80%;
     padding: 10px;
@@ -59,4 +71,10 @@
 .save-changes :focus {
     box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
     outline: 0;
+}
+
+@media (max-width: 830px) {
+    .average-mark-profile {
+        top: 80px;
+    }
 }

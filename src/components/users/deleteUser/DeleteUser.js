@@ -19,12 +19,25 @@ const DeleteUser = () => {
   const dispatch = useDispatch();
   const [filteredUsers, setfilteredUsers] = useState(users);
 
-  const userJSX = ({ id, firstName, email,lastName, group }) => {
-    console.log(group)
+  useEffect(() => {
+    dispatch(fetchUsersRequest());
+  }, []);
+
+  const userJSX = ({ id, firstName, email, lastName }) => {
     return (
       <div id="checklist" key={id}>
-        <input id={id} type="checkbox" value={id} onChange={handleChangeUsers} />
-          <label htmlFor={id}><b>{`${firstName} ${lastName}`}<span className="user-email-span">{email}</span></b></label>
+        <input
+          id={id}
+          type="checkbox"
+          value={id}
+          onChange={handleChangeUsers}
+        />
+        <label htmlFor={id}>
+          <b>
+            {`${firstName} ${lastName}`}
+            <span className="user-email-span">{email}</span>
+          </b>
+        </label>
       </div>
     );
   };
@@ -39,45 +52,46 @@ const DeleteUser = () => {
     setUser(updatedList);
   };
 
-  useEffect(() => {
-    dispatch(fetchUsersRequest());
-  }, []);
-
   const handleDeleteUser = () => {
     const data = {
       ids: user,
     };
     if (!data.ids[0]) {
-      console.log("error");
       return;
     } else {
-      console.log("success");
       dispatch(deletedUserRequest(data));
     }
   };
 
-
   return (
     <div className="Delete-User-Container">
       <div className="Delete-User-Container-Header">
-        <h2 style={{marginBottom: "25px"}}>Delete Users</h2>
+        <h2 style={{ marginBottom: "25px" }}>Delete Users</h2>
         <div className="search-field-container">
-        <TextField id="outlined-basic" label="Search user..." variant="outlined" value={searchKeyword} onChange={(e) => {
-            setSearchKeyword(e.target.value)
-            setLoading(true);
-            setTimeout(() => {
-              setfilteredUsers(filterUsersByInput(users, e.target.value));
-              setLoading(false)
-            }, 500)  
-          }}/>
-          <div className="loading-search-bar">{ loading &&  <Loading width="20px" height="20px"/>}</div>
+          <TextField
+            id="outlined-basic"
+            label="Search user..."
+            variant="outlined"
+            value={searchKeyword}
+            onChange={(e) => {
+              setSearchKeyword(e.target.value);
+              setLoading(true);
+              setTimeout(() => {
+                setfilteredUsers(filterUsersByInput(users, e.target.value));
+                setLoading(false);
+              }, 500);
+            }}
+          />
+          <div className="loading-search-bar">
+            {loading && <Loading width="20px" height="20px" />}
           </div>
+        </div>
       </div>
       <div className="Delete-User-Container-Main">
         <div className="delete-table-wrapper">
-            {filteredUsers.map((elem) => {
-              return userJSX(elem);
-            })}
+          {filteredUsers.map((elem) => {
+            return userJSX(elem);
+          })}
         </div>
       </div>
       <div className="Delete-User-Container-Foot">

@@ -14,7 +14,7 @@ function ShowSchedule() {
   const {
     user: { userGroup },
   } = useSelector(authSelector);
-  const group = userGroup[0].group.id;
+  const group = userGroup[0]?.group?.id;
   const dispatch = useDispatch();
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const times = ["9:30", "11:10", "13:00", "14:40", "16:20"];
@@ -52,7 +52,7 @@ function ShowSchedule() {
     return <Loading />;
   }
 
-  return (
+  return userGroup.length ? (
     <div className="Schedule-Container">
       <div className="table-responsive">
         <table className="table table-bordered text-center">
@@ -74,6 +74,8 @@ function ShowSchedule() {
         </table>
       </div>
     </div>
+  ) : (
+    <span>You Dont Have Schedule For This Week</span>
   );
 }
 

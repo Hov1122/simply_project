@@ -20,6 +20,7 @@ import { Avatar } from "@mui/material";
 import { fetchGroupScheduleRequest } from "../../state-management/schedule/requests";
 import { schedulesSelector } from "../../state-management/schedule/selectors";
 import { addTime, randomColor } from "../../helpers/helpers";
+import { v4 as uuidv4 } from "uuid";
 
 function Home() {
   const { loading } = useSelector(usersSelector);
@@ -164,7 +165,7 @@ function Home() {
         <h3 style={{ marginLeft: 50, marginBottom: 20 }}>
           {"Today's Schedule"}
         </h3>
-        {groupSchedules.length ? (
+        {userGroup.length ? (
           <div className="Schedule-Container">
             <div className="table-responsive">
               <table className="table table-bordered text-center">
@@ -183,15 +184,18 @@ function Home() {
                       if (day !== new Date().getDay()) return;
 
                       return scheduleSubject.map(
-                        ({ subject: { id, name } }, index) => {
+                        ({ subject: { name } }, index) => {
                           if (name === "Free class") {
                             return (
-                              <td style={{ backgroundColor: "#f7f7f7" }}></td>
+                              <td
+                                style={{ backgroundColor: "#f7f7f7" }}
+                                key={uuidv4()}
+                              ></td>
                             );
                           }
 
                           return (
-                            <td key={id}>
+                            <td key={uuidv4()}>
                               <span
                                 style={{
                                   backgroundColor: randomColor(),

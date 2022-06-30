@@ -7,7 +7,7 @@ import { usersSelector } from "../../../state-management/users/selectors";
 import Loading from "../../common/Loading";
 import Divider from "@material-ui/core/Divider";
 import "./MyProfile.css";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 import { Alert } from "@mui/material";
 
 const Profile = () => {
@@ -31,7 +31,6 @@ const Profile = () => {
   const { error } = useSelector(usersSelector);
   const dispatch = useDispatch();
 
-
   useEffect(() => {
     if (newPassword !== repeatPassword) {
       setPasswordError("Passwords do not match");
@@ -45,53 +44,83 @@ const Profile = () => {
   }
   return (
     <div className="Profile-Container">
-      <h2 style={
-        { 
-          marginBottom: 40, 
+      <h2
+        style={{
+          marginBottom: 40,
           display: "flex",
           justifyContent: "space-between",
           color: "#344767",
-          width: "12%"
-        }
-        }>
-          <SettingsIcon style={{margin: 'auto'}}/>
-          Settings
-        </h2>
+          width: "12%",
+        }}
+      >
+        <SettingsIcon style={{ margin: "auto" }} />
+        Settings
+      </h2>
       <div className="Profile-Info-Container">
         <div className="User-Profile">
           <div className="disabled-info">
             <h4>Profile information</h4>
             <Divider />
             <div className="row">
-              <TextField id="outlined-basic" label="First name" disabled={"disabled"}
-              size="small" value={firstName} variant="outlined" className="disabled-textfield"/>
-              <TextField id="outlined-basic" label="Last name" disabled={"disabled"}
-              size="small" value={lastName} variant="outlined" className="disabled-textfield"/>
+              <TextField
+                id="outlined-basic"
+                label="First name"
+                disabled={"disabled"}
+                size="small"
+                value={firstName}
+                variant="outlined"
+                className="disabled-textfield"
+              />
+              <TextField
+                id="outlined-basic"
+                label="Last name"
+                disabled={"disabled"}
+                size="small"
+                value={lastName}
+                variant="outlined"
+                className="disabled-textfield"
+              />
             </div>
             <div className="row">
-              <TextField id="outlined-basic" label="Role" disabled={"disabled"}
-                size="small" value={name} variant="outlined" className="disabled-textfield"/>
-              <TextField id="outlined-basic" label="Email" disabled={"disabled"}
-              size="small" value={email} variant="outlined" className="disabled-textfield"/>
+              <TextField
+                id="outlined-basic"
+                label="Role"
+                disabled={"disabled"}
+                size="small"
+                value={name}
+                variant="outlined"
+                className="disabled-textfield"
+              />
+              <TextField
+                id="outlined-basic"
+                label="Email"
+                disabled={"disabled"}
+                size="small"
+                value={email}
+                variant="outlined"
+                className="disabled-textfield"
+              />
             </div>
           </div>
-          <div style={{margin: 'auto'}}>
-            <div style={{position: 'relative'}}>
+          <div style={{ margin: "auto" }}>
+            <div className="Average-Mark-Container">
               <h4>Average mark</h4>
-              <span style={
-                {
-                  position: 'absolute',
-                  top: '60px',
-                  fontSize: "15px",
-                  left: '40px'
-                }}>{avgMark?.toFixed(2)}/100</span>
-              <CircularProgress variant="determinate" value={avgMark?.toFixed(2) || 100} 
-              size={100} 
-              style={
-                { 
-                  color: (avgMark?.toFixed(2) < 60) ? "#03590a" : ((avgMark?.toFixed(2) > 40 ) ? "#d9c725" : "#c40014")
-                }
-              }/>
+              <span className="average-mark-profile">
+                {avgMark?.toFixed(2)}/100
+              </span>
+              <CircularProgress
+                variant="determinate"
+                value={avgMark?.toFixed(2) || 100}
+                size={100}
+                style={{
+                  color:
+                    avgMark?.toFixed(2) > 60
+                      ? "#03590a"
+                      : avgMark?.toFixed(2) > 40
+                      ? "#d9c725"
+                      : "#c40014",
+                }}
+              />
             </div>
           </div>
         </div>
@@ -103,25 +132,38 @@ const Profile = () => {
         {success && !error && (
           <Alert severity="success">Your password successfully changed!</Alert>
         )}
-        {error && (
-           <Alert severity="error">Password is not correct!</Alert>
-        )}
+        {error && <Alert severity="error">Password is not correct!</Alert>}
         <div className="password-bar">
-          <TextField id="outlined-basic" label="Old password..." type="password"
-          size="small" variant="outlined"  
-          onInput={(e) => {
-            setOldPassword(e.target.value);
-          }}/>
-          <TextField id="outlined-basic" label="New password..." type="password"
-          size="small" variant="outlined"  
-          onInput={(e) => {
-            setNewPassword(e.target.value);
-          }}/>
-          <TextField id="outlined-basic" label="Repeat new password..." type="password"
-          size="small" variant="outlined"  
-          onInput={(e) => {
-            setRepeatPassword(e.target.value);
-          }}/>
+          <TextField
+            id="outlined-basic"
+            label="Old password..."
+            type="password"
+            size="small"
+            variant="outlined"
+            onInput={(e) => {
+              setOldPassword(e.target.value);
+            }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="New password..."
+            type="password"
+            size="small"
+            variant="outlined"
+            onInput={(e) => {
+              setNewPassword(e.target.value);
+            }}
+          />
+          <TextField
+            id="outlined-basic"
+            label="Repeat new password..."
+            type="password"
+            size="small"
+            variant="outlined"
+            onInput={(e) => {
+              setRepeatPassword(e.target.value);
+            }}
+          />
         </div>
         {passwordError && <Alert severity="error">{passwordError}</Alert>}
         <button

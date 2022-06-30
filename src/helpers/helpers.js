@@ -19,6 +19,17 @@ export const filterUsersByInput = (users, input) => {
   });
 };
 
+// filter groups array
+export const filterGroupsByInput = (groups, input) => {
+  const inputChars = input.split("");
+
+  return groups.filter((group) => {
+    return inputChars.every((char) =>
+      group.name.toLowerCase().includes(char.toLowerCase())
+    );
+  });
+};
+
 // Add time
 export function addTime(startTime, addMinutes) {
   const time = startTime.split(":");
