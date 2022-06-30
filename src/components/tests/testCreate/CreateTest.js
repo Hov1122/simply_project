@@ -7,7 +7,7 @@ import { fetchSubjectsRequest } from "../../../state-management/subjects/request
 import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
-import { groupsSelector } from "../../../state-management/groups/selectors";
+import { authSelector } from "../../../state-management/auth/selectors";
 import Select from "react-select";
 
 function TestCreater() {
@@ -16,7 +16,7 @@ function TestCreater() {
   const [selectedGroups, setSelectedGroups] = useState(null);
 
   const { subjects } = useSelector(subjectsSelector);
-  const { groups } = useSelector(groupsSelector);
+  const { user: userGroup } = useSelector(authSelector);
   const dispatch = useDispatch();
 
   const subjectSelect = subjects.slice(1).map((elem) => {
@@ -25,7 +25,7 @@ function TestCreater() {
       label: elem.name,
     };
   });
-  const groupSelect = groups.map((elem) => {
+  const groupSelect = userGroup.map((elem) => {
     return {
       value: elem.id,
       label: elem.name,
