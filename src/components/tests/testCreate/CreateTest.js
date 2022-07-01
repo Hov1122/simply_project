@@ -20,7 +20,7 @@ function TestCreater() {
   const dispatch = useDispatch();
   const [questionNumber, setQuestionNumber] = useState(0)
   const [questions, setQuestions] = useState([])
-  const [answers, setAnswers] = useState([])
+  const [questionAnswers, setQuestionAnswers] = useState([])
 
   const subjectSelect = subjects.slice(1).map((elem) => {
     return {
@@ -54,7 +54,7 @@ function TestCreater() {
               <button type={`button`} onClick={deleteQuestion} >X</button>
             </div>
             <div className="AnswersForm">
-              {answers?.map(item => item)}
+              {questions[questionNumber]?.questionanswers?.map(item => item)}
             </div>
             <button type="button" id={questionNumber} onClick={addAnswerRow}>Add New Answer</button>
           </div>
@@ -62,12 +62,12 @@ function TestCreater() {
     )
   }
 
-  const AnswerJSX = (questinoNumber, answerNumber) => {
+  const AnswerJSX = (questionNumber, answerNumber) => {
     return (
-      <div className="Answer">
-        <Field type="checkbox" name={`answers[${questinoNumber}][${answerNumber}].isCorrect`}/>
-        <Field type="text" placeholder="Enter Answer" name={`answers[${questinoNumber}][${answerNumber}].name`}/>
-        <button className="delete-answer" value="X" onClick={deleteAnswer} data-value={`${questinoNumber},${answerNumber}`}/>
+      <div>
+        <Field type="checkbox" name={`answers[${questionNumber}][${answerNumber}].isCorrect`}/>
+        <Field type="text" placeholder="Enter Answer" name={`answers[${questionNumber}][${answerNumber}].name`}/>
+        <button className="delete-answer" value="X" onClick={deleteAnswer} data-value={`${questionNumber},${answerNumber}`}/>
       </div>
     )
   }
@@ -80,25 +80,30 @@ function TestCreater() {
   // ADD NEW ANSWER ROW
   const addAnswerRow = (e) => {
     const questionNumber = e.target.id;
-    setAnswers([
-      ...answers,
+    console.log(questions)
+    console.log(questions[questionNumber])
+    setQuestionAnswers(
+      ...questions[questionNumber].questionanswers,
       AnswerJSX(
         questionNumber,
-        answers.length
+        questions[questionNumber].questionanswers.length
       )
-    ])
-    console.log(answers)
+    )
+    console.log(questionAnswers)
   };
 
   // ADD NEW QUESTION
   const addQuestionRow = () => {
     setQuestionNumber(prevValue => prevValue + 1)
-    setAnswers([])
+    const newQuestion = {
+      questionjsx: QuestionJSX(
+        questionNumber
+      ),
+      questionanswers: [],
+    }
     setQuestions([
       ...questions,
-      QuestionJSX(
-        questionNumber
-      )
+      newQuestion
     ])
   };
 
@@ -164,7 +169,7 @@ function TestCreater() {
             <Field placeholder="Test rating" type="number" name="highestScore"/>
           </div>
           <div className="QuestionsForm">
-            {questions.map(item => item)}
+            {questions?.map(item => item.questionjsx)}
           </div>
           <Field type='button' value='Add new question' onClick={addQuestionRow}/>
         </Form>
