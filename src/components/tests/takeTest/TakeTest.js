@@ -1,5 +1,5 @@
 import { Pagination } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { authSelector } from "../../../state-management/auth/selectors";
@@ -26,6 +26,8 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
     length - hours * 60 === 0 ? length - hours * 60 : length - hours * 60 - 1
   );
   const [seconds, setSeconds] = useState(minutes === 0 ? 1 : 59);
+
+  const submitBtnRef = useRef();
 
   const dispatch = useDispatch();
 
@@ -96,7 +98,10 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
 
   const submitTestHandler = (message) => {
     dispatch(submitTestRequest({ answersIds: answers, testId }));
-    navigate("/home", { state: { testSubmitted: true, message } });
+
+    setTimeout(() => {
+      navigate("/home", { state: { testSubmitted: true, message } });
+    }, 1000);
   };
 
   return name === "Student" ? (
@@ -125,7 +130,10 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
                     return (
                       <label htmlFor={id} key={id}>
                         <div
-                          className="Answer"
+                          className={
+                            "Answer " +
+                            (answerValues[id] ? "picked-answer" : "")
+                          }
                           onClick={(e) =>
                             e.target.classList.toggle("picked-answer")
                           }
@@ -167,18 +175,24 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
             );
           })}
         {questions.length <= questionCount && (
-          <button
-            className="submit-test"
+          <div
+            className="btn-container"
             onClick={() => {
+              submitBtnRef?.current.classList.add("submit");
               setBlocking(false);
 
               setTimeout(() => {
                 submitTestHandler("Test Submitted Successfully");
-              }, 500);
+              }, 4000);
             }}
           >
-            Submit Test
-          </button>
+            <div className="btn" ref={submitBtnRef}>
+              <svg>
+                <rect x="0" y="0" fill="none" width="160" height="40"></rect>
+              </svg>{" "}
+              <span>Submit</span> <span>loading</span> <span>Submitted</span>
+            </div>
+          </div>
         )}
         <Pagination
           count={Math.ceil(questions.length / 5)}

@@ -25,7 +25,7 @@ function TestCreater() {
       label: elem.name,
     };
   });
-  const groupSelect = userGroup.map((elem) => {
+  const groupSelect = userGroup?.map((elem) => {
     return {
       value: elem.id,
       label: elem.name,
