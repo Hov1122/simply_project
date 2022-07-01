@@ -1,0 +1,21 @@
+.Warning-Container {
+    background-color: rgb(224, 222, 222);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-radius: 7px;
+    padding: 20px;
+    width: 400px;
+    height: 200px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    z-index: 1;
+}
+
+.warning-title {
+    margin-bottom: 20px;
+    font-size: 30px;
+}
