@@ -1,21 +1,28 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { authSelector } from "../../../state-management/auth/selectors";
 import "./SearchResults.css";
 
 const SearchResults = ({ foundUsers }) => {
+  const {
+    user: { id },
+  } = useSelector(authSelector);
   const navigate = useNavigate();
 
   return (
     <div className="Search-Results-Container">
-      {foundUsers.map(({ id, firstName, role }) => (
+      {foundUsers.map(({ id: userId, firstName, role }) => (
         <div
           className="Search-Results-Item"
-          key={id}
+          key={userId}
           onMouseDown={() => {
-            navigate(`/userProfile/${id}`);
+            navigate(`/profile/${userId}`);
           }}
         >
-          <span className="Search-Item-Name">{firstName}</span>
+          <span className="Search-Item-Name">
+            {firstName} {userId === id && "(you)"}
+          </span>
           <span className="Search-Item-Role">{role.name}</span>
         </div>
       ))}

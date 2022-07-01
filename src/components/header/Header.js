@@ -12,8 +12,8 @@ import { fetchUsersRequest } from "../../state-management/users/requests";
 import SearchResults from "./searchResults/SearchResults";
 import Loading from "../common/Loading";
 import { HeaderPagePart } from "./helper";
-import SettingsIcon from '@mui/icons-material/Settings';
-import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Header = () => {
   const [color] = useState(randomColor());
@@ -26,9 +26,8 @@ const Header = () => {
 
   const {
     token,
-    user: { firstName, image },
+    user: { id, firstName, image },
   } = useSelector(authSelector);
-
   const { users } = useSelector(usersSelector);
   const dispatch = useDispatch();
 
@@ -118,9 +117,9 @@ const Header = () => {
             {showDropDown && (
               <div className="profile-dropdown" ref={dropDownRef}>
                 <span
-                  style={{display: "flex", justifyContent: "space-between"}}
+                  style={{ display: "flex", justifyContent: "space-between" }}
                   onClick={() => {
-                    navigate("/myProfile");
+                    navigate(`/profile/${id}`);
                     setShowDropDown(false);
                   }}
                 >
@@ -128,7 +127,7 @@ const Header = () => {
                   Settings
                 </span>
                 <span
-                  style={{display: "flex", justifyContent: "space-between"}}
+                  style={{ display: "flex", justifyContent: "space-between" }}
                   onClick={() => {
                     dispatch(logoutRequest());
                   }}

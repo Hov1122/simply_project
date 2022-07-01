@@ -107,7 +107,7 @@ const Test = ({
             <button
               className="check-results-button"
               onClick={() =>
-                navigate("/checkResults", { state: { testId: id } })
+                navigate("/test/result", { state: { testId: id } })
               }
             >
               Check Results

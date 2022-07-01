@@ -1,11 +1,16 @@
 import { Avatar } from "@material-ui/core";
 import React, { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { authSelector } from "../../../state-management/auth/selectors";
 import "./UsersDropDown.css";
 
 const UsersDropDown = ({ users, setShowUsers }) => {
   const dropDownRef = useRef(null);
 
+  const {
+    user: { id },
+  } = useSelector(authSelector);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +37,7 @@ const UsersDropDown = ({ users, setShowUsers }) => {
           <div
             key={user.id}
             className="User-Container"
-            onClick={() => navigate(`/userProfile/${user?.id}`)}
+            onClick={() => navigate(`/profile/${user?.id}`)}
           >
             <Avatar
               sx={{ bgcolor: "#2596be", marginTop: "10px" }}
@@ -43,7 +48,9 @@ const UsersDropDown = ({ users, setShowUsers }) => {
                 <b>{user.firstName}</b>
               </p>
               <p>
-                <b>{user.lastName}</b>
+                <b>
+                  {user.lastName} {user.id === id && "(you)"}
+                </b>
               </p>
             </div>
           </div>

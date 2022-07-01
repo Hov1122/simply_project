@@ -32,7 +32,6 @@ const Chat = () => {
   const { userGroup } = user;
 
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
-  // const [messages, setMessages] = useState([]);
   const { messages, loading, hasMore, error } = useSelector(messagesSelector);
   console.log(loading, hasMore, error);
   const messageAreaRef = useRef(null);

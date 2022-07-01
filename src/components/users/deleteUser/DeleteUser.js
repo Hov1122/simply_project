@@ -56,6 +56,7 @@ const DeleteUser = () => {
     const data = {
       ids: user,
     };
+
     if (!data.ids[0]) {
       return;
     } else {

@@ -105,7 +105,7 @@ function Menu() {
                 {user?.role?.name === "Admin" && (
                   <li className="nav-link">
                     <NavLink
-                      to="/changeData"
+                      to="/admin"
                       style={({ isActive }) => ({
                         backgroundColor: isActive ? "#bfbec9" : "#ffff",
                       })}

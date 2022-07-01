@@ -1,12 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { authSelector } from "../../../state-management/auth/selectors";
 import { usersSelector } from "../../../state-management/users/selectors";
 import "./UserProfile.css";
+import MyProfile from "../myProfile/MyProfile";
 
 const UserProfile = () => {
-  const { id } = useParams();
+  const { id: userId } = useParams();
 
+  const {
+    user: { id },
+  } = useSelector(authSelector);
   const { users } = useSelector(usersSelector);
 
   const {
@@ -15,9 +20,11 @@ const UserProfile = () => {
     email,
     avgMark,
     role: { name },
-  } = users.find((user) => user.id === +id);
+  } = users.find((user) => user.id === +userId);
 
-  return (
+  return +userId === id ? (
+    <MyProfile />
+  ) : (
     <div style={{ height: "100%", width: "100%", padding: "20px" }}>
       <div style={{ height: "75px" }}></div>
       <div className="User-Profile-Container">

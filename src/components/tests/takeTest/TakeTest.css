@@ -1,5 +1,4 @@
 .Take-Test-Container {
-    background-color: #ffff;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -13,15 +12,16 @@
 }
 
 .Question-Container {
-    border: 2px solid gray;
-    border-radius: 7px;
+    background-color: #fff;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 70%;
-    margin: 10px auto;
-    padding-left: 15px;
-    padding-right: 15px;
+    align-items: flex-start;
+    width: 100%;
+    margin: 30px auto;
+    padding: 40px 10px;
+    padding-left: 40px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .css-1s2u09g-control {
@@ -34,6 +34,19 @@
     display: flex;
     flex-direction: column;
     margin: 20px 0;
+    width: 100%;
+}
+
+.Answer {
+    background-color: #f0f9ff;
+    width: 90%;
+    border: 1px solid #bad9f4;
+    padding: 10px;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+
 }
 
 .test-timer {
@@ -49,8 +62,8 @@
 .answer-input {
     -webkit-appearance: none;
     cursor: pointer;
-	background-color: #fafafa;
-	border: 1px solid #cacece;
+	background-color: #f0f9ff;
+	border: 2px solid #bad9f4;
     height: 20px;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
 	padding: 9px;
@@ -63,8 +76,8 @@
 }
 
 .answer-input:checked {
-    background-color: #e9ecee;
-	border: 1px solid #adb8c0;
+    background-color: #f0f9ff;
+	border: 1px solid green;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
 	color: #99a1a7;
 }
@@ -75,7 +88,7 @@
 	position: absolute;
 	top: 0;
 	left: 3px;
-	color: #99a1a7;
+	color: green;
 }
 
 .answer-text {

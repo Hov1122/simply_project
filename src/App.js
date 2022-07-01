@@ -9,20 +9,19 @@ import NotFound from "./components/notFound/NotFound";
 import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Loading from "./components/common/Loading";
-import UserProfile from "./components/profile/userProfile/UserProfile";
 import ChangeData from "./components/changeData/ChangeData";
 
 // LAZY LOADING
 const Home = lazy(() => import("./components/home/home"));
-const MyProfile = lazy(() =>
-  import("./components/profile/myProfile/MyProfile")
-);
 const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
 const CheckResults = lazy(() =>
   import("./components/tests/checkResults/CheckResults")
 );
 const Chat = lazy(() => import("./components/chat/Chat"));
+const UserProfile = lazy(() =>
+  import("./components/profile/userProfile/UserProfile")
+);
 
 function App() {
   return (
@@ -45,13 +44,11 @@ function App() {
 
                     <Route path="/tests" element={<Tests />} />
 
-                    <Route path="/myProfile" element={<MyProfile />} />
+                    <Route path="/profile/:id" element={<UserProfile />} />
 
-                    <Route path="/userProfile/:id" element={<UserProfile />} />
+                    <Route path="/test/result" element={<CheckResults />} />
 
-                    <Route path="/checkResults" element={<CheckResults />} />
-
-                    <Route path="/changeData" element={<ChangeData />} />
+                    <Route path="/admin" element={<ChangeData />} />
 
                     <Route path="/chat" element={<Chat />} />
                   </Route>

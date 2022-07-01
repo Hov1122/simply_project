@@ -7,6 +7,7 @@ import { submitTestRequest } from "../../../state-management/tests/requests";
 import { motion } from "framer-motion";
 import { useBlocker } from "../../../helpers/hooks/useBlocker";
 import "./TakeTest.css";
+import TestCountDown from "./TestCountDown/TestCountDown";
 
 const TakeTest = ({ questions, testId, testDuration: length }) => {
   const {
@@ -102,11 +103,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
     <div style={{ width: "100%" }}>
       <div style={{ height: 75 }}></div>
       <div className="Take-Test-Container">
-        <span className="test-timer">
-          {hours < 10 ? `0${hours}` : hours}:
-          {minutes < 10 ? `0${minutes}` : minutes}:
-          {seconds < 10 ? `0${seconds}` : seconds}
-        </span>
+        <TestCountDown hours={hours} minutes={minutes} seconds={seconds} />
         {questions
           .slice(questionCount - 5, questionCount)
           .map(({ id, name, answers }) => {
@@ -120,39 +117,49 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
                 key={id}
                 className="Question-Container"
               >
-                <h2>Question {questions.findIndex((q) => q.id === id) + 1}</h2>
-                <span className="question-text">{name}</span>
+                <span className="question-text">
+                  {questions.findIndex((q) => q.id === id) + 1}. {name}
+                </span>
                 <div className="Answers-Container">
                   {answers.map(({ id, name }) => {
                     return (
-                      <div key={id} className="Answer">
-                        <input
-                          className="answer-input"
-                          type="checkbox"
-                          checked={answerValues[id] || false}
-                          id={id}
-                          style={{ borderRadius: 10 }}
-                          onChange={(e) => {
-                            const { checked } = e.target;
+                      <label htmlFor={id} key={id}>
+                        <div
+                          className="Answer"
+                          onClick={(e) =>
+                            e.target.classList.toggle("picked-answer")
+                          }
+                        >
+                          <label htmlFor={id} className="answer-text">
+                            {name}
+                          </label>
+                          <input
+                            className="answer-input"
+                            type="checkbox"
+                            checked={answerValues[id] || false}
+                            id={id}
+                            style={{ borderRadius: 10 }}
+                            onChange={(e) => {
+                              const { checked } = e.target;
 
-                            setAnswerValues((prevValues) => {
-                              const newValues = Object.assign({}, prevValues);
-                              newValues[id] = checked;
-                              return newValues;
-                            });
+                              setAnswerValues((prevValues) => {
+                                const newValues = Object.assign({}, prevValues);
+                                newValues[id] = checked;
+                                return newValues;
+                              });
 
-                            if (checked) {
-                              setAnswers((prev) => [...prev, id]);
-                              return;
-                            }
+                              if (checked) {
+                                setAnswers((prev) => [...prev, id]);
+                                return;
+                              }
 
-                            setAnswers((prev) => prev.filter((a) => a !== id));
-                          }}
-                        />
-                        <label htmlFor={id} className="answer-text">
-                          {name}
-                        </label>
-                      </div>
+                              setAnswers((prev) =>
+                                prev.filter((a) => a !== id)
+                              );
+                            }}
+                          />
+                        </div>
+                      </label>
                     );
                   })}
                 </div>
