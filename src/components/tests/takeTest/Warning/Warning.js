@@ -21,12 +21,21 @@ const Warning = ({ setShowWarning }) => {
   };
 
   return (
-    <div className="Warning-Container" ref={warningRef}>
-      <h2 className="warning-title">Warning</h2>
-      <p className="warning-body">
-        Your test will automatically be submitted if you leave this page or your
-        browser
-      </p>
+    <div className="Message" ref={warningRef}>
+      <div className="Message-icon">
+        <i className="fa fa-bell-o"></i>
+      </div>
+      <div className="Message-body">
+        <p>
+          Your test will be submitted, if you leave this page or your browser!
+        </p>
+      </div>
+      <button
+        className="Message-close js-messageClose"
+        onClick={() => setShowWarning(false)}
+      >
+        <i className="fa fa-times"></i>
+      </button>
     </div>
   );
 };

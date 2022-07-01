@@ -5,22 +5,38 @@
 }
 
 .Tests-Container {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 15px;
     padding: 20px 5px 5px 0px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    
+    margin-bottom: 20px;    
 }
 
 .filter-tests {
+    border: none;
+    background-color: rgb(205, 205, 205);
+    border-radius: 3px;
     padding: 10px;
-    margin-top: 10px;
+}
+
+.Student-Nav, .Teacher-Nav {
+    background-color: #ffff;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    margin: 0 auto;
+    border-radius: 15px;
+    width: 80%;
+}
+
+.Student-Nav span, .Teacher-Nav span {
+    margin-right: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px;
 }
 
 .Tests-bar {
@@ -35,13 +51,15 @@
 
 .Tests-Main-Container > div {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     text-align: center;
     justify-content: center;
+    width: 100%;
 }
 
 .Tests-Nav {
-    width: 200px;
+    width: 100%;
     margin-bottom: 50px;
     margin-top: 20px;
 }
@@ -62,4 +80,12 @@
 
 .Teacher-Nav {
     text-align: center;
+}
+
+.test-starts-at {
+    font-size: 15px;
+}
+
+.active-link {
+    background-color: rgb(213, 211, 211);
 }
