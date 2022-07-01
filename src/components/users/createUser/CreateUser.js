@@ -14,7 +14,7 @@ function CreateUser() {
   const dispatch = useDispatch();
   const rowJSX = (userCount) => {
     return (
-      <div className="firstChild">
+      <div key={userCount}>
         <span>{userCount + 1}</span>
         <Field type='text' name={`data[${userCount}].firstName`} placeholder="First Name" />
         <Field type='text' name={`data[${userCount}].lastName`}  placeholder="Last Name" />
@@ -25,7 +25,7 @@ function CreateUser() {
           <option value={2}>Teacher</option>
           <option value={3}>Student</option>
         </Field>
-        <button onClick={deleteRow}>X</button>
+        <input type={`button`} onClick={deleteRow} id={userCount} value="X" />
       </div>
     )}
 
@@ -42,10 +42,12 @@ function CreateUser() {
 
   // ADD USER IN DATABASE
   const addUser = (data) => {
+    console.log(data)
     dispatch(createUserRequest(data));
   };
 
   const deleteRow = () => {
+    // avelacnel
   };
 
   if (loading) {
