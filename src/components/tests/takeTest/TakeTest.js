@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { useBlocker } from "../../../helpers/hooks/useBlocker";
 import "./TakeTest.css";
 import TestCountDown from "./TestCountDown/TestCountDown";
+import Warning from "./Warning/Warning";
 
 const TakeTest = ({ questions, testId, testDuration: length }) => {
   const {
@@ -16,6 +17,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
     },
   } = useSelector(authSelector);
 
+  const [showWarning, setShowWarning] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [blocking, setBlocking] = useState(true);
   const [questionCount, setQuestionCount] = useState(5);
@@ -106,6 +108,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
 
   return name === "Student" ? (
     <div style={{ width: "100%" }}>
+      {showWarning && <Warning setShowWarning={setShowWarning} />}
       <div style={{ height: 75 }}></div>
       <div className="Take-Test-Container">
         <TestCountDown hours={hours} minutes={minutes} seconds={seconds} />

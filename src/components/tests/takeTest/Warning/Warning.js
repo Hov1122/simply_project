@@ -1,0 +1,34 @@
+import React from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
+import "./Warning.css";
+
+const Warning = ({ setShowWarning }) => {
+  const warningRef = useRef();
+
+  useEffect(() => {
+    setTimeout(() => {
+      document.addEventListener("click", closeWarning);
+    }, 1000);
+
+    return () => document.removeEventListener("click", closeWarning);
+  });
+
+  const closeWarning = (e) => {
+    if (warningRef?.current.contains(e.target) || !warningRef) return;
+
+    setShowWarning(false);
+  };
+
+  return (
+    <div className="Warning-Container" ref={warningRef}>
+      <h2 className="warning-title">Warning</h2>
+      <p className="warning-body">
+        Your test will automatically be submitted if you leave this page or your
+        browser
+      </p>
+    </div>
+  );
+};
+
+export default Warning;
