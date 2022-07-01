@@ -9,7 +9,6 @@ import Test from "./testItem/Test";
 import { fetchUserTestsRequest } from "../../state-management/tests/requests";
 import TakeTest from "./takeTest/TakeTest";
 import { Pagination } from "@mui/material";
-
 import { subjectsSelector } from "../../state-management/subjects/selectors";
 import { fetchSubjectsRequest } from "../../state-management/subjects/requests";
 
@@ -188,7 +187,7 @@ function Tests() {
         </div>
 
         <div className="Tests-Main-Container">
-          {inComplete && (
+          {inComplete && !completed && (
             <div>
               {userTests?.map((test) => {
                 if (test.isComplete === false) {
