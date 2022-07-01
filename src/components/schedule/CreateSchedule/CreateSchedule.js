@@ -8,6 +8,8 @@ import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { authSelector } from "../../../state-management/auth/selectors";
+import { groupsSelector } from "../../../state-management/groups/selectors";
+
 import Select from "react-select";
 import { Alert } from "@mui/material";
 
@@ -17,11 +19,13 @@ function ScheduleCreater() {
   const [requestError, setRequestError] = useState(null);
   const [success, setSuccess] = useState(false);
   const {
-    user: { userGroup },
+    user: { userGroup,role: {name} },
   } = useSelector(authSelector);
+  const {groups} = useSelector(groupsSelector)
   const dispatch = useDispatch();
   const container = useRef(null);
   const [scheduleGroup, setScheduleGroup] = useState(null);
+
 
   const subjectsArr = subjects.map((elem) => {
     return {
@@ -67,7 +71,15 @@ function ScheduleCreater() {
     },
   ]);
 
-  const groupsArr = userGroup.map(({ group }) => {
+  const groupsArr = name === "Admin" ? 
+  groups.map(({ name, id }) => {
+    return {
+      value: id,
+      label: name,
+    };
+  })
+  :
+   userGroup.map(({ group }) => {
     return {
       value: group.id,
       label: group.name,
