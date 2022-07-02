@@ -1,45 +1,86 @@
-.Test-Container {
-    background-color: rgb(205, 207, 208);
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px 30px;
-    width: 220px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    opacity: .7;
-    margin: 40px 50px;
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+.course {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+    margin: 20px auto;
+	overflow: hidden;
+	width: 90%;
+    height: 80%;
+    opacity: .8;
 }
 
-.Test-Container:hover {
+.course:hover {
     opacity: 1;
 }
 
-.Test-Container h2 {
-    font-size: 30px;
+.course h6 {
+	opacity: 0.6;
+	margin: 0;
+	letter-spacing: 1px;
+	text-transform: uppercase;
 }
 
-.Test-Main {
+.course h2 {
+	letter-spacing: 1px;
+	margin: 10px 0;
+}
+
+.course-preview {
+	background-color: #2A265F;
+	color: #fff;
+	padding: 30px;
+	max-width: 250px;
+}
+
+.course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+}
+
+.test-body {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.progress-container {
+	width: 100%;
+}
+
+.progress-text {
+	font-size: 12px;
+	opacity: 0.6;
+	letter-spacing: 1px;
+    width: 100%;
+}
+
+.test-btn-container {
     display: flex;
     flex-direction: column;
-    font: bold 16px/1.5 sans-serif;
 }
 
-.Test-Main span {
-    margin-bottom: 20px;
-}
-
-.take-test-button, .check-results-button {
-    cursor: pointer;
+.start-test-btn, .test-result-btn {
+	cursor: pointer;
+	background-color: #0a009d;
+    color: #ffff;
+    padding: 10px;
     border: none;
     border-radius: 7px;
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px 0;
-    background-color: aqua;
-    font-size: 20px;
-    margin-top: 30px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.test-result-btn {
+    width: 15%;
+}
+
+.test-time-left {
+    font-size: 15px;
+    margin-bottom: 25px;
+    font: bold;
 }

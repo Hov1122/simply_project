@@ -69,55 +69,119 @@ const Test = ({
   }
 
   return (
-    <div className="Test-Container">
-      <h2>{name}</h2>
-      <div className="Test-Main">
-        <span>
-          Subject: {subjects?.find((sub) => sub.id === subjectId)?.name}
-        </span>
-        <span>Duration: {length} minutes</span>
-        {mark !== -1 ? (
-          <span style={{ color: `${mark >= 6 ? "lightgreen" : "red"}` }}>
-            Mark: {mark?.toFixed(2)}
-          </span>
-        ) : null}
-        {mark === -1 && timeLeft ? (
-          timeLeft >= 0 ? (
-            <span>Time Left: {timeLeft} minutes</span>
-          ) : (
-            <span>Test Ended</span>
-          )
-        ) : null}
-        <span>Questions: {questions?.length}</span>
-        {!testStarted ? (
-          <span>Starts At: {new Date(start).toUTCString()}</span>
-        ) : !teacher ? (
-          mark === -1 ? (
-            <button
-              className="take-test-button"
-              onClick={() => {
-                setTakeTest(true);
-                setTestId(id);
-                setCurrentQuestions(questions);
-              }}
-            >
-              Take Test
-            </button>
-          ) : (
-            <button
-              className="check-results-button"
-              onClick={() =>
-                navigate("/test/result", { state: { testId: id } })
-              }
-            >
-              Check Results
-            </button>
-          )
-        ) : (
-          <span>Created: {new Date(createdAt).toLocaleDateString()}</span>
-        )}
+    <div className="courses-container">
+      <div className="course">
+        <div className="course-preview">
+          <h6>
+            Subject: {subjects?.find((sub) => sub.id === subjectId)?.name}
+          </h6>
+          <h2>{name}</h2>
+        </div>
+        <div className="course-info">
+          <div className="progress-container">
+            <div className="progress-text">
+              <div className="test-body">
+                <div>
+                  <h6>Questions: {questions?.length}</h6>
+                  <h2>Duration: {length} minutes</h2>
+                </div>
+                {!testStarted ? (
+                  <span className="test-starts-at">
+                    Starts At: {new Date(start).toUTCString()}
+                  </span>
+                ) : !teacher ? (
+                  mark === -1 ? (
+                    <div className="test-btn-container">
+                      {mark === -1 && timeLeft ? (
+                        timeLeft >= 0 ? (
+                          <span className="test-time-left">
+                            Time Left: {timeLeft} minutes
+                          </span>
+                        ) : (
+                          <span className="test-time-left">Test Ended</span>
+                        )
+                      ) : null}
+                      <button
+                        className="start-test-btn"
+                        onClick={() => {
+                          setTakeTest(true);
+                          setTestId(id);
+                          setCurrentQuestions(questions);
+                        }}
+                      >
+                        Start
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      className="test-result-btn"
+                      onClick={() =>
+                        navigate("/test/result", { state: { testId: id } })
+                      }
+                    >
+                      Results
+                    </button>
+                  )
+                ) : (
+                  <span>
+                    Created: {new Date(createdAt).toLocaleDateString()}
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    // <div className="Test-Container">
+    //   <h2>{name}</h2>
+    //   <div className="Test-Main">
+    //     <span>
+    //       Subject: {subjects?.find((sub) => sub.id === subjectId)?.name}
+    //     </span>
+    //     <span>Duration: {length} minutes</span>
+    //     {mark !== -1 ? (
+    //       <span style={{ color: `${mark >= 6 ? "lightgreen" : "red"}` }}>
+    //         Mark: {mark?.toFixed(2)}
+    //       </span>
+    //     ) : null}
+    //     {mark === -1 && timeLeft ? (
+    //       timeLeft >= 0 ? (
+    //         <span>Time Left: {timeLeft} minutes</span>
+    //       ) : (
+    //         <span>Test Ended</span>
+    //       )
+    //     ) : null}
+    //     <span>Questions: {questions?.length}</span>
+    //     {!testStarted ? (
+    //       <span>Starts At: {new Date(start).toUTCString()}</span>
+    //     ) : !teacher ? (
+    //       mark === -1 ? (
+    //         <button
+    //           className="take-test-button"
+    //           onClick={() => {
+    //             setTakeTest(true);
+    //             setTestId(id);
+    //             setCurrentQuestions(questions);
+    //           }}
+    //         >
+    //           Take Test
+    //         </button>
+    //       ) : (
+    //         <button
+    //           className="check-results-button"
+    //           onClick={() =>
+    //             navigate("/test/result", { state: { testId: id } })
+    //           }
+    //         >
+    //           Check Results
+    //         </button>
+    //       )
+    //     ) : (
+    //       <span>Created: {new Date(createdAt).toLocaleDateString()}</span>
+    //     )}
+    //   </div>
+    // </div>
   );
 };
 
