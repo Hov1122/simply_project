@@ -8,8 +8,8 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemText from "@material-ui/core/ListItemText";
 import Fab from "@material-ui/core/Fab";
 import GroupIcon from "@mui/icons-material/Group";
 import SendIcon from "@mui/icons-material/Send";
@@ -32,8 +32,8 @@ const Chat = () => {
   const { userGroup } = user;
 
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
-  const { messages, loading, hasMore, error } = useSelector(messagesSelector);
-  console.log(loading, hasMore, error);
+  const { messages, loading} = useSelector(messagesSelector);
+  console.log(loading)
   const messageAreaRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -128,30 +128,28 @@ const Chat = () => {
 
           <List>
             <div className="group-chats">
-              {userGroup.map((el, index) => {
+              {userGroup.map((el) => {
                 return (
-                  <ListItem
-                    sx={{ overflow: "auto" }}
-                    button
+                  <div
+                    className={"group-list-item " +(currentGroup === el.group.id ? "active-chat" : "")}
                     key={el.group.id}
                     onClick={(e) => {
                       e.stopPropagation();
                       setCurrentGroup(el.group.id);
                     }}
-                    className={!index ? "active-chat" : ""}
                   >
-                    <ListItemIcon>
-                      <GroupIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={el.group.name}></ListItemText>
-                    <ListItemText
-                      sx={{ display: "flex", marginLeft: "10px" }}
-                      onClick={() => setShowUsers(true)}
-                    >
-                      <GroupIcon sx={{ fontSize: "15px" }} />
-                      {groupUsers[el.group.id]?.length}
-                    </ListItemText>
-                  </ListItem>
+                      <div className="group-chat-name">
+                        <GroupIcon />
+                        <h3 style={{ marginLeft: "5px" }}>{el.group.name}</h3>
+                      </div>
+                      <div 
+                        style={{ display: "flex", marginLeft: "10px" }}
+                        onClick={() => setShowUsers(true)}
+                      >
+                        <GroupIcon sx={{ fontSize: "15px" }} />
+                        <span style={{ marginLeft: "5px", marginTop: "-5px"}}>{groupUsers[el.group.id]?.length}</span>
+                      </div>
+                  </div>
                 );
               })}
             </div>
@@ -169,30 +167,26 @@ const Chat = () => {
                 hour: "2-digit",
                 minute: "2-digit",
               });
-              // console.log(date.toLocaleDateString()); // to do add day on top
-
               return (
                 <ListItem key={data.id}>
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <ListItemText
-                        align={user ? "right" : "left"}
-                        secondary={`${data.sender?.firstName} ${data.sender?.lastName} ${data.sender?.role.name}`}
-                      ></ListItemText>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <ListItemText
-                        align={user ? "right" : "left"}
-                        primary={data.text}
-                      ></ListItemText>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <ListItemText
-                        align={user ? "right" : "left"}
-                        secondary={time}
-                      ></ListItemText>
-                    </Grid>
-                  </Grid>
+                  <div className={"message " + (user ? "right" : "")}>
+                    <div>
+                      {!user &&  
+                        <div>
+                          <div>
+                            <span className="user-role">{data.sender?.role.name}</span>
+                            <span className="user-name"><b>{data.sender?.firstName} {data.sender?.lastName} </b></span>
+                          </div>
+                        </div>
+                      }
+                      <div className={"sended-message-box " + (user ? "right" : "")}>
+                        <div className={user ? "sended-messages" : "recived-messages"}>{data.text}</div>
+                      </div>
+                      <div className={user ? "right" : ""}>
+                        <div>{time}</div>
+                      </div>
+                    </div>
+                  </div>
                 </ListItem>
               );
             })}

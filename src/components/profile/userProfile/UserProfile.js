@@ -1,10 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { usersSelector } from "../../../state-management/users/selectors";
 import "./UserProfile.css";
 import MyProfile from "../myProfile/MyProfile";
+import { getUserByIdRequest } from "../../../state-management/users/requests";
 
 const UserProfile = () => {
   const { id: userId } = useParams();
@@ -12,15 +13,14 @@ const UserProfile = () => {
   const {
     user: { id },
   } = useSelector(authSelector);
-  const { users } = useSelector(usersSelector);
 
-  const {
-    firstName,
-    lastName,
-    email,
-    avgMark,
-    role: { name },
-  } = users.find((user) => user.id === +userId);
+  const { userProfile } = useSelector(usersSelector)
+
+  const dispatch = useDispatch();  
+  
+  useEffect(() => {
+    dispatch(getUserByIdRequest(userId))
+  },[dispatch])
 
   return +userId === id ? (
     <MyProfile />
@@ -31,25 +31,25 @@ const UserProfile = () => {
         <h2 style={{ margin: "15px auto" }}>Profile</h2>
         <div className="User-Profile">
           <h3>
-            First Name : <span>{firstName}</span>
+            First Name : <span>{userProfile?.firstName}</span>
           </h3>
 
           <h3>
-            Last Name : <span>{lastName}</span>
+            Last Name : <span>{userProfile?.lastName}</span>
           </h3>
 
           {name !== "Teacher" && (
             <h3>
-              Average Mark : <span>{avgMark?.toFixed(2)}</span>
+              Average Mark : <span>{userProfile?.avgMark?.toFixed(2)}</span>
             </h3>
           )}
 
           <h3>
-            Email : <span>{email}</span>
+            Email : <span>{userProfile?.email}</span>
           </h3>
 
           <h3>
-            Role : <span>{name}</span>
+            Role : <span>{userProfile?.role?.name}</span>
           </h3>
         </div>
       </div>

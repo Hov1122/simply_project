@@ -1,25 +1,54 @@
 import axiosApiInstance from "../../helpers/axiosInstance/axiosApiInstance";
 import {
+  fetchTopStudentsSuccess,
   createUserSuccess,
   deleteUserSuccess,
   fetchUsersFailure,
   fetchUsersPending,
   fetchUsersSuccess,
   updateUserSuccess,
+  fetchUserByIdSuccess,
 } from "./actions";
 
-// GET ALL USERS
-export const fetchUsersRequest = () => {
+// GET USERS
+export const fetchUsersRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
-      const { data } = await axiosApiInstance.get(`/users`);
+      const { data } = await axiosApiInstance.get(`/users/?firstName=${payload}`);
       dispatch(fetchUsersSuccess(data));
     } catch (error) {
       dispatch(fetchUsersFailure(error));
     }
   };
 };
+
+// GET USER BY ID
+export const getUserByIdRequest = (payload) => {
+  return async (dispatch) => {
+    dispatch(fetchUsersPending());
+    try {
+      const { data } = await axiosApiInstance.get(`/users/${payload}`);
+      dispatch(fetchUserByIdSuccess(data));
+    } catch (error) {
+      dispatch(fetchUsersFailure(error));
+    }
+  };
+};
+
+// FILTER TOP 3 USERS
+export const getTopStudentsRequest = () => {
+  return async (dispatch) => {
+    dispatch(fetchUsersPending());
+    try {
+      const { data } = await axiosApiInstance.get(`/users/topUsers`);
+      dispatch(fetchTopStudentsSuccess(data));
+    } catch (error) {
+      dispatch(fetchUsersFailure(error));
+    }
+  };
+};
+
 
 // CREATE USER
 export const createUserRequest = (payload) => {

@@ -4,6 +4,12 @@ export const userTypes = {
     // GET ALL USERS
     FETCH_USERS_SUCCESS: "FETCH_USERS_SUCCESS",
 
+    // GET USER BY ID
+    FETCH_USER_BY_ID_SUCCESS: "FETCH_USER_BY_ID_SUCCESS",
+
+    //GET TOP 3 STUDENTS
+    GET_TOP_STUDENTS_SUCCESS: "GET_TOP_STUDENTS_SUCCESS",
+
     // CREATE USER
     CREATE_USER_SUCCESS: "CREATE_USER_SUCCESS",
 
@@ -21,6 +27,12 @@ export const userTypes = {
 
 // GET ALL USERS
 export const fetchUsersSuccess = createAction(userTypes.FETCH_USERS_SUCCESS);
+
+ // GET USER BY ID
+export const fetchUserByIdSuccess = createAction(userTypes.FETCH_USER_BY_ID_SUCCESS);
+
+//GET TOP 3 STUDENTS
+export const fetchTopStudentsSuccess = createAction(userTypes.GET_TOP_STUDENTS_SUCCESS);  
 
 // CREATE USER
 export const createUserSuccess = createAction(userTypes.CREATE_USER_SUCCESS);

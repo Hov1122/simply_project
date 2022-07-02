@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import Loading from "../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,9 +21,10 @@ import { fetchGroupScheduleRequest } from "../../state-management/schedule/reque
 import { schedulesSelector } from "../../state-management/schedule/selectors";
 import { addTime, randomColor } from "../../helpers/helpers";
 import { v4 as uuidv4 } from "uuid";
+import { getTopStudentsRequest } from "../../state-management/users/requests";
 
 function Home() {
-  const { loading } = useSelector(usersSelector);
+  const [loading, setLoading] = useState(false);
   const {
     user: {
       id,
@@ -34,7 +35,7 @@ function Home() {
       userGroup,
     },
   } = useSelector(authSelector);
-  const { users } = useSelector(usersSelector);
+  const { topStudents } = useSelector(usersSelector);
   const { userTests } = useSelector(testsSelector);
   const { groupSchedules } = useSelector(schedulesSelector);
 
@@ -47,21 +48,14 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true)
+    dispatch(getTopStudentsRequest())
     dispatch(fetchUserTestsRequest(id));
     dispatch(fetchGroupScheduleRequest(group));
+    setTimeout(()=> {
+      setLoading(false);
+    }, 500)
   }, [dispatch]);
-
-  const getTopStudents = (users) => {
-    let topStudents = [...users];
-    topStudents.sort((a, b) =>
-      a.avgMark < b.avgMark ? 1 : a.avgMark > b.avgMark ? -1 : 0
-    );
-    if (topStudents.length >= 3) {
-      return [topStudents[0], topStudents[1], topStudents[2]];
-    } else {
-      return [...topStudents];
-    }
-  };
 
   if (loading) {
     return <Loading />;
@@ -136,12 +130,12 @@ function Home() {
             <h3 style={{ marginRight: "50px" }}>Top 3 Students!</h3>
           </div>
           <div className="top-students-container">
-            {getTopStudents(users).map((user) => {
+            {topStudents.map((user) => {
               return (
                 <div
                   className="card-top-user"
                   key={user.id}
-                  onClick={() => navigate(`/userProfile/${user.id}`)}
+                  onClick={() => navigate(`/profile/${user.id}`)}
                 >
                   <Avatar
                     sx={{ bgcolor: "#2596be", marginTop: "10px" }}

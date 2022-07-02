@@ -4,7 +4,7 @@ import { authSelector } from "../../state-management/auth/selectors";
 import { useNavigate } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import "./Header.css";
-import { filterUsersByInput, randomColor } from "../../helpers/helpers";
+import { randomColor } from "../../helpers/helpers";
 import { Avatar } from "@mui/material";
 import { logoutRequest } from "../../state-management/auth/requests";
 import { usersSelector } from "../../state-management/users/selectors";
@@ -14,13 +14,12 @@ import Loading from "../common/Loading";
 import { HeaderPagePart } from "./helper";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { debounce } from "@material-ui/core";
 
 const Header = () => {
   const [color] = useState(randomColor());
-  const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
-  const [foundUsers, setFoundUsers] = useState([]);
   const [showFoundUsers, setShowFoundUsers] = useState(false);
   const dropDownRef = useRef(null);
 
@@ -28,22 +27,24 @@ const Header = () => {
     token,
     user: { id, firstName, image },
   } = useSelector(authSelector);
-  const { users } = useSelector(usersSelector);
+  const { users, loading } = useSelector(usersSelector);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   useEffect(() => {
     document.removeEventListener("click", closeDropDown);
-
-    token && dispatch(fetchUsersRequest());
-  }, [token, dispatch]);
+  }, []);
 
   const closeDropDown = (e) => {
     if (!dropDownRef || !dropDownRef?.current?.contains(e.target)) {
       setShowDropDown(false);
     }
   };
+
+  const handleSearch = debounce((keyword) => {
+    dispatch(fetchUsersRequest(keyword))
+  });
 
   return token ? (
     <div
@@ -76,17 +77,12 @@ const Header = () => {
                 onBlur={() => setShowFoundUsers(false)}
                 onInput={(e) => {
                   setSearchValue(e.target.value);
-                  setLoading(true);
-
-                  setTimeout(() => {
-                    setFoundUsers(filterUsersByInput(users, e.target.value));
-                    setLoading(false);
-                  }, 500);
+                  handleSearch(e.target.value)
                 }}
               />
             </div>
             {showFoundUsers && searchValue.length ? (
-              <SearchResults foundUsers={foundUsers} />
+              <SearchResults foundUsers={users} />
             ) : null}
           </div>
           <div className="profile-picture-dropdown">
