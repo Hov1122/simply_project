@@ -80,8 +80,6 @@ function TestCreater() {
   // ADD NEW ANSWER ROW
   const addAnswerRow = (e) => {
     const questionNumber = e.target.id;
-    console.log(questions)
-    console.log(questions[questionNumber])
     setQuestionAnswers(
       ...questions[questionNumber].questionanswers,
       AnswerJSX(
@@ -109,7 +107,6 @@ function TestCreater() {
 
   // ADD TEST IN DATABASE
   const addTest = (data) => {
-    console.log(data)
     dispatch(createTestRequest(data));
   };
 

@@ -10,16 +10,18 @@ import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
 import { TextField } from "@material-ui/core";
 import { debounce } from "../../../helpers/helpers";
+import { Alert } from "@mui/material";
 
 const DeleteUser = () => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const { users } = useSelector(usersSelector);
+  const { users, error } = useSelector(usersSelector);
+  const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSearchChange = debounce(() => {
-    dispatch(fetchUsersRequest(searchKeyword));
+  const handleSearchChange = debounce((search) => {
+    dispatch(fetchUsersRequest(search));
   });
 
   const userJSX = ({ id, firstName, email, lastName }) => {
@@ -60,6 +62,7 @@ const DeleteUser = () => {
       return;
     } else {
       dispatch(deletedUserRequest(data));
+      setSuccess(!error)
     }
   };
 
@@ -74,7 +77,7 @@ const DeleteUser = () => {
             variant="outlined"
             value={searchKeyword}
             onChange={(e) => {
-              handleSearchChange();
+              handleSearchChange(e.target.value);
               setSearchKeyword(e.target.value);
               setLoading(true);
               setTimeout(() => {
@@ -87,6 +90,7 @@ const DeleteUser = () => {
               <Loading width="16px" height="16px"></Loading>
             </div>
           )}
+          {!loading && success && <Alert severity="success">Users deleted successfully!</Alert>}
         </div>
       </div>
       <div className="Delete-User-Container-Main">

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./tests.css";
 import Loading from "../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,22 +15,14 @@ import { fetchSubjectsRequest } from "../../state-management/subjects/requests";
 function Tests() {
   const [testId, setTestId] = useState();
   const [createTest, setCreateTest] = useState(false);
-  const [inComplete, setInComplete] = useState(false);
   const [completed, setCompleted] = useState(false);
-  const [showTests, setShowTests] = useState(false);
   const [takeTest, setTakeTest] = useState(false);
   const [currentQuestions, setCurrentQuestions] = useState([]);
   const [testDuration, setTestDuration] = useState({});
   const [skipInComplete, setSkipInComplete] = useState(0);
   const [skipCompleted, setSkipCompleted] = useState(0);
   const [filterBy, setFilterBy] = useState({ all: true });
-
-  const completedRef = useRef(null);
-  const inCompleteRef = useRef(null);
-  const createTestRef = useRef(null);
-  const showTestsRef = useRef(null);
-  const hideFilter = useRef(null);
-  const hidePagination = useRef(null);
+  const [showTests, setShowTests] = useState(false);
 
   const { userTests, count } = useSelector(testsSelector);
   const dispatch = useDispatch();
@@ -53,8 +45,9 @@ function Tests() {
       fetchUserTestsRequest({ isComplete: completed, id, filterBy, skip })
     );
     if (name === "Student") {
-      setInComplete(true);
+      setCompleted(false);
     } else {
+      // setCreateTest(false);
       setShowTests(true);
     }
   }, [dispatch, filterBy]);
@@ -93,35 +86,18 @@ function Tests() {
       <div className="Tests-bar"></div>
       <div className="Tests-Container">
         <div className="Tests-Nav">
+
+
           {name === "Student" ? (
             <div className="Student-Nav">
-              <span
-                ref={inCompleteRef}
-                className="active-link"
-                onClick={() => {
-                  setCompleted(false);
-                  setCreateTest(false);
-                  setInComplete(true);
-                  inCompleteRef.current.classList.add("active-link");
-                  completedRef.current.classList.remove("active-link");
-                }}
-              >
-                Upcoming
-              </span>
-              <span
-                ref={completedRef}
-                onClick={() => {
-                  setCreateTest(false);
-                  setInComplete(false);
-                  setCompleted(true);
-                  completedRef.current.classList.add("active-link");
-                  inCompleteRef.current.classList.remove("active-link");
-                }}
-              >
-                Finished
-              </span>
+              <div className="switch-button"
+              onClick={() => {
+                setCompleted((prev)=> !prev)}
+              }>
+                <input className="switch-button-checkbox" type="checkbox"></input>
+                <label className="switch-button-label" htmlFor=""><span className="switch-button-label-span">Upcoming</span></label>
+              </div>
               <select
-                ref={hideFilter}
                 className="filter-tests"
                 onChange={(e) => filterTest(e)}
               >
@@ -139,35 +115,20 @@ function Tests() {
             </div>
           ) : (
             <div className="Teacher-Nav">
-              <span
-                className="active-link"
-                ref={showTestsRef}
-                onClick={() => {
-                  setShowTests(true);
-                  setCreateTest(false);
-                  showTestsRef.current.classList.add("active-link");
-                  createTestRef.current.classList.remove("active-link");
-                  hideFilter.current.style.display = "inline-block";
-                  hidePagination.current.style.display = "inline-block";
-                }}
-              >
-                Tests
-              </span>
-              <span
-                ref={createTestRef}
-                onClick={() => {
-                  setShowTests(false);
-                  setCreateTest(true);
-                  createTestRef.current.classList.add("active-link");
-                  showTestsRef.current.classList.remove("active-link");
-                  hideFilter.current.style.display = "none";
-                  hidePagination.current.style.display = "none";
-                }}
-              >
-                Create
-              </span>
-              <select
-                ref={hideFilter}
+              <div className="switch-button teacher-nav-switch"
+              onClick={() => { 
+                if (createTest) {
+                  setCreateTest(false)
+                  setShowTests(true)
+                } else {
+                  setCreateTest(true)
+                  setShowTests(false)
+                }
+              }}>
+                <input className="switch-button-checkbox" type="checkbox"></input>
+                <label className="switch-button-label" htmlFor=""><span className="switch-button-label-span">Tests</span></label>
+              </div>
+              {!createTest && <select
                 className="filter-tests"
                 onChange={(e) => filterTest(e)}
               >
@@ -181,13 +142,13 @@ function Tests() {
                     );
                   })}
                 </optgroup>
-              </select>
+              </select>}
             </div>
           )}
         </div>
 
         <div className="Tests-Main-Container">
-          {inComplete && !completed && (
+          {!completed && (
             <div>
               {userTests?.map((test) => {
                 if (test.isComplete === false) {
@@ -225,7 +186,7 @@ function Tests() {
               })}
             </div>
           )}
-          {showTests && (
+          {showTests && !createTest && (
             <div>
               {userTests?.map((test) => {
                 return (
@@ -242,21 +203,22 @@ function Tests() {
               })}
             </div>
           )}
-          {createTest && <TestCreater />}
+          {createTest && !showTests && <TestCreater />}
         </div>
-        <div ref={hidePagination}>
-          <Pagination
-            count={Math.ceil(count / 5)}
-            variant="outlined"
-            shape="rounded"
-            size="large"
-            onChange={(e, value) => {
-              const skip = (value - 1) * 5;
-
-              completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
-            }}
-          />
-        </div>
+        {!createTest && 
+          <div>
+            <Pagination
+              count={Math.ceil(count / 5)}
+              variant="outlined"
+              shape="rounded"
+              size="large"
+              onChange={(e, value) => {
+                const skip = (value - 1) * 5;
+                completed ? setSkipCompleted(skip) : setSkipInComplete(skip);
+              }}
+            />
+          </div>
+        }
       </div>
     </div>
   );

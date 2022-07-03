@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
 .Change-Data { 
     padding: 40px 70px 40px 40px;
 }
@@ -58,3 +59,160 @@
     padding: 20px 70px 20px 70px;
     width: 100%;
 }
+
+
+
+
+   span.switcher {
+    position: relative;
+    width: 200px;
+    left: 40%;
+    height: 50px;
+    border-radius: 25px;
+    margin: 20px 0;
+  }
+   span.switcher input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    position: relative;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: grey;
+    outline: none;
+    font-family: "Oswald", sans-serif;
+  }
+   span.switcher input:before,  span.switcher input:after {
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffffff;
+  }
+   span.switcher input:before {
+    content: "Create";
+    left: 20px;
+  }
+   span.switcher input:after {
+    content: "Delete";
+    right: 20px;
+  }
+   span.switcher label {
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    border-radius: 20px;
+  }
+   span.switcher.switcher-1 input {
+    transition: 0.25s -0.1s;
+  }
+   span.switcher.switcher-1 input:checked {
+    background-color: #ffffff;
+  }
+   span.switcher.switcher-1 input:checked:before {
+    color: #ffffff;
+    transition: color 0.5s 0.2s;
+  }
+   span.switcher.switcher-1 input:checked:after {
+    color: #cccccc;
+    transition: color 0.5s;
+  }
+   span.switcher.switcher-1 input:checked + label {
+    left: 10px;
+    right: 100px;
+    background: grey;
+    transition: left 0.5s, right 0.4s 0.2s;
+  }
+   span.switcher.switcher-1 input:not(:checked) {
+    background: grey;
+    transition: background 0.5s -0.1s;
+  }
+   span.switcher.switcher-1 input:not(:checked):before {
+    color: #cccccc;
+    transition: color 0.5s;
+  }
+   span.switcher.switcher-1 input:not(:checked):after {
+    color: grey;
+    transition: color 0.5s 0.2s;
+  }
+   span.switcher.switcher-1 input:not(:checked) + label {
+    left: 100px;
+    right: 10px;
+    background: #ffffff;
+    transition: left 0.4s 0.2s, right 0.5s, background 0.35s -0.1s;
+  }
+   span.switcher.switcher-2 {
+    overflow: hidden;
+  }
+   span.switcher.switcher-2 input {
+    transition: background-color 0s 0.5s;
+  }
+   span.switcher.switcher-2 input:before {
+    color: grey;
+  }
+   span.switcher.switcher-2 input:after {
+    color: #ffffff;
+  }
+   span.switcher.switcher-2 input:checked {
+    background-color: #ffffff;
+  }
+   span.switcher.switcher-2 input:checked + label {
+    background: #ffffff;
+    -webkit-animation: turn-on 0.5s ease-out;
+            animation: turn-on 0.5s ease-out;
+  }
+  @-webkit-keyframes turn-on {
+    0% {
+      left: 100%;
+    }
+    100% {
+      left: 0%;
+    }
+  }
+  @keyframes turn-on {
+    0% {
+      left: 100%;
+    }
+    100% {
+      left: 0%;
+    }
+  }
+   span.switcher.switcher-2 input:not(:checked) {
+    background: grey;
+  }
+   span.switcher.switcher-2 input:not(:checked) + label {
+    background: grey;
+    -webkit-animation: turn-off 0.5s ease-out;
+            animation: turn-off 0.5s ease-out;
+  }
+  @-webkit-keyframes turn-off {
+    0% {
+      right: 100%;
+    }
+    100% {
+      right: 0%;
+    }
+  }
+  @keyframes turn-off {
+    0% {
+      right: 100%;
+    }
+    100% {
+      right: 0%;
+    }
+  }
+   span.switcher.switcher-2 label {
+    top: 0px;
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+  }
+
+  span.switcher-user-group input:before {
+    content: "Users";
+  }
+   span.switcher-user-group input:after {
+    content: "Groups";
+  }

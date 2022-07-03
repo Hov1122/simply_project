@@ -181,7 +181,6 @@ const Profile = () => {
               error
                 ? setSuccess("")
                 : setSuccess("Password changed successfully");
-              console.log(error);
               setLoading(false);
             }, 2000);
 

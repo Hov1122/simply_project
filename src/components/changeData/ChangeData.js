@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {  useState } from "react";
 import CreateGroup from "../groups/createGroup/CreateGroup";
 import CreateUser from "../users/createUser/CreateUser";
 import DeleteUser from "../users/deleteUser/DeleteUser";
@@ -9,12 +9,8 @@ import { authSelector } from "../../state-management/auth/selectors";
 import { Navigate } from "react-router-dom";
 
 const ChangeData = () => {
-  const [showCreate, setShowCreate] = useState(true);
-  const [showUsers, setShowUsers] = useState(true);
-  const groupsRef = useRef(null);
-  const usersRef = useRef(null);
-  const createRef = useRef(null);
-  const deleteRef = useRef(null);
+  const [showCreate, setShowCreate] = useState(false);
+  const [showUsers, setShowUsers] = useState(false);
 
   const {
     user: {
@@ -27,7 +23,16 @@ const ChangeData = () => {
         <div className="Change-Data-Container-parrent">
         <div className="Change-Data-Container">
           <div className="Change-Data-Header">
-            <div>
+              <span className="switcher switcher-1 switcher-user-group"
+                onClick={() => {
+                  setShowUsers((prev) => !prev)
+                }}
+              >
+                <input type="checkbox" id="switcher-1" />
+                <label htmlFor="switcher-1"></label>
+              </span>
+
+            {/* <div>
               <span
                 className="active-link"
                 ref={usersRef}
@@ -49,10 +54,19 @@ const ChangeData = () => {
               >
                 Groups
               </span>
-            </div>
+            </div> */}
 
-            <div>
-              <span
+            
+              <span className="switcher switcher-1"
+                onClick={() => {
+                  setShowCreate((prev) => !prev)
+                }}
+              >
+                <input type="checkbox" id="switcher-1" />
+                <label htmlFor="switcher-1"></label>
+              </span>
+              { console.log( setShowCreate)
+              /* <span
                 className="active-link"
                 ref={createRef}
                 onClick={() => {
@@ -72,10 +86,10 @@ const ChangeData = () => {
                 }}
               >
                 Delete
-              </span>
-            </div>
+              </span> */}
           </div>
 
+          
           <div className="Change-Data-Main">
             {showCreate ? (
               showUsers ? (

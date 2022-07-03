@@ -32,7 +32,8 @@ const Chat = () => {
   const [messageLoading, setMessageLoading] = useState(false);
   const { user } = useSelector(authSelector);
   const { userGroup } = user;
-
+  const [filtredGroups, setFiltredGroups] = useState(userGroup);
+  const [searchGroupKeyword, setSearchGroupKeyword] = useState('')
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
   const { messages } = useSelector(messagesSelector);
   const messageAreaRef = useRef(null);
@@ -133,14 +134,25 @@ const Chat = () => {
               id="outlined-basic-email"
               label="Search"
               variant="outlined"
+              value = {searchGroupKeyword}
               fullWidth
+              onChange={(e) => {
+                  setSearchGroupKeyword(e.target.value)
+                  const inputChars = e.target.value.split('')
+                  setFiltredGroups(() => {
+                    return userGroup.filter(({group}) => {
+                      return inputChars.every((char) =>
+                        group.name.toLowerCase().includes(char.toLowerCase())
+                      );
+                    })});
+              }}
             />
           </Grid>
           <Divider />
 
           <List>
             <div className="group-chats">
-              {userGroup.map((el) => {
+              {filtredGroups.map((el) => {
                 return (
                   <div
                     className={

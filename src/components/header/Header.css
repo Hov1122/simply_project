@@ -106,7 +106,8 @@
     flex-direction: column;
     margin: 10px 0;
     min-width: 130px;
-    max-width: 130px;
+    padding: 0 10px 0 0;
+    max-width: 250px;
     max-height: fit-content;
 }
 

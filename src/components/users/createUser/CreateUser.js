@@ -42,7 +42,6 @@ function CreateUser() {
 
   // ADD USER IN DATABASE
   const addUser = (data) => {
-    console.log(data)
     dispatch(createUserRequest(data));
   };
 

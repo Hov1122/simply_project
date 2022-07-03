@@ -82,7 +82,7 @@ export const deletedUserRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
-      const { data } = await axiosApiInstance.delete(`/users`, payload);
+      const { data } = await axiosApiInstance.delete(`/users`, { data: payload});
       dispatch(deleteUserSuccess(data));
     } catch (error) {
       dispatch(fetchUsersFailure(error));

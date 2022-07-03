@@ -13,7 +13,6 @@ export const fetchGroupsMessages = (data) => {
       let url = `/chats/${data.groupId}/messages?take=-15`;
       if (data.skip) url += `&skip=${data.skip}`;
       const { data: msgs } = await axiosApiInstance.get(url);
-      console.log(msgs);
       msgs.initialise = data.initialise;
       dispatch(fetchGroupsMessagesSuccess(msgs));
     } catch (error) {

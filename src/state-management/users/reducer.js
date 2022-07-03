@@ -28,7 +28,6 @@ const usersReducer = createReducer(initialState, (builder) => {
     })
     // GET USER BY ID
     .addCase(fetchUserByIdSuccess, (state, { payload: {data}}) => {
-      // console.log(payload)
       state.userProfile = data.user;
       state.loading = false;
       state.error = null;

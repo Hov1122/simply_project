@@ -10,12 +10,14 @@ import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
 import { TextField } from "@material-ui/core";
 import { filterGroupsByInput } from "../../../helpers/helpers";
+import { Alert } from "@mui/material";
 
 const DeleteGroup = () => {
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [group, setGroup] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const { groups } = useSelector(groupsSelector);
+  const { groups, error } = useSelector(groupsSelector);
   const dispatch = useDispatch();
   const [filteredGroups, setfilteredGroups] = useState(groups);
 
@@ -57,6 +59,7 @@ const DeleteGroup = () => {
       return;
     } else {
       dispatch(deleteGroupRequest(data));
+      setSuccess(!error);
     }
   };
 
@@ -79,6 +82,8 @@ const DeleteGroup = () => {
               }, 500);
             }}
           />
+          {success && <Alert severity="success">Groups deleted successfully!</Alert>}
+          {success && error && <Alert severity="error">Something went wrong!</Alert>}
           <div className="loading-search-bar">
             {loading && <Loading width="20px" height="20px" />}
           </div>
