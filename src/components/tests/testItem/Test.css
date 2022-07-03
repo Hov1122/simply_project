@@ -18,8 +18,9 @@
 }
 
 .course h6 {
-	opacity: 0.6;
+	opacity: 0.9;
 	margin: 0;
+	font-size: 12px;
 	letter-spacing: 1px;
 	text-transform: uppercase;
 }

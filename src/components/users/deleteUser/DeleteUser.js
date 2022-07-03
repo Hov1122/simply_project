@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./DeleteUser.css";
 import {
   fetchUsersRequest,
@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import Loading from "../../common/Loading";
 import { useDispatch } from "react-redux";
 import { TextField } from "@material-ui/core";
-import { filterUsersByInput } from "../../../helpers/helpers";
+import { debounce } from "../../../helpers/helpers";
 
 const DeleteUser = () => {
   const [loading, setLoading] = useState(false);
@@ -17,11 +17,10 @@ const DeleteUser = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const { users } = useSelector(usersSelector);
   const dispatch = useDispatch();
-  const [filteredUsers, setfilteredUsers] = useState(users);
 
-  useEffect(() => {
-    dispatch(fetchUsersRequest());
-  }, []);
+  const handleSearchChange = debounce(() => {
+    dispatch(fetchUsersRequest(searchKeyword));
+  });
 
   const userJSX = ({ id, firstName, email, lastName }) => {
     return (
@@ -75,22 +74,24 @@ const DeleteUser = () => {
             variant="outlined"
             value={searchKeyword}
             onChange={(e) => {
+              handleSearchChange();
               setSearchKeyword(e.target.value);
               setLoading(true);
               setTimeout(() => {
-                setfilteredUsers(filterUsersByInput(users, e.target.value));
                 setLoading(false);
               }, 500);
             }}
           />
-          <div className="loading-search-bar">
-            {loading && <Loading width="20px" height="20px" />}
-          </div>
+          {loading && (
+            <div className="delete-users-loading">
+              <Loading width="16px" height="16px"></Loading>
+            </div>
+          )}
         </div>
       </div>
       <div className="Delete-User-Container-Main">
         <div className="delete-table-wrapper">
-          {filteredUsers.map((elem) => {
+          {users.map((elem) => {
             return userJSX(elem);
           })}
         </div>

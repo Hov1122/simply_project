@@ -26,6 +26,13 @@
     margin: 10px 0;
 }
 
+.chat-loading {
+    position: absolute;
+    top: 30%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+}
+
 .user-role {
     color:rgb(94, 94, 94);
     font-size: small;

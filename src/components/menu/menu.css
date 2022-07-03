@@ -1,18 +1,11 @@
 /* Google Font Import - Poppins */
 @import url('https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
 
 .menu-container{
     min-height: 100vh;
     background-color: #E4E9F7;
     transition: all 0.3s ease;
-  
 }
 
  .sidebar{
@@ -144,10 +137,6 @@ header .image-text {
     background-color: #bfbec9;
 }
 
-.sidebar li a:hover .icon{
-    background-color: #bfbec9;
-}
-
 .sidebar .menu-bar{
     height: calc(100% - 55px);
     display: flex;
@@ -177,10 +166,6 @@ header .image-text {
     font-size: 30px;
     margin: auto 0;
     padding: 8px;
-}
-
-.menu-icon:hover {
-    color: rgb(219, 199, 199);
 }
 
 .logoutButton{

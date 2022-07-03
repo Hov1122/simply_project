@@ -220,3 +220,12 @@
     background-color: rgb(233, 233, 233);
 }
 
+.search-field-container {
+    position: relative;
+}
+
+.delete-users-loading {
+    position: absolute;
+    right: 43%;
+    top: 30%;
+}

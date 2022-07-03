@@ -22,18 +22,19 @@ import { fetchGroupUsers } from "../../state-management/groups/requests";
 import { fetchGroupsMessages } from "../../state-management/chat/requests";
 import { addUserMessage } from "../../state-management/chat/actions";
 import UsersDropDown from "./usersDropDown/UsersDropDown";
+import Loading from "../common/Loading";
 
 const socket = io.connect("http://localhost:5000");
 
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");
   const [showUsers, setShowUsers] = useState(false);
+  const [messageLoading, setMessageLoading] = useState(false);
   const { user } = useSelector(authSelector);
   const { userGroup } = user;
 
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
-  const { messages, loading} = useSelector(messagesSelector);
-  console.log(loading)
+  const { messages } = useSelector(messagesSelector);
   const messageAreaRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -82,6 +83,12 @@ const Chat = () => {
 
   const loadOnScroll = () => {
     if (messageAreaRef.current.scrollTop === 0 && messages.length) {
+      setMessageLoading(true);
+
+      setTimeout(() => {
+        setMessageLoading(false);
+      }, 1000);
+
       const prevHeight = messageAreaRef.current.scrollHeight;
       dispatch(
         fetchGroupsMessages({ groupId: currentGroup, skip: messages.length })
@@ -103,6 +110,11 @@ const Chat = () => {
 
   return (
     <div className="chat">
+      {messageLoading && (
+        <div className="chat-loading">
+          <Loading />
+        </div>
+      )}
       {showUsers && (
         <UsersDropDown
           users={groupUsers[currentGroup]}
@@ -131,24 +143,29 @@ const Chat = () => {
               {userGroup.map((el) => {
                 return (
                   <div
-                    className={"group-list-item " +(currentGroup === el.group.id ? "active-chat" : "")}
+                    className={
+                      "group-list-item " +
+                      (currentGroup === el.group.id ? "active-chat" : "")
+                    }
                     key={el.group.id}
                     onClick={(e) => {
                       e.stopPropagation();
                       setCurrentGroup(el.group.id);
                     }}
                   >
-                      <div className="group-chat-name">
-                        <GroupIcon />
-                        <h3 style={{ marginLeft: "5px" }}>{el.group.name}</h3>
-                      </div>
-                      <div 
-                        style={{ display: "flex", marginLeft: "10px" }}
-                        onClick={() => setShowUsers(true)}
-                      >
-                        <GroupIcon sx={{ fontSize: "15px" }} />
-                        <span style={{ marginLeft: "5px", marginTop: "-5px"}}>{groupUsers[el.group.id]?.length}</span>
-                      </div>
+                    <div className="group-chat-name">
+                      <GroupIcon />
+                      <h3 style={{ marginLeft: "5px" }}>{el.group.name}</h3>
+                    </div>
+                    <div
+                      style={{ display: "flex", marginLeft: "10px" }}
+                      onClick={() => setShowUsers(true)}
+                    >
+                      <GroupIcon sx={{ fontSize: "15px" }} />
+                      <span style={{ marginLeft: "5px", marginTop: "-5px" }}>
+                        {groupUsers[el.group.id]?.length}
+                      </span>
+                    </div>
                   </div>
                 );
               })}
@@ -171,16 +188,32 @@ const Chat = () => {
                 <ListItem key={data.id}>
                   <div className={"message " + (user ? "right" : "")}>
                     <div>
-                      {!user &&  
+                      {!user && (
                         <div>
                           <div>
-                            <span className="user-role">{data.sender?.role.name}</span>
-                            <span className="user-name"><b>{data.sender?.firstName} {data.sender?.lastName} </b></span>
+                            <span className="user-role">
+                              {data.sender?.role.name}
+                            </span>
+                            <span className="user-name">
+                              <b>
+                                {data.sender?.firstName} {data.sender?.lastName}{" "}
+                              </b>
+                            </span>
                           </div>
                         </div>
-                      }
-                      <div className={"sended-message-box " + (user ? "right" : "")}>
-                        <div className={user ? "sended-messages" : "recived-messages"}>{data.text}</div>
+                      )}
+                      <div
+                        className={
+                          "sended-message-box " + (user ? "right" : "")
+                        }
+                      >
+                        <div
+                          className={
+                            user ? "sended-messages" : "recived-messages"
+                          }
+                        >
+                          {data.text}
+                        </div>
                       </div>
                       <div className={user ? "right" : ""}>
                         <div>{time}</div>

@@ -15,7 +15,9 @@ export const fetchUsersRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
-      const { data } = await axiosApiInstance.get(`/users/?firstName=${payload}`);
+      const { data } = await axiosApiInstance.get(
+        `/users/?firstName=${payload}`
+      );
       dispatch(fetchUsersSuccess(data));
     } catch (error) {
       dispatch(fetchUsersFailure(error));
@@ -48,7 +50,6 @@ export const getTopStudentsRequest = () => {
     }
   };
 };
-
 
 // CREATE USER
 export const createUserRequest = (payload) => {

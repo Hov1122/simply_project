@@ -48,13 +48,13 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true)
-    dispatch(getTopStudentsRequest())
-    dispatch(fetchUserTestsRequest(id));
+    setLoading(true);
+    dispatch(getTopStudentsRequest());
+    dispatch(fetchUserTestsRequest(+id));
     dispatch(fetchGroupScheduleRequest(group));
-    setTimeout(()=> {
+    setTimeout(() => {
       setLoading(false);
-    }, 500)
+    }, 500);
   }, [dispatch]);
 
   if (loading) {
@@ -155,66 +155,68 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="Today-Schedule">
-        <h3 style={{ marginLeft: 50, marginBottom: 20 }}>
-          {"Today's Schedule"}
-        </h3>
-        {userGroup.length ? (
-          <div className="Schedule-Container">
-            <div className="table-responsive">
-              <table className="table table-bordered text-center">
-                <thead>
-                  <tr className="bg-light-gray">
-                    <th className="text-uppercase">9:30</th>
-                    <th className="text-uppercase">11:10</th>
-                    <th className="text-uppercase">13:00</th>
-                    <th className="text-uppercase">14:40</th>
-                    <th className="text-uppercase">16:20</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {groupSchedules.map(({ day, scheduleSubject }) => {
-                      if (day !== new Date().getDay()) return;
+      <div style={{ padding: "0 20px 0 5px" }}>
+        <div className="Today-Schedule">
+          <h3 style={{ marginLeft: 50, marginBottom: 20 }}>
+            {"Today's Schedule"}
+          </h3>
+          {userGroup.length ? (
+            <div className="Schedule-Container">
+              <div className="table-responsive">
+                <table className="table table-bordered text-center">
+                  <thead>
+                    <tr className="bg-light-gray">
+                      <th className="text-uppercase">9:30</th>
+                      <th className="text-uppercase">11:10</th>
+                      <th className="text-uppercase">13:00</th>
+                      <th className="text-uppercase">14:40</th>
+                      <th className="text-uppercase">16:20</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      {groupSchedules.map(({ day, scheduleSubject }) => {
+                        if (day !== new Date().getDay()) return;
 
-                      return scheduleSubject.map(
-                        ({ subject: { name } }, index) => {
-                          if (name === "Free class") {
+                        return scheduleSubject.map(
+                          ({ subject: { name } }, index) => {
+                            if (name === "Free class") {
+                              return (
+                                <td
+                                  style={{ backgroundColor: "#f7f7f7" }}
+                                  key={uuidv4()}
+                                ></td>
+                              );
+                            }
+
                             return (
-                              <td
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                key={uuidv4()}
-                              ></td>
+                              <td key={uuidv4()}>
+                                <span
+                                  style={{
+                                    backgroundColor: randomColor(),
+                                    color: "#ffff",
+                                  }}
+                                  className="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
+                                >
+                                  {name}
+                                </span>
+                                <div className="margin-10px-top font-size14">
+                                  {times[index]}-{addTime(times[index], 90)}
+                                </div>
+                              </td>
                             );
                           }
-
-                          return (
-                            <td key={uuidv4()}>
-                              <span
-                                style={{
-                                  backgroundColor: randomColor(),
-                                  color: "#ffff",
-                                }}
-                                className="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
-                              >
-                                {name}
-                              </span>
-                              <div className="margin-10px-top font-size14">
-                                {times[index]}-{addTime(times[index], 90)}
-                              </div>
-                            </td>
-                          );
-                        }
-                      );
-                    })}
-                  </tr>
-                </tbody>
-              </table>
+                        );
+                      })}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
-        ) : (
-          <span>You Dont Have Schedule For Today</span>
-        )}
+          ) : (
+            <span>You Dont Have Schedule For Today</span>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -58,7 +58,7 @@ function Menu() {
                   <NavLink
                     to="/home"
                     style={({ isActive }) => ({
-                      backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                      backgroundColor: isActive ? "#bfbec9" : "",
                     })}
                   >
                     <i className="bx bx-home-alt icon"></i>
@@ -70,7 +70,7 @@ function Menu() {
                   <NavLink
                     to="/schedule"
                     style={({ isActive }) => ({
-                      backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                      backgroundColor: isActive ? "#bfbec9" : "",
                     })}
                   >
                     <i className="bx bx-calendar icon"></i>
@@ -82,7 +82,7 @@ function Menu() {
                   <NavLink
                     to="/tests"
                     style={({ isActive }) => ({
-                      backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                      backgroundColor: isActive ? "#bfbec9" : "",
                     })}
                   >
                     <i className="bx bx-receipt icon"></i>
@@ -107,11 +107,11 @@ function Menu() {
                     <NavLink
                       to="/admin"
                       style={({ isActive }) => ({
-                        backgroundColor: isActive ? "#bfbec9" : "#ffff",
+                        backgroundColor: isActive ? "#bfbec9" : "",
                       })}
                     >
                       <i className="bx bx-user-plus icon"></i>
-                      <span className="text nav-text">changeData</span>
+                      <span className="text nav-text">Admin</span>
                     </NavLink>
                   </li>
                 )}
