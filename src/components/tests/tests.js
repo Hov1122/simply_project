@@ -105,7 +105,7 @@ function Tests() {
               <select className="filter-tests" onChange={(e) => filterTest(e)}>
                 <option value="all">All</option>
                 <optgroup label="Subjects">
-                  {subjects.map((subject) => {
+                  {subjects.slice(1).map((subject) => {
                     return (
                       <option key={subject.id} value={subject.id}>
                         {subject.name}
@@ -144,7 +144,7 @@ function Tests() {
                 >
                   <option value="all">All</option>
                   <optgroup label="Subjects">
-                    {subjects.map((subject) => {
+                    {subjects.slice(1).map((subject) => {
                       return (
                         <option key={subject.id} value={subject.id}>
                           {subject.name}
