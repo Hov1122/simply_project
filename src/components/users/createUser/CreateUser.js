@@ -47,7 +47,12 @@ function CreateUser() {
             </option>
           ))}
         </Field>
-        <input type={`button`} onClick={deleteRow} id={userCount} value="X" />
+        <input
+          type={`button`}
+          onClick={(e) => deleteRow(e)}
+          id={userCount}
+          value="X"
+        />
       </div>
     );
   };
@@ -64,8 +69,8 @@ function CreateUser() {
     dispatch(createUserRequest(data));
   };
 
-  const deleteRow = () => {
-    // avelacnel
+  const deleteRow = (e) => {
+    setUsers((users) => users.filter((user) => user.key != e.target.id));
   };
 
   if (loading) {
