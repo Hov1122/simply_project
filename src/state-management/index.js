@@ -8,6 +8,7 @@ import usersReducer from "./users/reducer";
 import subjectsReducer from "./subjects/reducer";
 import scheduleReducer from "./schedule/reducer";
 import chatsReducer from "./chat/reducer";
+import rolesReducer from "./role/reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   subjects: subjectsReducer,
   schedules: scheduleReducer,
   chats: chatsReducer,
+  roles: rolesReducer,
 });
 
 const store = configureStore({
