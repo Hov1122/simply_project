@@ -15,12 +15,18 @@ function TestCreater() {
   const [loading] = useState(false);
 
   const { subjects } = useSelector(subjectsSelector);
-  const { user: { userGroup, role: { name }, id } } = useSelector(authSelector);
+  const {
+    user: {
+      userGroup,
+      role: { name },
+      id,
+    },
+  } = useSelector(authSelector);
   const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
-  const [questionNumber, setQuestionNumber] = useState(0)
-  const [questions, setQuestions] = useState([])
-  const [questionAnswers, setQuestionAnswers] = useState([])
+  const [questionNumber, setQuestionNumber] = useState(0);
+  const [questions, setQuestions] = useState([]);
+  const [questionAnswers, setQuestionAnswers] = useState([]);
 
   const subjectSelect = subjects.slice(1).map((elem) => {
     return {
@@ -37,40 +43,63 @@ function TestCreater() {
             label: name,
           };
         })
-      : userGroup?.map((elem) => {
+      : userGroup?.map(({ group }) => {
           return {
-            value: elem.id,
-            label: elem.name,
+            value: group.id,
+            label: group.name,
           };
         });
-
   const QuestionJSX = (questionNumber) => {
     return (
-      <div>
-          <div className="Question-Container">
-            <h3>Question</h3>
-            <div className="Question-header">
-              <Field placeholder="Enter Question" type="text" name={`questions[${questionNumber}]`}/>
-              <button type={`button`} onClick={deleteQuestion} >X</button>
-            </div>
-            <div className="AnswersForm">
-              {questions[questionNumber]?.questionanswers?.map(item => item)}
-            </div>
-            <button type="button" id={questionNumber} onClick={addAnswerRow}>Add New Answer</button>
+      <div key={questionNumber} data-question-number={questionNumber}>
+        <div className="Question-Container">
+          <h3>Question</h3>
+          <div className="Question-header">
+            <Field
+              placeholder="Enter Question"
+              type="text"
+              name={`questions[${questionNumber}]`}
+            />
+            <button
+              type={`button`}
+              data-question-number={questionNumber}
+              onClick={(e) => deleteQuestion(e)}
+            >
+              X
+            </button>
           </div>
+          <div className="AnswersForm">
+            {questions[questionNumber]?.questionanswers?.map((item) => item)}
+          </div>
+          <button type="button" id={questionNumber} onClick={addAnswerRow}>
+            Add New Answer
+          </button>
+        </div>
       </div>
-    )
-  }
+    );
+  };
 
   const AnswerJSX = (questionNumber, answerNumber) => {
     return (
       <div>
-        <Field type="checkbox" name={`answers[${questionNumber}][${answerNumber}].isCorrect`}/>
-        <Field type="text" placeholder="Enter Answer" name={`answers[${questionNumber}][${answerNumber}].name`}/>
-        <button className="delete-answer" value="X" onClick={deleteAnswer} data-value={`${questionNumber},${answerNumber}`}/>
+        <Field
+          type="checkbox"
+          name={`answers[${questionNumber}][${answerNumber}].isCorrect`}
+        />
+        <Field
+          type="text"
+          placeholder="Enter Answer"
+          name={`answers[${questionNumber}][${answerNumber}].name`}
+        />
+        <button
+          className="delete-answer"
+          value="X"
+          onClick={deleteAnswer}
+          data-value={`${questionNumber},${answerNumber}`}
+        />
       </div>
-    )
-  }
+    );
+  };
 
   useEffect(() => {
     dispatch(fetchSubjectsRequest());
@@ -86,23 +115,18 @@ function TestCreater() {
         questionNumber,
         questions[questionNumber].questionanswers.length
       )
-    )
-    console.log(questionAnswers)
+    );
+    console.log(questionAnswers);
   };
 
   // ADD NEW QUESTION
   const addQuestionRow = () => {
-    setQuestionNumber(prevValue => prevValue + 1)
+    setQuestionNumber((prevValue) => prevValue + 1);
     const newQuestion = {
-      questionjsx: QuestionJSX(
-        questionNumber
-      ),
+      questionjsx: QuestionJSX(questionNumber),
       questionanswers: [],
-    }
-    setQuestions([
-      ...questions,
-      newQuestion
-    ])
+    };
+    setQuestions([...questions, newQuestion]);
   };
 
   // ADD TEST IN DATABASE
@@ -110,13 +134,16 @@ function TestCreater() {
     dispatch(createTestRequest(data));
   };
 
-  const deleteQuestion = () => {
-
-  }
-
-  const deleteAnswer = () => {
-
-  }
+  const deleteQuestion = (e) => {
+    const toRemove = e.target.getAttribute("data-question-number");
+    setQuestions((questions) => {
+      return questions.filter(
+        ({ questionjsx }) =>
+          questionjsx.props["data-question-number"] != toRemove
+      );
+    });
+  };
+  const deleteAnswer = () => {};
 
   if (loading) {
     return <Loading />;
@@ -127,48 +154,67 @@ function TestCreater() {
       <h2>Create Test</h2>
       <Formik
         initialValues={{
-            userId: id, // userId
-            name: '',
-            subjectId: 1,
-            highestScore: '',
-            start: '',
-            length: '', 
-            group: 1,
-            questions: '',
-            answers: '',
+          userId: id, // userId
+          name: "",
+          subjectId: 1,
+          highestScore: "",
+          start: "",
+          length: "",
+          group: 1,
+          questions: "",
+          answers: "",
         }}
-        onSubmit={values => addTest({...values})}
+        onSubmit={(values) => addTest({ ...values })}
       >
         <Form>
           <div className="testInformationHeader">
             <Field type="text" placeholder="Test Name" name="name" />
-            <input value="Add test" type="submit"/>
+            <input value="Add test" type="submit" />
           </div>
           <div className="testInformationData">
-            <Field as='select' name="subjectId"> 
-              {subjectSelect.map(element => {
+            <Field as="select" name="subjectId">
+              {subjectSelect.map((element) => {
                 return (
-                  <option key={element.label} value={element.value}>{element.label}</option>
-                )
+                  <option key={element.label} value={element.value}>
+                    {element.label}
+                  </option>
+                );
               })}
             </Field>
-            <Field as='select' name="group" > 
-              {groupSelect.map(element => {
+            <Field as="select" name="group">
+              {groupSelect.map((element) => {
                 return (
-                  <option key={element.label} value={element.value}>{element.label}</option>
-                )
+                  <option key={element.label} value={element.value}>
+                    {element.label}
+                  </option>
+                );
               })}
             </Field>
           </div>
           <div className="testInformationData">
-            <Field placeholder="Test Start Date" type="datetime-local" name="start"/>
-            <Field placeholder="Test length" type="number" name="length"/>
-            <Field placeholder="Test rating" type="number" name="highestScore"/>
+            <Field
+              placeholder="Test Start Date"
+              type="datetime-local"
+              name="start"
+            />
+            <Field placeholder="Test length" type="number" name="length" />
+            <Field
+              placeholder="Test rating"
+              type="number"
+              name="highestScore"
+            />
           </div>
           <div className="QuestionsForm">
-            {questions?.map(item => item.questionjsx)}
+            {questions?.map((item) => {
+              return item.questionjsx;
+            })}
           </div>
-          <Field type='button' value='Add new question' onClick={addQuestionRow}/>
+          <Field
+            type="button"
+            value="Add new question"
+            onClick={addQuestionRow}
+            name="addQuestion"
+          />
         </Form>
       </Formik>
     </div>

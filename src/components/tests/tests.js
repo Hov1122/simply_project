@@ -86,24 +86,26 @@ function Tests() {
       <div className="Tests-bar"></div>
       <div className="Tests-Container">
         <div className="Tests-Nav">
-
-
           {name === "Student" ? (
             <div className="Student-Nav">
-              <div className="switch-button"
-              onClick={() => {
-                setCompleted((prev)=> !prev)}
-              }>
-                <input className="switch-button-checkbox" type="checkbox"></input>
-                <label className="switch-button-label" htmlFor=""><span className="switch-button-label-span">Upcoming</span></label>
-              </div>
-              <select
-                className="filter-tests"
-                onChange={(e) => filterTest(e)}
+              <div
+                className="switch-button"
+                onClick={() => {
+                  setCompleted((prev) => !prev);
+                }}
               >
+                <input
+                  className="switch-button-checkbox"
+                  type="checkbox"
+                ></input>
+                <label className="switch-button-label" htmlFor="">
+                  <span className="switch-button-label-span">Upcoming</span>
+                </label>
+              </div>
+              <select className="filter-tests" onChange={(e) => filterTest(e)}>
                 <option value="all">All</option>
                 <optgroup label="Subjects">
-                  {subjects.slice(1).map((subject) => {
+                  {subjects.map((subject) => {
                     return (
                       <option key={subject.id} value={subject.id}>
                         {subject.name}
@@ -115,40 +117,49 @@ function Tests() {
             </div>
           ) : (
             <div className="Teacher-Nav">
-              <div className="switch-button teacher-nav-switch"
-              onClick={() => { 
-                if (createTest) {
-                  setCreateTest(false)
-                  setShowTests(true)
-                } else {
-                  setCreateTest(true)
-                  setShowTests(false)
-                }
-              }}>
-                <input className="switch-button-checkbox" type="checkbox"></input>
-                <label className="switch-button-label" htmlFor=""><span className="switch-button-label-span">Tests</span></label>
-              </div>
-              {!createTest && <select
-                className="filter-tests"
-                onChange={(e) => filterTest(e)}
+              <div
+                className="switch-button teacher-nav-switch"
+                onClick={() => {
+                  if (createTest) {
+                    setCreateTest(false);
+                    setShowTests(true);
+                  } else {
+                    setCreateTest(true);
+                    setShowTests(false);
+                  }
+                }}
               >
-                <option value="all">All</option>
-                <optgroup label="Subjects">
-                  {subjects.slice(1).map((subject) => {
-                    return (
-                      <option key={subject.id} value={subject.id}>
-                        {subject.name}
-                      </option>
-                    );
-                  })}
-                </optgroup>
-              </select>}
+                <input
+                  className="switch-button-checkbox"
+                  type="checkbox"
+                ></input>
+                <label className="switch-button-label" htmlFor="">
+                  <span className="switch-button-label-span">Tests</span>
+                </label>
+              </div>
+              {!createTest && (
+                <select
+                  className="filter-tests"
+                  onChange={(e) => filterTest(e)}
+                >
+                  <option value="all">All</option>
+                  <optgroup label="Subjects">
+                    {subjects.map((subject) => {
+                      return (
+                        <option key={subject.id} value={subject.id}>
+                          {subject.name}
+                        </option>
+                      );
+                    })}
+                  </optgroup>
+                </select>
+              )}
             </div>
           )}
         </div>
 
         <div className="Tests-Main-Container">
-          {!completed && (
+          {!completed && name === "Student" && (
             <div>
               {userTests?.map((test) => {
                 if (test.isComplete === false) {
@@ -166,7 +177,7 @@ function Tests() {
               })}
             </div>
           )}
-          {completed && (
+          {completed && name === "Student" && (
             <div>
               {userTests?.map((test) => {
                 const { mark } = test;
@@ -205,7 +216,7 @@ function Tests() {
           )}
           {createTest && !showTests && <TestCreater />}
         </div>
-        {!createTest && 
+        {!createTest && (
           <div>
             <Pagination
               count={Math.ceil(count / 5)}
@@ -218,7 +229,7 @@ function Tests() {
               }}
             />
           </div>
-        }
+        )}
       </div>
     </div>
   );

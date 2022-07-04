@@ -7,9 +7,8 @@ import Loading from "../common/Loading";
 import { loginRequest } from "../../state-management/auth/requests";
 import { refreshTokenRequest } from "../../helpers/requests/refreshTokenRequest";
 import { loginSuccess } from "../../state-management/auth/actions";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import { Alert } from "@mui/material";
-
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -68,14 +67,14 @@ function LoginPage() {
     <div className="login-page">
       <div className="login-container">
         <h1>Log In</h1>
-        {error && 
+        {error && (
           <>
             <Alert variant="outlined" severity="error">
               {error}
             </Alert>
-            <br/>
+            <br />
           </>
-        }
+        )}
 
         <TextField
           variant="outlined"
@@ -88,7 +87,7 @@ function LoginPage() {
           onChange={handleEmailChange}
           onKeyDown={logHandler}
         />
-        <br/>
+        <br />
         <TextField
           variant="outlined"
           id="outlined-basic"
@@ -100,7 +99,7 @@ function LoginPage() {
           onChange={handlePasswordChange}
           onKeyDown={logHandler}
         />
-       
+
         <button disabled={!(email && password)} onClick={logHandler}>
           Log In
         </button>
