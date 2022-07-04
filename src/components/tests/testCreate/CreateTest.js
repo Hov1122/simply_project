@@ -70,7 +70,7 @@
             </div>
             <div className="AnswersForm">
               {
-                questions[questionNumber - 1]?.questionanswers?.map((item) => item)
+                answersArrayRender(questionNumber)
               }
             </div>
             <button type="button" id={questionNumber} onClick={addAnswerRow}>
@@ -80,6 +80,10 @@
         </div>
       );
     };
+
+    const answersArrayRender = (questionNumber) => {
+      return questions[questionNumber]?.questionanswers?.map(item => item)
+    }
 
     const AnswerJSX = (questionNumber, answerNumber) => {
       return (
@@ -118,7 +122,6 @@
           newQuestionsData.questionanswers.length
         )
       )
-      console.log(newQuestionsData, number)
       setQuestions(prevValue => {
         prevValue[number] = newQuestionsData
         return [...prevValue]
@@ -216,9 +219,22 @@
               />
             </div>
             <div className="QuestionsForm">
-              {questions?.map((item) => {
-                return item.questionjsx;
-              })}
+              {questions?.map((item, index) => {
+                console.log(item)
+                  return (
+                    <div key={index}>
+                      {
+                        item.questionjsx
+                      }
+                      {
+                        item.questionanswers.map((answer) => {
+                          return answer
+                        })
+                      }
+                    </div>
+                  )
+                })
+              }
             </div>
             <Field
               type="button"
