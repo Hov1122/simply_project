@@ -19,13 +19,15 @@ function ScheduleCreater() {
   const [requestError, setRequestError] = useState(null);
   const [success, setSuccess] = useState(false);
   const {
-    user: { userGroup,role: {name} },
+    user: {
+      userGroup,
+      role: { name },
+    },
   } = useSelector(authSelector);
-  const {groups} = useSelector(groupsSelector)
+  const { groups } = useSelector(groupsSelector);
   const dispatch = useDispatch();
   const container = useRef(null);
   const [scheduleGroup, setScheduleGroup] = useState(null);
-
 
   const subjectsArr = subjects.map((elem) => {
     return {
@@ -71,20 +73,20 @@ function ScheduleCreater() {
     },
   ]);
 
-  const groupsArr = name === "Admin" ? 
-  groups.map(({ name, id }) => {
-    return {
-      value: id,
-      label: name,
-    };
-  })
-  :
-   userGroup.map(({ group }) => {
-    return {
-      value: group.id,
-      label: group.name,
-    };
-  });
+  const groupsArr =
+    name === "Admin"
+      ? groups.map(({ name, id }) => {
+          return {
+            value: id,
+            label: name,
+          };
+        })
+      : userGroup.map(({ group }) => {
+          return {
+            value: group.id,
+            label: group.name,
+          };
+        });
 
   const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 

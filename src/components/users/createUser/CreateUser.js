@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./CreateUser.css";
 import Loading from "../../common/Loading";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUserRequest } from "../../../state-management/users/requests";
 import { Field, Form, Formik } from "formik";
 import { Delete } from "@mui/icons-material";
+import { fetchRoles } from "../../../state-management/role/requests";
+import { rolesSelector } from "../../../state-management/role/selectors";
 
 function CreateUser() {
   const [loading] = useState(false);
   const [users, setUsers] = useState([]);
   const [userCount, setUserCount] = useState(0);
-
+  const { roles } = useSelector(rolesSelector);
+  useEffect(() => {
+    dispatch(fetchRoles());
+  }, []);
   const dispatch = useDispatch();
   const rowJSX = (userCount) => {
     return (
@@ -65,16 +70,16 @@ function CreateUser() {
             marginRight: "25px",
           }}
         >
-          <option value={1}>Admin</option>
-          <option value={2}>Teacher</option>
-          <option value={3}>Student</option>
+          {roles.map((role) => (
+            <option key={role.id} value={role.id}>
+              {role.name}
+            </option>
+          ))}
         </Field>
         <Delete
-          sx={{ color: "grey", cursor: "pointer" }}
           type={`button`}
-          onClick={deleteRow}
+          onClick={(e) => deleteRow(e)}
           id={userCount}
-          value="X"
         ></Delete>
       </div>
     );
@@ -87,12 +92,13 @@ function CreateUser() {
   };
 
   // ADD USER IN DATABASE
-  const addUser = (data) => {
+  const addUser = ({ data }) => {
+    data.forEach((user) => (user.roleId = +user.roleId));
     dispatch(createUserRequest(data));
   };
 
-  const deleteRow = () => {
-    // avelacnel
+  const deleteRow = (e) => {
+    setUsers((users) => users.filter((user) => user.key != e.target.id));
   };
 
   if (loading) {
