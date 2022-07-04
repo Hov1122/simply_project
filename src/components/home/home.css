@@ -152,7 +152,8 @@
 }
 
 .table {
-    width: 80vw;
+    /* if somthing is wrong go here (its for develoeprs) */
+    width: 100%; 
     height: fit-content !important;
 }
 
@@ -265,3 +266,4 @@
     vertical-align: top;
     border-top: 1px solid #dee2e6;
 }
+
