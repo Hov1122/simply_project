@@ -163,7 +163,7 @@ function Home() {
           {userGroup.length ? (
             <div className="Schedule-Container">
               <div className="table-responsive">
-                <table className="table table-bordered text-center">
+                <table className="home-table home-table-bordered text-center">
                   <thead>
                     <tr className="bg-light-gray">
                       <th className="text-uppercase">9:30</th>
@@ -196,7 +196,7 @@ function Home() {
                                     backgroundColor: randomColor(),
                                     color: "#ffff",
                                   }}
-                                  className="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
+                                  className="padding-5px-tb padding-15px-lr home-table-border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
                                 >
                                   {name}
                                 </span>

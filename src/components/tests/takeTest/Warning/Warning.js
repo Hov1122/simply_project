@@ -15,7 +15,7 @@ const Warning = ({ setShowWarning }) => {
   });
 
   const closeWarning = (e) => {
-    if (warningRef?.current.contains(e.target) || !warningRef) return;
+    if (warningRef?.current?.contains(e.target) || !warningRef) return;
 
     setShowWarning(false);
   };

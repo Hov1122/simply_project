@@ -146,87 +146,33 @@
     overflow-y: scroll;
 }
 
-/* Schedule Table */
+/* Schedule home-table */
 .bg-light-gray {
     background-color: #f7f7f7;
 }
 
-.table {
+.Schedule-Container {
+    width: 100%;
+}
+
+.home-table {
     /* if somthing is wrong go here (its for develoeprs) */
-    width: 100%; 
+    width: 80vw; 
     height: fit-content !important;
 }
 
-.table-bordered thead td, .table-bordered thead th {
+.home-table-bordered thead td, .home-table-bordered thead th {
     border-bottom-width: 2px;
     padding: 15px;
 }
-.table thead th {
+.home-table thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
 }
-.table-bordered td, .table-bordered th {
+.home-table-bordered td, .home-table-bordered th {
     border: 1px solid #dee2e6;
     text-align: center;
     margin: auto;
-}
-
-
-.bg-sky.box-shadow {
-    box-shadow: 0px 5px 0px 0px #00a2a7
-}
-
-.bg-orange.box-shadow {
-    box-shadow: 0px 5px 0px 0px #af4305
-}
-
-.bg-green.box-shadow {
-    box-shadow: 0px 5px 0px 0px #4ca520
-}
-
-.bg-yellow.box-shadow {
-    box-shadow: 0px 5px 0px 0px #dcbf02
-}
-
-.bg-pink.box-shadow {
-    box-shadow: 0px 5px 0px 0px #e82d8b
-}
-
-.bg-purple.box-shadow {
-    box-shadow: 0px 5px 0px 0px #8343e8
-}
-
-.bg-lightred.box-shadow {
-    box-shadow: 0px 5px 0px 0px #d84213
-}
-
-
-.bg-sky {
-    background-color: #02c2c7
-}
-
-.bg-orange {
-    background-color: #e95601
-}
-
-.bg-green {
-    background-color: #5bbd2a
-}
-
-.bg-yellow {
-    background-color: #f0d001
-}
-
-.bg-pink {
-    background-color: #ff48a4
-}
-
-.bg-purple {
-    background-color: #9d60ff
-}
-
-.bg-lightred {
-    background-color: #ff5722
 }
 
 .padding-15px-lr {
@@ -258,10 +204,10 @@
     font-size: 13px;
 }
 
-.table-bordered td, .table-bordered th {
+.home-table-bordered td, .home-table-bordered th {
     border: 1px solid #dee2e6;
 }
-.table td, .table th {
+.home-table td, .home-table th {
     padding: .75rem;
     vertical-align: top;
     border-top: 1px solid #dee2e6;

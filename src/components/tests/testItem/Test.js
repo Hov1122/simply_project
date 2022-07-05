@@ -84,6 +84,7 @@ const Test = ({
                 <div>
                   <h6>Questions: {questions?.length}</h6>
                   <h2>Duration: {length} minutes</h2>
+                  {mark !== -1 && <h2>Mark: {mark}</h2>}
                 </div>
                 {!testStarted ? (
                   <span className="test-starts-at">

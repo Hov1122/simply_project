@@ -9,15 +9,17 @@ import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { groupsSelector } from "../../../state-management/groups/selectors";
+import { v4 as uuidv4 } from "uuid";
 
 import Select from "react-select";
 import { Alert } from "@mui/material";
 
 function ScheduleCreater() {
   const [loading] = useState(false);
-  const { subjects } = useSelector(subjectsSelector);
   const [requestError, setRequestError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [scheduleGroup, setScheduleGroup] = useState(null);
+
   const {
     user: {
       userGroup,
@@ -25,9 +27,14 @@ function ScheduleCreater() {
     },
   } = useSelector(authSelector);
   const { groups } = useSelector(groupsSelector);
+  const { subjects } = useSelector(subjectsSelector);
   const dispatch = useDispatch();
   const container = useRef(null);
-  const [scheduleGroup, setScheduleGroup] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchSubjectsRequest());
+    dispatch(fetchGroupsRequest());
+  }, []);
 
   const subjectsArr = subjects.map((elem) => {
     return {
@@ -35,43 +42,18 @@ function ScheduleCreater() {
       label: elem.name,
     };
   });
-  const [scheduleSubjects, setScheduleSubjects] = useState([
-    {
+
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+
+  const [scheduleSubjects, setScheduleSubjects] = useState(
+    days.map(() => ({
       "2022-06-20T09:30:47.418Z": 1,
       "2022-06-20T11:10:47.418Z": 1,
       "2022-06-20T13:00:47.418Z": 1,
       "2022-06-20T14:40:47.418Z": 1,
       "2022-06-20T16:20:47.418Z": 1,
-    },
-    {
-      "2022-06-20T09:30:47.418Z": 1,
-      "2022-06-20T11:10:47.418Z": 1,
-      "2022-06-20T13:00:47.418Z": 1,
-      "2022-06-20T14:40:47.418Z": 1,
-      "2022-06-20T16:20:47.418Z": 1,
-    },
-    {
-      "2022-06-20T09:30:47.418Z": 1,
-      "2022-06-20T11:10:47.418Z": 1,
-      "2022-06-20T13:00:47.418Z": 1,
-      "2022-06-20T14:40:47.418Z": 1,
-      "2022-06-20T16:20:47.418Z": 1,
-    },
-    {
-      "2022-06-20T09:30:47.418Z": 1,
-      "2022-06-20T11:10:47.418Z": 1,
-      "2022-06-20T13:00:47.418Z": 1,
-      "2022-06-20T14:40:47.418Z": 1,
-      "2022-06-20T16:20:47.418Z": 1,
-    },
-    {
-      "2022-06-20T09:30:47.418Z": 1,
-      "2022-06-20T11:10:47.418Z": 1,
-      "2022-06-20T13:00:47.418Z": 1,
-      "2022-06-20T14:40:47.418Z": 1,
-      "2022-06-20T16:20:47.418Z": 1,
-    },
-  ]);
+    }))
+  );
 
   const groupsArr =
     name === "Admin"
@@ -88,55 +70,22 @@ function ScheduleCreater() {
           };
         });
 
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
   let day = -1;
-  let subjectId = [0, 1, 2, 3];
 
   const daySchedule = (day) => {
     return (
       <div className="Schedule-day" key={day} data-value={days[day]}>
         <h3>{days[day]}</h3>
-        <Select
-          options={subjectsArr}
-          defaultValue={{ label: "Free class", value: 1 }}
-          key={subjectId[0]}
-          onChange={(e) => {
-            handleChangeSubject(day, "2022-06-20T09:30:47.418Z", e);
-          }}
-        />
-        <Select
-          options={subjectsArr}
-          defaultValue={{ label: "Free class", value: 1 }}
-          key={subjectId[1]}
-          onChange={(e) => {
-            handleChangeSubject(day, "2022-06-20T11:10:47.418Z", e);
-          }}
-        />
-        <Select
-          options={subjectsArr}
-          defaultValue={{ label: "Free class", value: 1 }}
-          key={subjectId[2]}
-          onChange={(e) => {
-            handleChangeSubject(day, "2022-06-20T13:00:47.418Z", e);
-          }}
-        />
-        <Select
-          options={subjectsArr}
-          defaultValue={{ label: "Free class", value: 1 }}
-          key={subjectId[3]}
-          onChange={(e) => {
-            handleChangeSubject(day, "2022-06-20T14:40:47.418Z", e);
-          }}
-        />
-        <Select
-          options={subjectsArr}
-          defaultValue={{ label: "Free class", value: 1 }}
-          key={subjectId[4]}
-          onChange={(e) => {
-            handleChangeSubject(day, "2022-06-20T16:20:47.418Z", e);
-          }}
-        />
+        {Object.keys(scheduleSubjects[0]).map((time) => (
+          <Select
+            options={subjectsArr}
+            defaultValue={{ label: "Free class", value: 1 }}
+            key={uuidv4()}
+            onChange={(e) => {
+              handleChangeSubject(day, time, e);
+            }}
+          />
+        ))}
       </div>
     );
   };
@@ -151,11 +100,6 @@ function ScheduleCreater() {
   const handleChangeGroup = (e) => {
     setScheduleGroup(e.value);
   };
-
-  useEffect(() => {
-    dispatch(fetchSubjectsRequest());
-    dispatch(fetchGroupsRequest());
-  }, []);
 
   // ADD SCHEDULE IN DATABASE
   const addSchedule = () => {
@@ -212,7 +156,6 @@ function ScheduleCreater() {
       <div className="Schedule-Container-Main">
         {days.map(() => {
           day += 1;
-          subjectId.forEach((elem) => elem + 4);
           return daySchedule(day);
         })}
       </div>

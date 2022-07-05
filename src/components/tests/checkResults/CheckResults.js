@@ -9,6 +9,7 @@ import {
   fetchTestResults,
 } from "../../../state-management/tests/requests";
 import { testsSelector } from "../../../state-management/tests/selectors";
+import Loading from "../../common/Loading";
 import "./CheckResults.css";
 
 const CheckResults = () => {
@@ -21,13 +22,15 @@ const CheckResults = () => {
   const {
     user: { id },
   } = useSelector(authSelector);
-  const { testResults, currentTest } = useSelector(testsSelector);
+  const { testResults, currentTest, loading } = useSelector(testsSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchTestById({ id: testId }));
     dispatch(fetchTestResults({ userId: id, testId }));
   }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <div className="Check-Results-Container">
@@ -65,13 +68,15 @@ const CheckResults = () => {
                           disabled="disabled"
                           id={aid}
                           defaultChecked={
+                            !testResults?.questions?.[qid] ||
                             testResults?.questions[qid][0][aid] !== undefined
-                              ? true
-                              : false
+                              ? false
+                              : true
                           }
                           style={{
                             borderRadius: 10,
-                            borderColor: isCorrect ? "green" : "red",
+                            borderWidth: "2px",
+                            backgroundColor: !isCorrect ? "green" : "red",
                           }}
                         />
                         <label htmlFor={aid} className="answer-text">
@@ -85,7 +90,8 @@ const CheckResults = () => {
             );
           })}
       <Pagination
-        count={Math.ceil(currentTest?.questions?.length / 5)}
+        // count={Math.ceil(currentTest?.questions?.length / 5)}
+        count={2}
         sx={{ marginTop: 3 }}
         variant="outlined"
         color="primary"

@@ -4,7 +4,7 @@ import Loading from "../../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserRequest } from "../../../state-management/users/requests";
 import { Field, Form, Formik } from "formik";
-import { Delete } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchRoles } from "../../../state-management/role/requests";
 import { rolesSelector } from "../../../state-management/role/selectors";
 
@@ -13,14 +13,16 @@ function CreateUser() {
   const [users, setUsers] = useState([]);
   const [userCount, setUserCount] = useState(0);
   const { roles } = useSelector(rolesSelector);
+
   useEffect(() => {
     dispatch(fetchRoles());
   }, []);
+
   const dispatch = useDispatch();
   const rowJSX = (userCount) => {
     return (
       <div key={userCount} style={{ marginBottom: "20px" }}>
-        <span>{userCount + 1}</span>
+        <span>{userCount}</span>
         <Field
           type="text"
           name={`data[${userCount}].firstName`}
@@ -76,11 +78,13 @@ function CreateUser() {
             </option>
           ))}
         </Field>
-        <Delete
-          type={`button`}
-          onClick={(e) => deleteRow(e)}
+        <div
           id={userCount}
-        ></Delete>
+          onClick={deleteRow}
+          style={{ cursor: "pointer", display: "inline-block" }}
+        >
+          <DeleteIcon onClick={() => deleteRow(userCount)}></DeleteIcon>
+        </div>
       </div>
     );
   };
@@ -97,8 +101,8 @@ function CreateUser() {
     dispatch(createUserRequest(data));
   };
 
-  const deleteRow = (e) => {
-    setUsers((users) => users.filter((user) => user.key != e.target.id));
+  const deleteRow = (id) => {
+    setUsers((users) => users.filter((user) => user.key != id));
   };
 
   if (loading) {
@@ -123,7 +127,7 @@ function CreateUser() {
         onSubmit={(values) => addUser(values)}
       >
         <Form>
-          {!!userCount && (
+          {!!users.length && (
             <button type="submit" className="submit-create">
               Submit
             </button>

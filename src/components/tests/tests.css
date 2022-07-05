@@ -16,9 +16,10 @@
 }
 
 .filter-tests {
-    border: none;
-    background-color: rgb(205, 205, 205);
-    border-radius: 3px;
+    border-radius: 10px;
+    border-color: #fff;
+    font: bold;
+    color: #ffff;
     padding: 10px;
 }
 
@@ -28,11 +29,9 @@
     padding: 10px;
     margin: 0 auto;
     border-radius: 15px;
-    background-color: rgb(197, 228, 238);
+    background-color: #494581;
     width: 80%;
 }
-
-
 
 .Tests-bar {
     padding: 40px 70px 40px 40px;
@@ -59,8 +58,6 @@
     margin-top: 20px;
 }
 
-
-
 .tests {
     width:100%;
     height: 100%;
@@ -76,17 +73,15 @@
     font-size: 15px;
 }
 
-
-
   .switch-button {
     background: rgba(255, 255, 255, 0.56);
     border-radius: 30px;
     overflow: hidden;
     width: 240px;
     text-align: center;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 1px;
-    color: #155FFF;
+    color: #000;
     position: relative;
     padding-right: 120px;
     position: relative;
