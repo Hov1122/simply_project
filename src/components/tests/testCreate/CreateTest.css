@@ -11,6 +11,11 @@
     width: 100%;
 }
 
+.TestCreater-Answer-Container {
+    display: flex;
+    
+}
+
 .TestCreater-Container input{
     margin: 5px;
     width: 100%;

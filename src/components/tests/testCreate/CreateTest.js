@@ -52,13 +52,13 @@
     const QuestionJSX = (questionNumber) => {
       return (
         <div key={questionNumber} data-question-number={questionNumber}>
-          <div className="Question-Container">
+          <div>
             <h3>Question {+questionNumber + 1}</h3>
             <div className="Question-header">
               <Field
                 placeholder="Enter Question"
                 type="text"
-                name={`questions[${questionNumber}]`}
+                name={`questions[${questionNumber}].name`}
               />
               <button
                 type={`button`}
@@ -68,11 +68,9 @@
                 X
               </button>
             </div>
-            <div className="AnswersForm">
               {
                 answersArrayRender(questionNumber)
               }
-            </div>
             <button type="button" id={questionNumber} onClick={addAnswerRow}>
               Add New Answer
             </button>
@@ -87,7 +85,7 @@
 
     const AnswerJSX = (questionNumber, answerNumber) => {
       return (
-        <div key={`${questionNumber}, ${answerNumber}`}>
+        <div key={`${questionNumber}, ${answerNumber}`} className={'TestCreater-Answer-Container'}>
           <Field
             type="checkbox"
             name={`answers[${questionNumber}][${answerNumber}].isCorrect`}
@@ -99,10 +97,9 @@
           />
           <button
             className="delete-answer"
-            value="X"
             onClick={deleteAnswer}
             data-value={`${questionNumber},${answerNumber}`}
-          />
+          >X</button>
         </div>
       );
     };
@@ -144,6 +141,13 @@
 
     // ADD TEST IN DATABASE
     const addTest = (data) => {
+      data.answers.forEach(element => {
+        element.forEach(item => {
+          if (!item.isCorrect)
+            item.isCorrect = false
+        })
+      });
+      data.start += ':00.000Z';
       console.log(data)
       dispatch(createTestRequest(data));
     };
@@ -220,17 +224,18 @@
             </div>
             <div className="QuestionsForm">
               {questions?.map((item, index) => {
-                console.log(item)
                   return (
-                    <div key={index}>
+                    <div key={index} className="Question-Container">
                       {
                         item.questionjsx
                       }
-                      {
-                        item.questionanswers.map((answer) => {
-                          return answer
-                        })
-                      }
+                      <div className="AnswersForm">
+                        {
+                          item.questionanswers.map((answer) => {
+                            return answer
+                          })
+                        }
+                      </div>
                     </div>
                   )
                 })
