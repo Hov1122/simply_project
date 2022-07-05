@@ -52,7 +52,6 @@
     const QuestionJSX = (questionNumber) => {
       return (
         <div key={questionNumber} data-question-number={questionNumber}>
-          <div>
             <h3>Question {+questionNumber + 1}</h3>
             <div className="Question-header">
               <Field
@@ -61,6 +60,7 @@
                 name={`questions[${questionNumber}].name`}
               />
               <button
+                className="delete-answer"
                 type={`button`}
                 data-question-number={questionNumber}
                 onClick={(e) => deleteQuestion(e)}
@@ -71,10 +71,6 @@
               {
                 answersArrayRender(questionNumber)
               }
-            <button type="button" id={questionNumber} onClick={addAnswerRow}>
-              Add New Answer
-            </button>
-          </div>
         </div>
       );
     };
@@ -187,7 +183,7 @@
           <Form>
             <div className="testInformationHeader">
               <Field type="text" placeholder="Test Name" name="name" />
-              <input value="Add test" type="submit" />
+              <input value="Add test" type="submit" className="CreateTest-buttons"/>
             </div>
             <div className="testInformationData">
               <Field as="select" name="subjectId">
@@ -235,7 +231,10 @@
                             return answer
                           })
                         }
-                      </div>
+                      </div>  
+                      <button className="CreateTest-buttons" type="button" id={index} onClick={addAnswerRow}>
+                        Add New Answer
+                      </button>
                     </div>
                   )
                 })
