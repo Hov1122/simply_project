@@ -9,16 +9,20 @@ import { fetchRoles } from "../../../state-management/role/requests";
 import { rolesSelector } from "../../../state-management/role/selectors";
 
 function CreateUser() {
-  const [loading] = useState(false);
   const [users, setUsers] = useState([]);
   const [userCount, setUserCount] = useState(0);
-  const { roles } = useSelector(rolesSelector);
+  const { roles, loading } = useSelector(rolesSelector);
 
   useEffect(() => {
     dispatch(fetchRoles());
   }, []);
 
   const dispatch = useDispatch();
+
+  if (loading) {
+    return <Loading />;
+  }
+
   const rowJSX = (userCount) => {
     return (
       <div key={userCount} style={{ marginBottom: "20px" }}>
@@ -105,10 +109,6 @@ function CreateUser() {
     setUsers((users) => users.filter((user) => user.key != id));
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="UserCreater-Container">
       <h2>Create User</h2>
@@ -120,7 +120,7 @@ function CreateUser() {
               lastName: "",
               email: "",
               password: "",
-              roleId: "",
+              roleId: roles[0]?.id,
             },
           ],
         }}
