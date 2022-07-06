@@ -181,6 +181,9 @@
           onSubmit={(values) => addTest({ ...values })}
         >
           <Form>
+            <div>
+              Questions count: {questions.length}
+            </div>
             <div className="testInformationHeader">
               <Field type="text" placeholder="Test Name" name="name" />
               <input value="Add test" type="submit" className="CreateTest-buttons"/>
