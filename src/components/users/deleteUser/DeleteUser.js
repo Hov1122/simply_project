@@ -24,7 +24,7 @@ const DeleteUser = () => {
     dispatch(fetchUsersRequest(search));
   });
 
-  const userJSX = ({ id, firstName, email, lastName }) => {
+  const userJSX = ({ id, firstName, email, lastName } = {}) => {
     return (
       <div id="checklist" key={id}>
         <input
@@ -62,7 +62,7 @@ const DeleteUser = () => {
       return;
     } else {
       dispatch(deletedUserRequest(data));
-      setSuccess(!error)
+      setSuccess(!error);
     }
   };
 
@@ -90,12 +90,15 @@ const DeleteUser = () => {
               <Loading width="16px" height="16px"></Loading>
             </div>
           )}
-          {!loading && success && <Alert severity="success">Users deleted successfully!</Alert>}
+          {!loading && success && (
+            <Alert severity="success">Users deleted successfully!</Alert>
+          )}
         </div>
       </div>
       <div className="Delete-User-Container-Main">
         <div className="delete-table-wrapper">
           {users.map((elem) => {
+            console.log(users);
             return userJSX(elem);
           })}
         </div>

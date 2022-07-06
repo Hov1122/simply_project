@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import "./CreateUser.css";
 import Loading from "../../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserRequest } from "../../../state-management/users/requests";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, FieldArray, ErrorMessage } from "formik";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchRoles } from "../../../state-management/role/requests";
 import { rolesSelector } from "../../../state-management/role/selectors";
+import { CircularProgress } from "@mui/material";
+import { Button, IconButton } from "@material-ui/core";
+
+import * as Yup from "yup";
 
 function CreateUser() {
-  const [users, setUsers] = useState([]);
-  const [userCount, setUserCount] = useState(0);
   const { roles, loading } = useSelector(rolesSelector);
+  const arrayPushRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchRoles());
@@ -23,13 +26,31 @@ function CreateUser() {
     return <Loading />;
   }
 
-  const rowJSX = (userCount) => {
+  const addUserSchema = Yup.object().shape({
+    usersData: Yup.array().of(
+      Yup.object().shape({
+        firstName: Yup.string()
+          .min(2, "Too Short!")
+          .max(50, "Too Long!")
+          .required("Required"),
+        lastName: Yup.string()
+          .min(2, "Too Short!")
+          .max(50, "Too Long!")
+          .required("Required"),
+        email: Yup.string().email("Invalid email").required("Required"),
+        password: Yup.string().required("Required"),
+      })
+    ),
+  });
+
+  const rowJSX = (userCount, remove) => {
+    console.log(userCount);
     return (
       <div key={userCount} style={{ marginBottom: "20px" }}>
-        <span>{userCount}</span>
+        <span>{userCount + 1}</span>
         <Field
           type="text"
-          name={`data[${userCount}].firstName`}
+          name={`usersData[${userCount}].firstName`}
           placeholder="First Name"
           style={{
             padding: "5px",
@@ -37,9 +58,10 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
+        <ErrorMessage name={`users.${userCount}.firstName`} />
         <Field
           type="text"
-          name={`data[${userCount}].lastName`}
+          name={`usersData[${userCount}].lastName`}
           placeholder="Last Name"
           style={{
             padding: "5px",
@@ -49,7 +71,7 @@ function CreateUser() {
         />
         <Field
           type="text"
-          name={`data[${userCount}].email`}
+          name={`usersData[${userCount}].email`}
           placeholder="E-Mail"
           style={{
             padding: "5px",
@@ -59,7 +81,7 @@ function CreateUser() {
         />
         <Field
           type="password"
-          name={`data[${userCount}].password`}
+          name={`usersData[${userCount}].password`}
           placeholder="Password"
           style={{
             padding: "5px",
@@ -69,7 +91,7 @@ function CreateUser() {
         />
         <Field
           as="select"
-          name={`data[${userCount}].roleId`}
+          name={`usersData[${userCount}].roleId`}
           style={{
             padding: "5px",
             borderRadius: "3px",
@@ -82,31 +104,17 @@ function CreateUser() {
             </option>
           ))}
         </Field>
-        <div
-          id={userCount}
-          onClick={deleteRow}
-          style={{ cursor: "pointer", display: "inline-block" }}
-        >
-          <DeleteIcon onClick={() => deleteRow(userCount)}></DeleteIcon>
-        </div>
+        <IconButton>
+          <DeleteIcon onClick={() => remove(userCount)}></DeleteIcon>
+        </IconButton>
       </div>
     );
   };
 
-  // ADD NEW USER ROW
-  const addUserRow = () => {
-    setUserCount((prevValue) => prevValue + 1);
-    setUsers([...users, rowJSX(userCount)]);
-  };
-
   // ADD USER IN DATABASE
-  const addUser = ({ data }) => {
-    data.forEach((user) => (user.roleId = +user.roleId));
-    dispatch(createUserRequest(data));
-  };
-
-  const deleteRow = (id) => {
-    setUsers((users) => users.filter((user) => user.key != id));
+  const addUser = ({ usersData }, setSubmitting) => {
+    usersData.forEach((user) => (user.roleId = +user.roleId));
+    dispatch(createUserRequest(usersData, setSubmitting));
   };
 
   return (
@@ -114,7 +122,7 @@ function CreateUser() {
       <h2>Create User</h2>
       <Formik
         initialValues={{
-          data: [
+          usersData: [
             {
               firstName: "",
               lastName: "",
@@ -124,23 +132,51 @@ function CreateUser() {
             },
           ],
         }}
-        onSubmit={(values) => addUser(values)}
+        validationSchema={addUserSchema}
+        onSubmit={(values, { setSubmitting }) => addUser(values, setSubmitting)}
       >
-        <Form>
-          {!!users.length && (
-            <button type="submit" className="submit-create">
-              Submit
+        {({ isSubmitting }) => (
+          <Form autoCapitalize="off">
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              color="primary"
+              className="submit-create"
+              startIcon={isSubmitting ? <CircularProgress /> : undefined}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+              {console.log(isSubmitting)}
+            </Button>
+            <FieldArray name="usersData">
+              {({
+                push,
+                remove,
+                form: {
+                  values: { usersData },
+                },
+              }) => {
+                arrayPushRef.current = push;
+                return usersData?.map((user, i) => rowJSX(i, remove));
+              }}
+            </FieldArray>
+
+            <button
+              type={`button`}
+              className="add-new-row-button"
+              onClick={() =>
+                arrayPushRef.current({
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  password: "",
+                  roleId: roles[0]?.id,
+                })
+              }
+            >
+              Add new Row
             </button>
-          )}
-          {users.map((item) => item)}
-          <button
-            type={`button`}
-            className="add-new-row-button"
-            onClick={addUserRow}
-          >
-            Add new Row
-          </button>
-        </Form>
+          </Form>
+        )}
       </Formik>
     </div>
   );

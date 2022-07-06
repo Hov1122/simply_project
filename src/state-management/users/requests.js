@@ -52,7 +52,7 @@ export const getTopStudentsRequest = () => {
 };
 
 // CREATE USER
-export const createUserRequest = (payload) => {
+export const createUserRequest = (payload, setSubmitting) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
@@ -61,6 +61,8 @@ export const createUserRequest = (payload) => {
       dispatch(createUserSuccess(data));
     } catch (error) {
       dispatch(fetchUsersFailure(error));
+    } finally {
+      setTimeout(() => setSubmitting(false), 1000);
     }
   };
 };
