@@ -59,10 +59,6 @@ function LoginPage() {
     setPassword(e.target.value);
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="login-page">
       <div className="login-container">
@@ -99,6 +95,12 @@ function LoginPage() {
           onChange={handlePasswordChange}
           onKeyDown={logHandler}
         />
+
+        {loading && (
+          <div className="login-loading">
+            <Loading />
+          </div>
+        )}
 
         <button disabled={!(email && password)} onClick={logHandler}>
           Log In
