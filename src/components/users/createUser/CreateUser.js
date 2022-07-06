@@ -43,8 +43,7 @@ function CreateUser() {
     ),
   });
 
-  const rowJSX = (userCount, remove) => {
-    console.log(userCount);
+  const rowJSX = (userCount, remove, errors) => {
     return (
       <div key={userCount} style={{ marginBottom: "20px" }}>
         <span>{userCount + 1}</span>
@@ -58,7 +57,11 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
-        <ErrorMessage name={`users.${userCount}.firstName`} />
+        {errors?.userData?.[userCount]?.firstName && (
+          <div>{errors?.userData?.[0].firstName}</div>
+        )}
+        <ErrorMessage name={`usersData[${userCount}].firstName`} />
+
         <Field
           type="text"
           name={`usersData[${userCount}].lastName`}
@@ -69,8 +72,13 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
+        {errors?.userData?.[userCount]?.lastName && (
+          <div>{errors?.userData?.[userCount]?.lastName}</div>
+        )}
+        <ErrorMessage name={`usersData[${userCount}].lastName`} />
+
         <Field
-          type="text"
+          type="email"
           name={`usersData[${userCount}].email`}
           placeholder="E-Mail"
           style={{
@@ -79,6 +87,11 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
+        {errors?.userData?.[userCount]?.email && (
+          <div>{errors?.userData?.[userCount]?.email}</div>
+        )}
+        {/* <ErrorMessage name={`usersData[${userCount}].email`} /> */}
+
         <Field
           type="password"
           name={`usersData[${userCount}].password`}
@@ -89,6 +102,11 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
+        {errors?.userData?.[userCount]?.lastName && (
+          <div>{errors?.userData?.[userCount]?.lastName}</div>
+        )}
+        <ErrorMessage name={`usersData[${userCount}].password`} />
+
         <Field
           as="select"
           name={`usersData[${userCount}].roleId`}
@@ -104,8 +122,8 @@ function CreateUser() {
             </option>
           ))}
         </Field>
-        <IconButton>
-          <DeleteIcon onClick={() => remove(userCount)}></DeleteIcon>
+        <IconButton onClick={() => remove(userCount)}>
+          <DeleteIcon></DeleteIcon>
         </IconButton>
       </div>
     );
@@ -135,7 +153,7 @@ function CreateUser() {
         validationSchema={addUserSchema}
         onSubmit={(values, { setSubmitting }) => addUser(values, setSubmitting)}
       >
-        {({ isSubmitting }) => (
+        {({ errors, isSubmitting }) => (
           <Form autoCapitalize="off">
             <Button
               disabled={isSubmitting}
@@ -145,7 +163,6 @@ function CreateUser() {
               startIcon={isSubmitting ? <CircularProgress /> : undefined}
             >
               {isSubmitting ? "Submitting..." : "Submit"}
-              {console.log(isSubmitting)}
             </Button>
             <FieldArray name="usersData">
               {({
@@ -156,7 +173,7 @@ function CreateUser() {
                 },
               }) => {
                 arrayPushRef.current = push;
-                return usersData?.map((user, i) => rowJSX(i, remove));
+                return usersData?.map((user, i) => rowJSX(i, remove, errors));
               }}
             </FieldArray>
 
