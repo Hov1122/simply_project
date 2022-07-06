@@ -69,61 +69,9 @@
     right: -10;
 }
 
-/* submit button */
-/* .submit-create {
-  cursor: pointer;
-    margin-bottom: 10px;
-    margin-top: 45px;
-    margin-left: 100px;
-    transform: translate(-50%, -50%);
-    color: lightgreen;
-    text-decoration: none;
-    font-size: 1.1em;
-    display: inline-block;
-    font-family: Montserrat;
-    text-transform: uppercase;
-    padding: 0.5em 2em;
-    border: 2px solid lightgreen;
-    transition: 0.02s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
-  }
-  .submit-create::before {
-    content: "";
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 100%;
-    bottom: 0;
-    background: lightgreen;
-    transition: 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s cubic-bezier(0.1, 0, 0.1, 1);
-    z-index: -1;
-  }
-  .submit-create::after {
-    content: "";
-    display: inline-block;
-    background-image: url("https://cdn-icons-png.flaticon.com/128/109/109617.png");
-    position: absolute;
-    top: 0;
-    left: calc(100% - 3em);
-    right: 3em;
-    bottom: 0;
-    background-size: 1.5em;
-    background-repeat: no-repeat;
-    background-position: center;
-    transition: right 0.3s cubic-bezier(0.1, 0, 0.1, 1);
-  }
-  .submit-create:hover {
-    padding: 0.5em 3.5em 0.5em 0.5em;
-  }
-  .submit-create:hover::before {
-    left: calc(100% - 3em);
-    right: 0;
-    transition: 0.3s cubic-bezier(0.1, 0, 0.1, 1), left 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
-  }
-  .submit-create:hover::after {
-    right: 0;
-    transition: right 0.3s 0.2s cubic-bezier(0.1, 0, 0.1, 1);
-  } */
+.field-error-message {
+  color: red;
+}
 
   /* add new row button */
   .add-new-row-button { 

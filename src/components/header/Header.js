@@ -18,6 +18,7 @@ import { debounce } from "@material-ui/core";
 
 const Header = () => {
   const [color] = useState(randomColor());
+  const [loading, setLoading] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [showDropDown, setShowDropDown] = useState(false);
   const [showFoundUsers, setShowFoundUsers] = useState(false);
@@ -27,7 +28,7 @@ const Header = () => {
     token,
     user: { id, firstName, image },
   } = useSelector(authSelector);
-  const { users, loading } = useSelector(usersSelector);
+  const { users } = useSelector(usersSelector);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -43,7 +44,12 @@ const Header = () => {
   };
 
   const handleSearch = debounce((keyword) => {
-    dispatch(fetchUsersRequest(keyword))
+    setLoading(true);
+    dispatch(fetchUsersRequest(keyword));
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   });
 
   return token ? (
@@ -77,7 +83,7 @@ const Header = () => {
                 onBlur={() => setShowFoundUsers(false)}
                 onInput={(e) => {
                   setSearchValue(e.target.value);
-                  handleSearch(e.target.value)
+                  handleSearch(e.target.value);
                 }}
               />
             </div>
