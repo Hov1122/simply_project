@@ -8,6 +8,8 @@ import {
   fetchUsersSuccess,
   updateUserSuccess,
   fetchUserByIdSuccess,
+  recoverPasswordSuccess,
+
 } from "./actions";
 
 // GET USERS
@@ -74,6 +76,19 @@ export const updateUserRequest = (payload) => {
     try {
       const data = await axiosApiInstance.put(`/users`, payload);
       dispatch(updateUserSuccess(data));
+    } catch (error) {
+      dispatch(fetchUsersFailure(error));
+    }
+  };
+};
+
+// RECOVER USER PASSWORD
+export const recoverPasswordRequest = (payload) => {
+  return async (dispatch) => {
+    dispatch(fetchUsersPending());
+    try {
+      await axiosApiInstance.get(`/forgotPassword?email=${payload}`);
+      dispatch(recoverPasswordSuccess());
     } catch (error) {
       dispatch(fetchUsersFailure(error));
     }

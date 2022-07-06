@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { authSelector } from "../../state-management/auth/selectors";
 import Loading from "../common/Loading";
 import { loginRequest } from "../../state-management/auth/requests";
@@ -59,10 +59,6 @@ function LoginPage() {
     setPassword(e.target.value);
   };
 
-  if (loading) {
-    return <Loading />;
-  }
-
   return (
     <div className="login-page">
       <div className="login-container">
@@ -99,7 +95,21 @@ function LoginPage() {
           onChange={handlePasswordChange}
           onKeyDown={logHandler}
         />
+<<<<<<< HEAD
+        <NavLink
+          className="forgot-password-box"
+          to="/recovery">
+          Forgot password?
+        </NavLink>
+=======
 
+        {loading && (
+          <div className="login-loading">
+            <Loading />
+          </div>
+        )}
+
+>>>>>>> 097bbb1eef87ca8d658589bc6a84583733f8584c
         <button disabled={!(email && password)} onClick={logHandler}>
           Log In
         </button>
