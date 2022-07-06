@@ -10,12 +10,12 @@ const Recovery = () => {
   const [recoveryMail, setrecoveryMail] = useState("");
   const dispatch = useDispatch();
   const { loading } = useSelector(usersSelector);
-//   const [success] = useState(); // to be continued
+  //   const [success] = useState(); // to be continued
 
   return (
     <div className="recovery-page">
       <div className="recovery-component">
-        <h2>Recover your account.</h2>
+        <h2 style={{ marginBottom: 20 }}>Recover your account.</h2>
         <TextField
           variant="outlined"
           label="Type your email..."

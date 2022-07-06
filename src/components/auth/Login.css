@@ -54,5 +54,10 @@
 
 .login-loading {
     position: relative;
-    margin: 10px 40px 40px 0;
+    background-image: url('../../assets/images/background.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
 }

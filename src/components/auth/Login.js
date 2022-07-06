@@ -59,6 +59,13 @@ function LoginPage() {
     setPassword(e.target.value);
   };
 
+  if (loading)
+    return (
+      <div className="login-loading">
+        <Loading />
+      </div>
+    );
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -95,21 +102,10 @@ function LoginPage() {
           onChange={handlePasswordChange}
           onKeyDown={logHandler}
         />
-<<<<<<< HEAD
-        <NavLink
-          className="forgot-password-box"
-          to="/recovery">
+        <NavLink className="forgot-password-box" to="/recovery">
           Forgot password?
         </NavLink>
-=======
 
-        {loading && (
-          <div className="login-loading">
-            <Loading />
-          </div>
-        )}
-
->>>>>>> 097bbb1eef87ca8d658589bc6a84583733f8584c
         <button disabled={!(email && password)} onClick={logHandler}>
           Log In
         </button>
