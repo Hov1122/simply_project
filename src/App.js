@@ -11,10 +11,12 @@ import Main from "./components/main/Main";
 import Loading from "./components/common/Loading";
 import ChangeData from "./components/changeData/ChangeData";
 
+
 // LAZY LOADING
 const Home = lazy(() => import("./components/home/home"));
 const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
+const Recovery = lazy(() => import("./components/recovery/Recovery"))
 const CheckResults = lazy(() =>
   import("./components/tests/checkResults/CheckResults")
 );
@@ -36,6 +38,7 @@ function App() {
                 <Routes>
                   (// PUBLIC ROUTES)
                   <Route path="/" element={<Login />} />
+                  <Route path="/recovery" element={<Recovery />} />
                   (// PROTECTED ROUTES)
                   <Route element={<RequireAuth />}>
                     <Route path="/home" element={<Home />} />

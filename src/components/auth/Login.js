@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { authSelector } from "../../state-management/auth/selectors";
 import Loading from "../common/Loading";
 import { loginRequest } from "../../state-management/auth/requests";
@@ -99,7 +99,11 @@ function LoginPage() {
           onChange={handlePasswordChange}
           onKeyDown={logHandler}
         />
-
+        <NavLink
+          className="forgot-password-box"
+          to="/recovery">
+          Forgot password?
+        </NavLink>
         <button disabled={!(email && password)} onClick={logHandler}>
           Log In
         </button>

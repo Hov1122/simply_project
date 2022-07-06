@@ -16,6 +16,9 @@ export const userTypes = {
     // UPDATE USER
     UPDATE_USER_SUCCESS: "UPDATE_USER_SUCCESS",
 
+    //RECOVER USER PASSWORD SUCCESS
+    RECOVER_PASSWORD_SUCCESS: "RECOVER_PASSWORD_SUCCESS",
+
     // DELETE USER
     DELETE_USER_SUCCESS: "DELETE_USER_SUCCESS",
 
@@ -39,6 +42,9 @@ export const createUserSuccess = createAction(userTypes.CREATE_USER_SUCCESS);
 
 // UPDATE USER
 export const updateUserSuccess = createAction(userTypes.UPDATE_USER_SUCCESS);
+
+//RECOVER USER PASSWORD
+export const recoverPasswordSuccess = createAction(userTypes.RECOVER_PASSWORD_SUCCESS);
 
 // DELETE USER
 export const deleteUserSuccess = createAction(userTypes.DELETE_USER_SUCCESS);

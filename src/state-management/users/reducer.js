@@ -8,6 +8,7 @@ import {
   deleteUserSuccess,
   fetchTopStudentsSuccess,
   fetchUserByIdSuccess,
+  recoverPasswordSuccess,
 } from "./actions";
 
 const initialState = {
@@ -52,6 +53,12 @@ const usersReducer = createReducer(initialState, (builder) => {
         }
         return user;
       });
+      state.loading = false;
+      state.error = null;
+    })
+    // RECOVER USER PASSWORD
+    .addCase(recoverPasswordSuccess, (state) => {
+      state.loading = false;
       state.error = null;
     })
     // DELETE USER
