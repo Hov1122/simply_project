@@ -87,7 +87,7 @@ export const recoverPasswordRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
-      await axiosApiInstance.get(`/forgotPassword?email=${payload}`);
+      await axiosApiInstance.get(`/users/forgotPassword?email=${payload}`);
       dispatch(recoverPasswordSuccess());
     } catch (error) {
       dispatch(fetchUsersFailure(error));

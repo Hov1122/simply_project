@@ -9,11 +9,12 @@
 }
 
 .recovery-component {
+    color: #10333E;
     display: flex;
     flex-direction: column;
     justify-content:center;
     align-items: center;
-    width: 350px;
+    width: 400px;
     height: 500px;
     position: absolute;
     top: 50%;
@@ -43,4 +44,13 @@
 .recovery-loading {
     position: relative;
     margin: 50px;
+}
+
+.recovery-to-home-link {
+    color:#fff;
+}
+
+.did-remember-box {
+    width: 100%;
+    margin: 10px auto;
 }
