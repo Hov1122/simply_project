@@ -27,7 +27,7 @@ const usersReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     // GET USER BY ID
-    .addCase(fetchUserByIdSuccess, (state, { payload: {data}}) => {
+    .addCase(fetchUserByIdSuccess, (state, { payload: { data } }) => {
       state.userProfile = data.user;
       state.loading = false;
       state.error = null;
@@ -39,21 +39,30 @@ const usersReducer = createReducer(initialState, (builder) => {
       state.error = null;
     })
     // CREATE USER
-    .addCase(createUserSuccess, (state, { payload }) => {
-      state.users.push(payload.createdUser);
+    .addCase(createUserSuccess, (state) => {
       state.loading = false;
       state.error = null;
     })
     // UPDATE USER
-    .addCase(updateUserSuccess, (state, { payload:{data:{data}} }) => {
-      state.users = state.users.map((user) => {
-        if (user.id === data.updatedUser.id) {
-          return data.updatedUser;
+    .addCase(
+      updateUserSuccess,
+      (
+        state,
+        {
+          payload: {
+            data: { data },
+          },
         }
-        return user;
-      });
-      state.error = null;
-    })
+      ) => {
+        state.users = state.users.map((user) => {
+          if (user.id === data.updatedUser.id) {
+            return data.updatedUser;
+          }
+          return user;
+        });
+        state.error = null;
+      }
+    )
     // DELETE USER
     .addCase(deleteUserSuccess, (state, { payload }) => {
       state.users = state.users.filter(
