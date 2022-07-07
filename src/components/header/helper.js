@@ -6,18 +6,9 @@ export const HeaderPagePart = () => {
   return (
     <div className="header-page-part">
       <div>
-        <NavLink
-          style={{
-            textDecoration: "none",
-            color: "#344767",
-            marginLeft: "15px",
-            marginTop: "18px",
-            display: "flex",
-          }}
-          to="/home"
-        >
+        <NavLink className="header-home-image" to="/home">
           <HomeSharpIcon sx={{ color: "#344767" }} />
-          <b>{"Home"}</b>
+          <span className="header-home-link">{"Home"}</span>
         </NavLink>
       </div>
     </div>

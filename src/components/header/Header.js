@@ -58,13 +58,7 @@ const Header = () => {
     >
       <div className="Header-Container blur">
         <HeaderPagePart />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "45%",
-          }}
-        >
+        <div className="header-input-avatar-container">
           <div className="search-bar-container">
             <div className="searchField">
               <SearchOutlinedIcon

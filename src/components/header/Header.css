@@ -153,6 +153,58 @@
     display: flex;
 }
 
+.header-home-image {
+    text-decoration: none;
+    color: #344767;
+    margin-left: 15px;
+    margin-top: 18px;
+    display: flex;
+}
+
+.header-input-avatar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 45%;
+}
+
+
+@media(max-width: 700px) {
+    .Header-Container {
+        justify-content: flex-start;
+        height: 100px;
+        overflow-x: scroll;
+    }
+
+    .header-input-avatar-container {
+        width: 100%;
+        padding: 0;
+        /* overflow-x: auto;
+        overflow-y: visible; */
+    }
+
+    .search-bar-container {
+        width: 100%;
+    }
+
+    .header-home-link {
+        font-size: 10px;
+        margin-top: 5px;
+    }
+
+    .header-home-image {
+        margin-left: 0;
+    }
+
+    .Search-Loading {
+        display: none;
+    }
+
+    .firstName {
+        margin-top: 10px;
+        font-size: 10px;
+    }
+}
+
 @media(max-width: 500px) {
     .search-icon {
         display: none;
