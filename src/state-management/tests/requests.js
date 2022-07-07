@@ -7,10 +7,9 @@ import {
   updateTestSuccess,
   deleteTestSuccess,
   fetchUserTestsSuccess,
-  submitTestSuccess,
   fetchTestResultsSuccess,
   fetchTestByIdSuccess,
-} from "./actions";
+} from "./slice";
 
 // GET ALL TESTS
 export const fetchTestsRequest = () => {
@@ -65,11 +64,7 @@ export const submitTestRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {
-      const { data } = await axiosApiInstance.post(
-        `/users/submitTest`,
-        payload
-      );
-      dispatch(submitTestSuccess(data));
+      await axiosApiInstance.post(`/users/submitTest`, payload);
     } catch (error) {
       dispatch(fetchTestsFailure(error));
     }

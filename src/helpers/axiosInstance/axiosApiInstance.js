@@ -1,8 +1,5 @@
 import axios from "axios";
-import {
-  loginSuccess,
-  logoutSuccess,
-} from "../../state-management/auth/actions";
+import { loginSuccess, logoutSuccess } from "../../state-management/auth/slice";
 import store from "../../state-management/index";
 import { refreshTokenRequest } from "../requests/refreshTokenRequest";
 const axiosApiInstance = axios.create({

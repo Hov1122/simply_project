@@ -1,13 +1,4 @@
-import { createReducer } from "@reduxjs/toolkit";
-import {
-  fetchScheduleSuccess,
-  fetchGroupScheduleSuccess,
-  fetchSchedulePending,
-  fetchScheduleFailure,
-  createScheduleSuccess,
-  updateScheduleSuccess,
-  deleteScheduleSuccess,
-} from "./actions";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   groupSchedules: [],
@@ -16,50 +7,63 @@ const initialState = {
   error: null,
 };
 
-const scheduleReducer = createReducer(initialState, (builder) => {
-  builder
+const scheduleSlice = createSlice({
+  name: "schedule",
+  initialState,
+  reducers: {
     // GET ALL SCHEDULES
-    .addCase(fetchScheduleSuccess, (state, { payload }) => {
+    fetchScheduleSuccess: (state, { payload }) => {
       state.schedules = payload.schedule;
       state.loading = false;
       state.error = null;
-    })
+    },
     // GET CURRENT GROUP'S SCHEDULES
-    .addCase(fetchGroupScheduleSuccess, (state, { payload }) => {
+    fetchGroupScheduleSuccess: (state, { payload }) => {
       state.groupSchedules = payload.data;
       state.loading = false;
       state.error = null;
-    })
+    },
     // CREATE SCHEDULE
-    .addCase(createScheduleSuccess, (state, { payload }) => {
+    createScheduleSuccess: (state, { payload }) => {
       state.schedules.push(payload.createdSchedule);
       state.loading = false;
       state.error = null;
-    })
+    },
     // UPDATE SCHEDULE
-    .addCase(updateScheduleSuccess, (state, { payload }) => {
+    updateScheduleSuccess: (state, { payload }) => {
       state.schedules = state.schedules.map((schedule) => {
         if (schedule.id === payload.updatedSchedule.id) {
           return payload.updatedSchedule;
         }
         return schedule;
       });
-    })
+    },
     // DELETE SCHEDULE
-    .addCase(deleteScheduleSuccess, (state, { payload }) => {
+    deleteScheduleSuccess: (state, { payload }) => {
       state.schedules = state.schedules.filter(
         (schedule) => schedule.id !== payload.deletedSchedule.id
       );
-    })
+    },
     // FETCH PENDING AND FAILURE
-    .addCase(fetchSchedulePending, (state) => {
+    fetchSchedulePending: (state) => {
       state.loading = true;
       state.error = null;
-    })
-    .addCase(fetchScheduleFailure, (state, { payload }) => {
+    },
+    fetchScheduleFailure: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    });
+    },
+  },
 });
 
-export default scheduleReducer;
+export const {
+  fetchScheduleSuccess,
+  fetchGroupScheduleSuccess,
+  createScheduleSuccess,
+  updateScheduleSuccess,
+  deleteScheduleSuccess,
+  fetchSchedulePending,
+  fetchScheduleFailure,
+} = scheduleSlice.actions;
+
+export default scheduleSlice.reducer;

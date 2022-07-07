@@ -4,7 +4,7 @@ import {
   fetchSubjectsFailure,
   fetchSubjectsPending,
   fetchSubjectsSuccess,
-} from "./actions";
+} from "./slice";
 
 // GET ALL SUBJECTS
 export const fetchSubjectsRequest = () => {

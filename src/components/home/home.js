@@ -110,7 +110,11 @@ function Home() {
                   .slice(userTests.length - 4)
                   .map(({ id, name, highestScore, createdAt }) => {
                     return (
-                      <div className="Last-Exam" key={id}>
+                      <div
+                        className="Last-Exam"
+                        key={id}
+                        onClick={() => navigate("/tests")}
+                      >
                         <span>{name}</span>
                         <span>Rating: {highestScore}</span>
                         <span>

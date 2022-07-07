@@ -3,7 +3,7 @@ import {
   fetchGroupsMessagesSuccess,
   fetchGroupsMessagesPending,
   fetchGroupsMessagesFailure,
-} from "./actions";
+} from "./slice";
 
 // GET ALL GROUPS
 export const fetchGroupsMessages = (data) => {

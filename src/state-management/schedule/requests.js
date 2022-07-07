@@ -7,7 +7,7 @@ import {
   createScheduleSuccess,
   updateScheduleSuccess,
   deleteScheduleSuccess,
-} from "./actions";
+} from "./slice";
 
 // GET ALL SCHEDULES
 export const fetchSchedulesRequest = () => {

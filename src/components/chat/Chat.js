@@ -8,8 +8,6 @@ import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
-// import ListItemText from "@material-ui/core/ListItemText";
 import Fab from "@material-ui/core/Fab";
 import GroupIcon from "@mui/icons-material/Group";
 import SendIcon from "@mui/icons-material/Send";
@@ -20,7 +18,7 @@ import { messagesSelector } from "../../state-management/chat/selectors";
 import { groupsSelector } from "../../state-management/groups/selectors";
 import { fetchGroupUsers } from "../../state-management/groups/requests";
 import { fetchGroupsMessages } from "../../state-management/chat/requests";
-import { addUserMessage } from "../../state-management/chat/actions";
+import { addUserMessage } from "../../state-management/chat/slice";
 import UsersDropDown from "./usersDropDown/UsersDropDown";
 import Loading from "../common/Loading";
 
@@ -33,7 +31,7 @@ const Chat = () => {
   const { user } = useSelector(authSelector);
   const { userGroup } = user;
   const [filtredGroups, setFiltredGroups] = useState(userGroup);
-  const [searchGroupKeyword, setSearchGroupKeyword] = useState('')
+  const [searchGroupKeyword, setSearchGroupKeyword] = useState("");
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
   const { messages } = useSelector(messagesSelector);
   const messageAreaRef = useRef(null);
@@ -134,17 +132,18 @@ const Chat = () => {
               id="outlined-basic-email"
               label="Search"
               variant="outlined"
-              value = {searchGroupKeyword}
+              value={searchGroupKeyword}
               fullWidth
               onChange={(e) => {
-                  setSearchGroupKeyword(e.target.value)
-                  const inputChars = e.target.value.split('')
-                  setFiltredGroups(() => {
-                    return userGroup.filter(({group}) => {
-                      return inputChars.every((char) =>
-                        group.name.toLowerCase().includes(char.toLowerCase())
-                      );
-                    })});
+                setSearchGroupKeyword(e.target.value);
+                const inputChars = e.target.value.split("");
+                setFiltredGroups(() => {
+                  return userGroup.filter(({ group }) => {
+                    return inputChars.every((char) =>
+                      group.name.toLowerCase().includes(char.toLowerCase())
+                    );
+                  });
+                });
               }}
             />
           </Grid>

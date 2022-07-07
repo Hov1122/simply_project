@@ -3,7 +3,7 @@ import {
   fetchRolesSuccess,
   fetchRolesPending,
   fetchRolesFailure,
-} from "./actions";
+} from "./slice";
 
 // GET ALL GROUPS
 export const fetchRoles = () => {

@@ -6,7 +6,7 @@ import { authSelector } from "../../state-management/auth/selectors";
 import Loading from "../common/Loading";
 import { loginRequest } from "../../state-management/auth/requests";
 import { refreshTokenRequest } from "../../helpers/requests/refreshTokenRequest";
-import { loginSuccess } from "../../state-management/auth/actions";
+import { loginSuccess } from "../../state-management/auth/slice";
 import TextField from "@mui/material/TextField";
 import { Alert } from "@mui/material";
 

@@ -6,7 +6,7 @@ import {
   fetchGroupsSuccess,
   createGroupSuccess,
   fetchGroupUsersSuccess,
-} from "./actions";
+} from "./slice";
 
 // GET ALL GROUPS
 export const fetchGroupsRequest = () => {
@@ -52,7 +52,9 @@ export const deleteGroupRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchGroupsPending());
     try {
-      const { data } = await axiosApiInstance.delete(`/groups`, {data : payload});
+      const { data } = await axiosApiInstance.delete(`/groups`, {
+        data: payload,
+      });
       dispatch(deleteGroupSuccess(data));
     } catch (error) {
       dispatch(fetchGroupsFailure(error));

@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
-import authReducer from "./auth/reducer";
-import groupsReducer from "./groups/reducer";
-import testsReducer from "./tests/reducer";
-import usersReducer from "./users/reducer";
-import subjectsReducer from "./subjects/reducer";
-import scheduleReducer from "./schedule/reducer";
-import chatsReducer from "./chat/reducer";
-import rolesReducer from "./role/reducer";
+import authReducer from "./auth/slice";
+import groupsReducer from "./groups/slice";
+import testsReducer from "./tests/slice";
+import usersReducer from "./users/slice";
+import subjectsReducer from "./subjects/slice";
+import scheduleReducer from "./schedule/slice";
+import chatsReducer from "./chat/slice";
+import rolesReducer from "./role/slice";
 
 const rootReducer = combineReducers({
   auth: authReducer,

@@ -9,8 +9,7 @@ import {
   updateUserSuccess,
   fetchUserByIdSuccess,
   recoverPasswordSuccess,
-
-} from "./actions";
+} from "./slice";
 
 // GET USERS
 export const fetchUsersRequest = (payload) => {
