@@ -44,7 +44,7 @@ function CreateUser() {
     ),
   });
 
-  const rowJSX = (userCount, remove, errors) => {
+  const rowJSX = (userCount, remove) => {
     return (
       <div key={userCount} style={{ marginBottom: "20px" }}>
         <span>{userCount + 1}</span>
@@ -58,9 +58,7 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
-        {errors?.userData?.[userCount]?.firstName && (
-          <div>{errors?.userData?.[0].firstName}</div>
-        )}
+
         <ErrorMessage name={`usersData[${userCount}].firstName`} />
 
         <Field
@@ -73,9 +71,7 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
-        {errors?.userData?.[userCount]?.lastName && (
-          <div>{errors?.userData?.[userCount]?.lastName}</div>
-        )}
+
         <ErrorMessage name={`usersData[${userCount}].lastName`} />
 
         <Field
@@ -91,9 +87,6 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
-        {errors?.userData?.[userCount]?.email && (
-          <div>{errors?.userData?.[userCount]?.email}</div>
-        )}
 
         <Field
           type="password"
@@ -105,9 +98,7 @@ function CreateUser() {
             marginRight: "25px",
           }}
         />
-        {errors?.userData?.[userCount]?.lastName && (
-          <div>{errors?.userData?.[userCount]?.lastName}</div>
-        )}
+
         <ErrorMessage name={`usersData[${userCount}].password`} />
 
         <Field
@@ -169,7 +160,7 @@ function CreateUser() {
         validationSchema={addUserSchema}
         onSubmit={(values, { setSubmitting }) => addUser(values, setSubmitting)}
       >
-        {({ errors, isSubmitting }) => (
+        {({ isSubmitting }) => (
           <Form autoCapitalize="off">
             <Button
               disabled={isSubmitting}
@@ -189,7 +180,7 @@ function CreateUser() {
                 },
               }) => {
                 arrayPushRef.current = push;
-                return usersData?.map((user, i) => rowJSX(i, remove, errors));
+                return usersData?.map((user, i) => rowJSX(i, remove));
               }}
             </FieldArray>
 

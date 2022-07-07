@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { subjectsSelector } from "../../../state-management/subjects/selectors";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { groupsSelector } from "../../../state-management/groups/selectors";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { useRef } from "react";
 import * as Yup from "yup";
 
@@ -20,11 +20,23 @@ function TestCreater() {
 
   const createTestSchema = Yup.object().shape({
     userId: Yup.number().strict().required(),
-    name: Yup.string().min(3).required(),
+    name: Yup.string()
+      .min(2, <span className="field-error-message">Too Short</span>)
+      .max(50, <span className="field-error-message">Too Long</span>)
+      .required(<span className="field-error-message">*</span>),
     subjectId: Yup.number().required(),
-    start: Yup.string().required(),
-    length: Yup.number().strict().required(),
-    highestScore: Yup.number().strict().required(),
+    start: Yup.string().required(
+      <span className="field-error-message">*</span>
+    ),
+    length: Yup.number()
+      .strict()
+      .min(2, <span className="field-error-message">Too Short</span>)
+      .max(300, <span className="field-error-message">Too Long</span>)
+      .required(<span className="field-error-message">*</span>),
+    highestScore: Yup.number()
+      .strict()
+      .min(1, <span className="field-error-message">Too Short</span>)
+      .required(<span className="field-error-message">*</span>),
     group: Yup.number().required(),
     questions: Yup.array().of(
       Yup.object().shape({
@@ -34,9 +46,10 @@ function TestCreater() {
           .required(<span className="field-error-message">*</span>),
         answers: Yup.array().of(
           Yup.object().shape({
-            name: Yup.string().required(
-              <span className="field-error-message">*</span>
-            ),
+            name: Yup.string()
+              .required(<span className="field-error-message">*</span>)
+              .min(2, <span className="field-error-message">Too Short</span>)
+              .max(50, <span className="field-error-message">Too Long</span>),
             isCorrect: Yup.boolean().required(
               <span className="field-error-message">*</span>
             ),
@@ -99,11 +112,13 @@ function TestCreater() {
           </button>
         </div>
 
+        <ErrorMessage name={`questions[${questionNumber}].name`} />
+
         <FieldArray name={`questions.${questionNumber}.answers`}>
-          {({ push, remove, errors }) => {
+          {({ push, remove }) => {
             answerPushRefs[questionNumber] = push;
             return answers?.map((user, i) =>
-              AnswerJSX(i, questionNumber, remove, errors)
+              AnswerJSX(i, questionNumber, remove)
             );
           }}
         </FieldArray>
@@ -135,6 +150,9 @@ function TestCreater() {
           placeholder="Enter Answer"
           name={`questions[${questionNumber}].answers[${answerNumber}].name`}
         />
+        <ErrorMessage
+          name={`questions[${questionNumber}].answers[${answerNumber}].name`}
+        />
         <button
           className="delete-answer"
           type="button"
@@ -164,7 +182,6 @@ function TestCreater() {
     });
     data.questions = questions;
     data.answers = answers;
-    console.log(data);
     dispatch(createTestRequest(data));
   };
 
@@ -179,84 +196,90 @@ function TestCreater() {
         initialValues={{
           userId: id, // userId
           name: "",
-          subjectId: 1,
+          subjectId: subjectSelect[0]?.value,
           highestScore: "",
           start: "",
           length: "",
-          group: 1,
+          group: groupSelect[0]?.value,
           questions: [{ name: "", answers: [{ isCorrect: false, name: "" }] }],
         }}
         validationSchema={createTestSchema}
         onSubmit={(values) => addTest({ ...values })}
       >
-        <Form>
-          <div>Questions count: </div>
-          <div className="testInformationHeader">
-            <Field type="text" placeholder="Test Name" name="name" />
-            <input
-              value="Add test"
-              type="submit"
-              className="CreateTest-buttons"
-            />
-          </div>
-          <div className="testInformationData">
-            <Field as="select" name="subjectId">
-              {subjectSelect.map((element) => {
-                return (
-                  <option key={element.label} value={element.value}>
-                    {element.label}
-                  </option>
-                );
-              })}
-            </Field>
-            <Field as="select" name="group">
-              {groupSelect.map((element) => {
-                console.log(element);
-                return (
-                  <option key={element.label} value={element.value}>
-                    {element.label}
-                  </option>
-                );
-              })}
-            </Field>
-          </div>
-          <div className="testInformationData">
-            <Field
-              placeholder="Test Start Date"
-              type="datetime-local"
-              name="start"
-            />
-            <Field placeholder="Test length" type="number" name="length" />
-            <Field
-              placeholder="Test rating"
-              type="number"
-              name="highestScore"
-            />
-          </div>
-          <div className="QuestionsForm">
-            <FieldArray name="questions">
-              {({ push, remove, errors, form: { values } }) => {
-                const { questions } = values;
-                arrayPushRef.current = push;
-                return questions?.map((q, i) =>
-                  QuestionJSX(q, i, remove, errors)
-                );
-              }}
-            </FieldArray>
-            <button
-              className="CreateTest-buttons"
-              type="button"
-              onClick={() =>
-                arrayPushRef.current({
-                  name: "",
-                  answers: [{ isCorrect: false, name: "" }],
-                })
-              }
-            >
-              Add New Question
-            </button>
-          </div>
-        </Form>
+        {({ isSubmitting }) => (
+          <Form>
+            <div>Questions count: </div>
+            <div className="testInformationHeader">
+              <Field type="text" placeholder="Test Name" name="name" />
+              <ErrorMessage name={`name`} />
+              <input
+                value="Add test"
+                type="submit"
+                className="CreateTest-buttons"
+              />
+            </div>
+            {console.log(isSubmitting)}
+
+            <div className="testInformationData">
+              <Field as="select" name="subjectId">
+                {subjectSelect.map((element) => {
+                  return (
+                    <option key={element.label} value={element.value}>
+                      {element.label}
+                    </option>
+                  );
+                })}
+              </Field>
+              <Field as="select" name="group">
+                {groupSelect.map((element) => {
+                  return (
+                    <option key={element.label} value={element.value}>
+                      {element.label}
+                    </option>
+                  );
+                })}
+              </Field>
+            </div>
+            <div className="testInformationData">
+              <Field
+                placeholder="Test Start Date"
+                type="datetime-local"
+                name="start"
+              />
+              <ErrorMessage name={`start`} />
+              <Field placeholder="Test length" type="number" name="length" />
+              <ErrorMessage name={`length`} />
+              <Field
+                placeholder="Test rating"
+                type="number"
+                name="highestScore"
+              />
+              <ErrorMessage name={`highestScore`} />
+            </div>
+
+            <div className="QuestionsForm">
+              <FieldArray name="questions">
+                {({ push, remove, form: { values } }) => {
+                  const { questions } = values;
+                  arrayPushRef.current = push;
+                  return questions?.map((q, i) => QuestionJSX(q, i, remove));
+                }}
+              </FieldArray>
+              <button
+                className="CreateTest-buttons"
+                type="button"
+                onClick={() =>
+                  arrayPushRef.current({
+                    name: "",
+                    answers: [{ isCorrect: false, name: "" }],
+                  })
+                }
+              >
+                Add New Question
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );
