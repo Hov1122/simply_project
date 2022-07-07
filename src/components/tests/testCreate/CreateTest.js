@@ -145,6 +145,7 @@ function TestCreater() {
         <Field
           type="checkbox"
           name={`questions[${questionNumber}].answers[${answerNumber}].isCorrect`}
+          className={`answerChecker`}
         />
         <Field
           type="text"

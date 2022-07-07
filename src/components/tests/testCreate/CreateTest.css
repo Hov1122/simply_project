@@ -13,6 +13,7 @@
 
 .TestCreater-Answer-Container {
     display: flex;
+    gap:5px;
 }
 
 .Question-header {
@@ -86,7 +87,28 @@ input[area-hidden='true'] {
 
 .testInformationData {
     display: flex;
+    gap:20px;
     justify-content: center;
+}
+
+.MuiButton-label {
+    border-bottom: 1px solid black;
+    padding: 0 20px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+
+.MuiButton-label {
+    border-bottom: 1px solid black;
+    padding: 0 20px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
 
 .Question {
@@ -125,13 +147,14 @@ input[area-hidden='true'] {
     color: white;
     right: 10px;
     top: 15%;
+    width: 40px;
 }
 
 .delete-answer {
     background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
     color: white;
     cursor: pointer;
-    width: 35px;
+    width: 40px;
     margin-top:5px;
     border-radius: 50%;
 }
@@ -140,8 +163,22 @@ hr {
     width: 80%;
 }
 
+.QuestionsForm > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.answerChecker {
+    top: 25%;
+    position: relative;
+}
+
 .QuestionsForm {
+    display: flex;
+    flex-direction: column;
     width: 80%;
+    gap: 20px;
 }
 
 form {
@@ -149,6 +186,7 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 
 .CreateTest-buttons {
