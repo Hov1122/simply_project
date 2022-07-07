@@ -83,7 +83,6 @@
 .header-page-part {
     padding: 5px;
     color: #344767;
-    /* padding: 5px; */
 }
 
 .firstName {
@@ -178,8 +177,6 @@
     .header-input-avatar-container {
         width: 100%;
         padding: 0;
-        /* overflow-x: auto;
-        overflow-y: visible; */
     }
 
     .search-bar-container {
