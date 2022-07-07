@@ -11,7 +11,8 @@ import { authSelector } from "../../../state-management/auth/selectors";
 import { groupsSelector } from "../../../state-management/groups/selectors";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { useRef } from "react";
-import { Button, CircularProgress } from "@material-ui/core";
+import { Button, CircularProgress, IconButton } from "@material-ui/core";
+import DeleteIcon from "@mui/icons-material/Delete";
 import * as Yup from "yup";
 
 function TestCreater() {
@@ -104,13 +105,12 @@ function TestCreater() {
             type="text"
             name={`questions[${questionNumber}].name`}
           />
-          <button
-            className="delete-answer"
-            type={`button`}
+          <IconButton
             onClick={() => remove(questionNumber)}
+            disabled={questionNumber === 0}
           >
-            X
-          </button>
+            <DeleteIcon></DeleteIcon>
+          </IconButton>
         </div>
 
         <ErrorMessage name={`questions[${questionNumber}].name`} />
@@ -155,15 +155,12 @@ function TestCreater() {
         <ErrorMessage
           name={`questions[${questionNumber}].answers[${answerNumber}].name`}
         />
-        <button
-          className="delete-answer"
-          type="button"
-          onClick={() => {
-            remove(answerNumber);
-          }}
+        <IconButton
+          onClick={() => remove(answerNumber)}
+          disabled={answerNumber === 0}
         >
-          X
-        </button>
+          <DeleteIcon></DeleteIcon>
+        </IconButton>
       </div>
     );
   };
