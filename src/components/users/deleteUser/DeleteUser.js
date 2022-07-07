@@ -21,7 +21,7 @@ const DeleteUser = () => {
   const dispatch = useDispatch();
 
   const handleSearchChange = debounce((search) => {
-    dispatch(fetchUsersRequest(search));
+    dispatch(fetchUsersRequest({ search }));
   });
 
   const userJSX = ({ id, firstName, email, lastName } = {}) => {
@@ -98,7 +98,6 @@ const DeleteUser = () => {
       <div className="Delete-User-Container-Main">
         <div className="delete-table-wrapper">
           {users.map((elem) => {
-            console.log(users);
             return userJSX(elem);
           })}
         </div>

@@ -11,6 +11,7 @@ import { authSelector } from "../../../state-management/auth/selectors";
 import { groupsSelector } from "../../../state-management/groups/selectors";
 import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import { useRef } from "react";
+import { Button, CircularProgress } from "@material-ui/core";
 import * as Yup from "yup";
 
 function TestCreater() {
@@ -172,7 +173,7 @@ function TestCreater() {
   }, []);
 
   // ADD TEST IN DATABASE
-  const addTest = (data) => {
+  const addTest = (data, setSubmitting) => {
     data.start += ":00.000Z";
     const questions = [];
     const answers = [];
@@ -182,7 +183,7 @@ function TestCreater() {
     });
     data.questions = questions;
     data.answers = answers;
-    dispatch(createTestRequest(data));
+    dispatch(createTestRequest(data, setSubmitting));
   };
 
   if (loading) {
@@ -204,21 +205,31 @@ function TestCreater() {
           questions: [{ name: "", answers: [{ isCorrect: false, name: "" }] }],
         }}
         validationSchema={createTestSchema}
-        onSubmit={(values) => addTest({ ...values })}
+        onSubmit={(values, { setSubmitting }) =>
+          addTest({ ...values }, setSubmitting)
+        }
       >
-        {({ isSubmitting }) => (
-          <Form>
-            <div>Questions count: </div>
+        {({ isSubmitting, values }) => (
+          <Form autoCapitalize="off">
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              color="primary"
+              className="submit-create"
+              startIcon={isSubmitting ? <CircularProgress /> : undefined}
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </Button>
             <div className="testInformationHeader">
               <Field type="text" placeholder="Test Name" name="name" />
               <ErrorMessage name={`name`} />
-              <input
+              {/* <input
                 value="Add test"
                 type="submit"
                 className="CreateTest-buttons"
-              />
+              /> */}
             </div>
-            {console.log(isSubmitting)}
+            {console.log(isSubmitting, values)}
 
             <div className="testInformationData">
               <Field as="select" name="subjectId">

@@ -87,14 +87,19 @@ export const fetchTestResults = ({ userId, testId }) => {
 };
 
 // CREATE TEST
-export const createTestRequest = (payload) => {
+export const createTestRequest = (payload, setSubmitting) => {
   return async (dispatch) => {
     dispatch(fetchTestsPending());
+    setSubmitting(true);
     try {
       const { data } = await axiosApiInstance.post(`/tests`, payload);
       dispatch(createTestSuccess(data));
     } catch (error) {
       dispatch(fetchTestsFailure(error));
+    } finally {
+      setTimeout(() => {
+        setSubmitting(false);
+      }, 1000);
     }
   };
 };
