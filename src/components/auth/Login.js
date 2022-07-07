@@ -36,6 +36,8 @@ function LoginPage() {
 
         setLoading(false);
       })();
+    } else {
+      navigate("/home");
     }
   }, [dispatch, navigate, state, token]);
 
