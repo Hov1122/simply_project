@@ -14,10 +14,12 @@
 .TestCreater-Answer-Container {
     display: flex;
     gap:5px;
+    width: 100%;
 }
 
 .Question-header {
     display: flex;
+    width: 100%;
 }
 
 .Question-header input {
@@ -91,6 +93,11 @@ input[area-hidden='true'] {
     justify-content: center;
 }
 
+.MuiButton-label:hover {
+    color:white;
+    background: linear-gradient(to bottom, #0f0c29, #4b43a2, #24243e);
+}
+
 .MuiButton-label {
     border-bottom: 1px solid black;
     padding: 0 20px;
@@ -139,34 +146,23 @@ input[area-hidden='true'] {
     width: 80%;
 }
 
-.delete-question {
-    position: absolute;
-    cursor: pointer;
-    border-radius: 50%;
-    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-    color: white;
-    right: 10px;
-    top: 15%;
-    width: 40px;
-}
-
-.delete-answer {
-    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
-    color: white;
-    cursor: pointer;
-    width: 40px;
-    margin-top:5px;
-    border-radius: 50%;
-}
-
 hr {
     width: 80%;
 }
 
 .QuestionsForm > div {
+    width: 100%;
     display: flex;
+    align-items: center;
     flex-direction: column;
-    gap: 5px;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: white;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;;
 }
 
 .answerChecker {
@@ -179,6 +175,7 @@ hr {
     flex-direction: column;
     width: 80%;
     gap: 20px;
+    align-items: center;
 }
 
 form {
@@ -190,9 +187,10 @@ form {
 }
 
 .CreateTest-buttons {
-    width: 100%;
+    width: 70%;
     border-radius: 30px;
     padding: 5px;
+    margin-top: 5px;
     border: none;
     background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
     color: white;
@@ -208,10 +206,6 @@ input[type='button']:hover, input[type='submit']:hover, .CreateTest-buttons:hove
 
 #addNewQuestion {
     width: 60%;
-}
-
-.delete-question:hover, .delete-answer:hover {
-    background: linear-gradient(to bottom, #0f0c29, #443bab, #24243e);
 }
 
 [data-value="rigthAnswer"] {
