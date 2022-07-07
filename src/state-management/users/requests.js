@@ -16,12 +16,12 @@ export const fetchUsersRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
-      if (!payload.search.length) {
+      if (!payload?.search?.length) {
         dispatch(fetchUsersSuccess({ data: { users: [] } }));
         return;
       }
       let url = `/users/?`;
-      payload.search && (url += `search=${payload.search}`);
+      payload?.search && (url += `search=${payload.search}`);
       const { data } = await axiosApiInstance.get(url);
       dispatch(fetchUsersSuccess(data));
     } catch (error) {

@@ -19,6 +19,8 @@ function TestCreater() {
   const [loading] = useState(false);
   const arrayPushRef = useRef(null);
   const answerPushRefs = useRef([]);
+  const { loading: groupsLoading } = useSelector(groupsSelector);
+  const { loading: subjectsLoading } = useSelector(subjectsSelector);
 
   const createTestSchema = Yup.object().shape({
     userId: Yup.number().strict().required(),
@@ -170,6 +172,8 @@ function TestCreater() {
     dispatch(fetchGroupsRequest());
   }, []);
 
+  if (groupsLoading || subjectsLoading) return <Loading />;
+
   // ADD TEST IN DATABASE
   const addTest = (data, setSubmitting) => {
     data.start += ":00.000Z";
@@ -207,7 +211,7 @@ function TestCreater() {
           addTest({ ...values }, setSubmitting)
         }
       >
-        {({ isSubmitting, values }) => (
+        {({ isSubmitting }) => (
           <Form autoCapitalize="off">
             <Button
               disabled={isSubmitting}
@@ -227,7 +231,6 @@ function TestCreater() {
                 className="CreateTest-buttons"
               /> */}
             </div>
-            {console.log(isSubmitting, values)}
 
             <div className="testInformationData">
               <Field as="select" name="subjectId">

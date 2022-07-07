@@ -10,18 +10,21 @@ import { rolesSelector } from "../../../state-management/role/selectors";
 import { CircularProgress } from "@mui/material";
 import { Button, IconButton } from "@material-ui/core";
 import { Alert } from "@mui/material";
+import Loading from "../../common/Loading";
 import * as Yup from "yup";
 
 function CreateUser() {
   const [success, setSuccess] = useState(false);
 
-  const { roles } = useSelector(rolesSelector);
+  const { roles, loading: rolesLoading } = useSelector(rolesSelector);
   const { error, loading } = useSelector(usersSelector);
   const arrayPushRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchRoles());
   }, []);
+
+  if (rolesLoading) return <Loading />;
 
   const dispatch = useDispatch();
 
