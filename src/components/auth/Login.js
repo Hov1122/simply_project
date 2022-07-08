@@ -37,7 +37,7 @@ function LoginPage() {
         setLoading(false);
       })();
     } else {
-      navigate("/home");
+      navigate(state?.from?.pathname || "/home");
     }
   }, [dispatch, navigate, state, token]);
 
@@ -49,7 +49,6 @@ function LoginPage() {
 
     setTimeout(() => {
       setLoading(false);
-      // navigate("/home");
     }, 1000);
   };
 

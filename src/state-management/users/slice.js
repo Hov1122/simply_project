@@ -57,6 +57,11 @@ const usersSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+    // RESET USER PASSWORD
+    resetPasswordSuccess: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
     // DELETE USER
     deleteUserSuccess: (state, { payload }) => {
       state.users = state.users.filter(
@@ -87,6 +92,7 @@ export const {
   deleteUserSuccess,
   fetchUsersPending,
   fetchUsersFailure,
+  resetPasswordSuccess,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

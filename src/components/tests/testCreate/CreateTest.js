@@ -45,7 +45,7 @@ function TestCreater() {
     questions: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .min(2, <span className="field-error-message">Too Short</span>)
+          .min(4, <span className="field-error-message">Too Short</span>)
           .max(50, <span className="field-error-message">Too Long</span>)
           .required(<span className="field-error-message">*</span>),
         answers: Yup.array().of(
@@ -126,13 +126,13 @@ function TestCreater() {
           }}
         </FieldArray>
         <button
-          className="CreateTest-buttons"
-          type="button"
+          className="icon-btn add-btn"
           onClick={() => {
             answerPushRefs[questionNumber]({ isCorrect: false, name: "" });
           }}
         >
-          Add answer
+          <div className="add-icon"></div>
+          <div className="btn-txt">Add answer</div>
         </button>
       </div>
     );
@@ -147,7 +147,7 @@ function TestCreater() {
         <Field
           type="checkbox"
           name={`questions[${questionNumber}].answers[${answerNumber}].isCorrect`}
-          className={`answerChecker`}
+          className={`answer-input`}
         />
         <Field
           type="text"
@@ -225,11 +225,6 @@ function TestCreater() {
             <div className="testInformationHeader">
               <Field type="text" placeholder="Test Name" name="name" />
               <ErrorMessage name={`name`} />
-              {/* <input
-                value="Add test"
-                type="submit"
-                className="CreateTest-buttons"
-              /> */}
             </div>
 
             <div className="testInformationData">
@@ -278,8 +273,7 @@ function TestCreater() {
                 }}
               </FieldArray>
               <button
-                className="CreateTest-buttons"
-                type="button"
+                className="icon-btn add-btn add-question-btn"
                 onClick={() =>
                   arrayPushRef.current({
                     name: "",
@@ -287,7 +281,8 @@ function TestCreater() {
                   })
                 }
               >
-                Add New Question
+                <div className="add-icon"></div>
+                <div className="btn-txt">Add question</div>
               </button>
             </div>
           </Form>

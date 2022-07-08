@@ -9,6 +9,7 @@ import {
   updateUserSuccess,
   fetchUserByIdSuccess,
   recoverPasswordSuccess,
+  resetPasswordSuccess,
 } from "./slice";
 
 // GET USERS
@@ -92,6 +93,19 @@ export const recoverPasswordRequest = (payload) => {
     try {
       await axiosApiInstance.get(`/users/forgotPassword?email=${payload}`);
       dispatch(recoverPasswordSuccess());
+    } catch (error) {
+      dispatch(fetchUsersFailure(error));
+    }
+  };
+};
+
+// RESET USER PASSWORD
+export const resetPasswordRequest = ({ userId, testId }) => {
+  return async (dispatch) => {
+    dispatch(fetchUsersPending());
+    try {
+      await axiosApiInstance.put(`/users/resetPassword/${userId}/${testId}`);
+      dispatch(resetPasswordSuccess());
     } catch (error) {
       dispatch(fetchUsersFailure(error));
     }
