@@ -75,9 +75,9 @@ const usersSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchUsersFailure: (state) => {
+    fetchUsersFailure: (state, {payload}) => {
       state.loading = false;
-      state.error = "Incorrect Password";
+      state.error = payload;
     },
   },
 });

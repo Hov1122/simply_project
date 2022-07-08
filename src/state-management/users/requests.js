@@ -26,7 +26,7 @@ export const fetchUsersRequest = (payload) => {
       const { data } = await axiosApiInstance.get(url);
       dispatch(fetchUsersSuccess(data));
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     }
   };
 };
@@ -39,7 +39,7 @@ export const getUserByIdRequest = (payload) => {
       const { data } = await axiosApiInstance.get(`/users/${payload}`);
       dispatch(fetchUserByIdSuccess(data));
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     }
   };
 };
@@ -52,7 +52,7 @@ export const getTopStudentsRequest = () => {
       const { data } = await axiosApiInstance.get(`/users/topUsers`);
       dispatch(fetchTopStudentsSuccess(data));
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     }
   };
 };
@@ -66,7 +66,7 @@ export const createUserRequest = (payload, setSubmitting) => {
 
       dispatch(createUserSuccess(data));
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     } finally {
       setTimeout(() => setSubmitting(false), 1000);
     }
@@ -81,7 +81,7 @@ export const updateUserRequest = (payload) => {
       const data = await axiosApiInstance.put(`/users`, payload);
       dispatch(updateUserSuccess(data));
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     }
   };
 };
@@ -94,20 +94,20 @@ export const recoverPasswordRequest = (payload) => {
       await axiosApiInstance.get(`/users/forgotPassword?email=${payload}`);
       dispatch(recoverPasswordSuccess());
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     }
   };
 };
 
 // RESET USER PASSWORD
-export const resetPasswordRequest = ({ userId, testId }) => {
+export const resetPasswordRequest = ({ userId, recovery_token, password }) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
-      await axiosApiInstance.put(`/users/resetPassword/${userId}/${testId}`);
+      await axiosApiInstance.put(`/users/resetPassword/${userId}/${recovery_token}`, { password });
       dispatch(resetPasswordSuccess());
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     }
   };
 };
@@ -122,7 +122,7 @@ export const deletedUserRequest = (payload) => {
       });
       dispatch(deleteUserSuccess(data));
     } catch (error) {
-      dispatch(fetchUsersFailure(error));
+      dispatch(fetchUsersFailure(error.response.data.message));
     }
   };
 };

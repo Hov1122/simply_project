@@ -5,20 +5,17 @@ import { createUserRequest } from "../../../state-management/users/requests";
 import { Form, Formik, FieldArray } from "formik";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchRoles } from "../../../state-management/role/requests";
-import { usersSelector } from "../../../state-management/users/selectors";
 import { rolesSelector } from "../../../state-management/role/selectors";
 import { CircularProgress } from "@mui/material";
 import { Button, IconButton } from "@material-ui/core";
-import { Alert } from "@mui/material";
 import Loading from "../../common/Loading";
 import { TextField, Grid } from "@material-ui/core";
 import * as Yup from "yup";
+import ErrorOrSuccess from "../../common/ErrorOrSuccess";
 
 function CreateUser() {
-  const [success, setSuccess] = useState(false);
-
   const { roles, loading: rolesLoading } = useSelector(rolesSelector);
-  const { error, loading } = useSelector(usersSelector);
+  const [showMessage, setShowMessage] = useState(false)
   const arrayPushRef = useRef(null);
 
   useEffect(() => {
@@ -162,21 +159,14 @@ function CreateUser() {
   const addUser = ({ usersData }, setSubmitting) => {
     usersData.forEach((user) => (user.roleId = +user.roleId));
     dispatch(createUserRequest(usersData, setSubmitting));
-
-    setTimeout(() => {
-      if (!error && !loading) {
-        setSuccess("Users Created Successfully");
-      } else {
-        setSuccess("");
-      }
-    }, 2000);
+    setShowMessage(true)
   };
 
   return (
     <div className="UserCreater-Container">
       <h2 style={{ margin: "15px 0" }}>Create User</h2>
-      {error && !loading && !success && <Alert severity="error">{error}</Alert>}
-      {!loading && success && <Alert severity="success">{success}</Alert>}
+      {showMessage && <ErrorOrSuccess successMessage="Users created successfully"/>}
+
       <Formik
         initialValues={{
           usersData: [
@@ -239,8 +229,7 @@ function CreateUser() {
             <button
               type={`button`}
               className="add-new-row-button"
-              onClick={() =>
-                arrayPushRef.current({
+              onClick={() =>  arrayPushRef.current({
                   firstName: "",
                   lastName: "",
                   email: "",

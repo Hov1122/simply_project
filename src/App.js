@@ -40,7 +40,7 @@ function App() {
                   (// PUBLIC ROUTES)
                   <Route path="/" element={<Login />} />
                   <Route path="/recovery" element={<Recovery />} />
-                  <Route path="/reset-password/:id/:recovery_token" exact element={<ResetPass />} />
+                  <Route path="/reset-password/:userId/:recovery_token" exact element={<ResetPass />} />
                   (// PROTECTED ROUTES)
                   <Route element={<RequireAuth />}>
                     <Route path="/home" element={<Home />} />

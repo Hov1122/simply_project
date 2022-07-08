@@ -22,7 +22,7 @@
     transform: translate(-50%, -50%);
 }
 
-.reqovery-button {
+.reset-button {
     opacity: 1;
     width: 60%;
     height: 40px;
@@ -41,6 +41,10 @@
     cursor: pointer;
 }
 
+.reset-button:disabled {
+    opacity: 0.5 !important;
+}
+
 .reset-loading {
     position: relative;
     margin: 50px;
@@ -50,7 +54,3 @@
     color:#fff;
 }
 
-.did-remember-box {
-    width: 100%;
-    margin: 10px auto;
-}

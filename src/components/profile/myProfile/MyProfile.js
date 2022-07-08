@@ -3,19 +3,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { updateUserRequest } from "../../../state-management/users/requests";
-import { usersSelector } from "../../../state-management/users/selectors";
 import Loading from "../../common/Loading";
 import Divider from "@material-ui/core/Divider";
 import "./MyProfile.css";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Alert } from "@mui/material";
+import ErrorOrSuccess from "../../common/ErrorOrSuccess";
 
 const Profile = () => {
   const [passwordError, setPasswordError] = useState(null);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [showMessage, setShowMessage] = useState(false)
   const [loading, setLoading] = useState(false);
 
   const {
@@ -28,7 +28,6 @@ const Profile = () => {
       role: { name },
     },
   } = useSelector(authSelector);
-  const { error } = useSelector(usersSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -129,10 +128,7 @@ const Profile = () => {
       <div className="Profile-Info-Container">
         <h4>Change password</h4>
         <Divider />
-        {success && !error && (
-          <Alert severity="success">Your password successfully changed!</Alert>
-        )}
-        {error && <Alert severity="error">Password is not correct!</Alert>}
+        {showMessage && <ErrorOrSuccess successMessage="Your password successfully changed!"/>}
         <div className="password-bar">
           <TextField
             id="outlined-basic"
@@ -173,14 +169,12 @@ const Profile = () => {
           className="save-changes"
           onClick={async () => {
             setLoading(true);
+            setShowMessage(true);
             dispatch(
               updateUserRequest({ id, password: oldPassword, newPassword })
             );
 
             setTimeout(() => {
-              error
-                ? setSuccess("")
-                : setSuccess("Password changed successfully");
               setLoading(false);
             }, 2000);
 

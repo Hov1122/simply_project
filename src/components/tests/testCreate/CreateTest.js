@@ -14,13 +14,18 @@ import { useRef } from "react";
 import { Button, CircularProgress, IconButton } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as Yup from "yup";
+import { Alert } from "@mui/material";
+import { testsSelector } from "../../../state-management/tests/selectors";
 
 function TestCreater() {
   const [loading] = useState(false);
+  const [showMessage, setShowMessage] = useState(false)
+  const [success, setSuccess] = useState('')
   const arrayPushRef = useRef(null);
   const answerPushRefs = useRef([]);
   const { loading: groupsLoading } = useSelector(groupsSelector);
   const { loading: subjectsLoading } = useSelector(subjectsSelector);
+  const {error} = useSelector(testsSelector)
 
   const createTestSchema = Yup.object().shape({
     userId: Yup.number().strict().required(),
@@ -207,12 +212,16 @@ function TestCreater() {
           questions: [{ name: "", answers: [{ isCorrect: false, name: "" }] }],
         }}
         validationSchema={createTestSchema}
-        onSubmit={(values, { setSubmitting }) =>
-          addTest({ ...values }, setSubmitting)
-        }
+        onSubmit={(values, { setSubmitting }) => {
+          setShowMessage(true)
+          setTimeout(() => setSuccess(error), 1000)
+          return addTest({ ...values }, setSubmitting)
+        }}
       >
         {({ isSubmitting }) => (
           <Form autoCapitalize="off">
+          {showMessage && success && <Alert severity="error" sx={{margin: "15px auto"}}>Test created successfully.</Alert>}
+          {showMessage && error && <Alert severity="error" sx={{margin: "15px auto"}}>{error}</Alert>}
             <Button
               disabled={isSubmitting}
               type="submit"
