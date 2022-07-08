@@ -101,7 +101,7 @@ function TestCreater() {
           };
         });
 
-  const QuestionJSX = (question, questionNumber, remove) => {
+  const QuestionJSX = (question, questionNumber, remove, questionsCount) => {
     const { answers } = question;
     return (
       <div key={questionNumber}>
@@ -114,7 +114,7 @@ function TestCreater() {
           />
           <IconButton
             onClick={() => remove(questionNumber)}
-            disabled={questionNumber === 0}
+            disabled={questionsCount === 1}
           >
             <DeleteIcon></DeleteIcon>
           </IconButton>
@@ -126,7 +126,7 @@ function TestCreater() {
           {({ push, remove }) => {
             answerPushRefs[questionNumber] = push;
             return answers?.map((user, i) =>
-              AnswerJSX(i, questionNumber, remove)
+              AnswerJSX(i, questionNumber, remove, answers.length)
             );
           }}
         </FieldArray>
@@ -143,7 +143,7 @@ function TestCreater() {
     );
   };
 
-  const AnswerJSX = (answerNumber, questionNumber, remove) => {
+  const AnswerJSX = (answerNumber, questionNumber, remove, answersCount) => {
     return (
       <div
         key={`${questionNumber} ${answerNumber}`}
@@ -164,7 +164,7 @@ function TestCreater() {
         />
         <IconButton
           onClick={() => remove(answerNumber)}
-          disabled={answerNumber === 0}
+          disabled={answersCount === 1}
         >
           <DeleteIcon></DeleteIcon>
         </IconButton>
@@ -278,7 +278,9 @@ function TestCreater() {
                 {({ push, remove, form: { values } }) => {
                   const { questions } = values;
                   arrayPushRef.current = push;
-                  return questions?.map((q, i) => QuestionJSX(q, i, remove));
+                  return questions?.map((q, i) =>
+                    QuestionJSX(q, i, remove, questions.length)
+                  );
                 }}
               </FieldArray>
               <button

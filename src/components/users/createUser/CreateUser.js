@@ -44,27 +44,28 @@ function CreateUser() {
   });
 
   const rowJSX = (
-    userCount,
+    userNumber,
     remove,
     errors,
     touched,
     handleBlur,
-    handleChange
+    handleChange,
+    usersCount
   ) => {
     return (
-      <Grid item xs={2} sm={4} md={12} key={userCount}>
-        <span>{userCount + 1}</span>
+      <Grid item xs={2} sm={4} md={12} key={userNumber}>
+        <span>{userNumber + 1}</span>
         <TextField
           type="text"
-          name={`usersData[${userCount}].firstName`}
+          name={`usersData[${userNumber}].firstName`}
           placeholder="First Name"
           onChange={handleChange}
           onBlur={handleBlur}
           error={
-            errors?.usersData?.[userCount]?.firstName &&
-            touched?.usersData?.[userCount]?.firstName
+            errors?.usersData?.[userNumber]?.firstName &&
+            touched?.usersData?.[userNumber]?.firstName
           }
-          helperText={errors?.usersData?.[userCount]?.firstName}
+          helperText={errors?.usersData?.[userNumber]?.firstName}
           style={{
             // padding: "5px",
             borderRadius: "3px",
@@ -75,14 +76,14 @@ function CreateUser() {
 
         <TextField
           type="text"
-          name={`usersData[${userCount}].lastName`}
+          name={`usersData[${userNumber}].lastName`}
           placeholder="Last Name"
           onBlur={handleBlur}
           error={
-            Boolean(errors?.usersData?.[userCount]?.lastName) &&
-            touched?.usersData?.[userCount]?.lastName
+            Boolean(errors?.usersData?.[userNumber]?.lastName) &&
+            touched?.usersData?.[userNumber]?.lastName
           }
-          helperText={errors?.usersData?.[userCount]?.lastName}
+          helperText={errors?.usersData?.[userNumber]?.lastName}
           onChange={handleChange}
           style={{
             // padding: "5px",
@@ -94,14 +95,14 @@ function CreateUser() {
 
         <TextField
           type="text"
-          name={`usersData[${userCount}].email`}
+          name={`usersData[${userNumber}].email`}
           placeholder="E-Mail"
           onBlur={handleBlur}
           error={
-            errors?.usersData?.[userCount]?.email &&
-            touched?.usersData?.[userCount]?.email
+            errors?.usersData?.[userNumber]?.email &&
+            touched?.usersData?.[userNumber]?.email
           }
-          helperText={errors?.usersData?.[userCount]?.email}
+          helperText={errors?.usersData?.[userNumber]?.email}
           onChange={handleChange}
           style={{
             // padding: "5px",
@@ -112,14 +113,14 @@ function CreateUser() {
         />
         <TextField
           type="password"
-          name={`usersData[${userCount}].password`}
+          name={`usersData[${userNumber}].password`}
           placeholder="Password"
           onBlur={handleBlur}
           error={
-            errors?.usersData?.[userCount]?.password &&
-            touched?.usersData?.[userCount]?.password
+            errors?.usersData?.[userNumber]?.password &&
+            touched?.usersData?.[userNumber]?.password
           }
-          helperText={errors?.usersData?.[userCount]?.password}
+          helperText={errors?.usersData?.[userNumber]?.password}
           onChange={handleChange}
           style={{
             // padding: "5px",
@@ -129,7 +130,7 @@ function CreateUser() {
           }}
         />
         <TextField
-          name={`usersData[${userCount}].roleId`}
+          name={`usersData[${userNumber}].roleId`}
           select
           value={roles[0]?.id || ""}
           style={{
@@ -146,8 +147,8 @@ function CreateUser() {
           ))}
         </TextField>
         <IconButton
-          onClick={() => remove(userCount)}
-          disabled={userCount === 0}
+          onClick={() => remove(userNumber)}
+          disabled={usersCount === 1}
         >
           <DeleteIcon></DeleteIcon>
         </IconButton>
@@ -218,7 +219,8 @@ function CreateUser() {
                         errors,
                         touched,
                         handleBlur,
-                        handleChange
+                        handleChange,
+                        usersData.length
                       )
                     )}
                   </Grid>
