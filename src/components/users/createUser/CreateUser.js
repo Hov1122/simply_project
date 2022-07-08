@@ -160,7 +160,9 @@ function CreateUser() {
   const addUser = ({ usersData }, setSubmitting) => {
     usersData.forEach((user) => (user.roleId = +user.roleId));
     dispatch(createUserRequest(usersData, setSubmitting));
-    setShowMessage(true)
+    setTimeout(() => {
+      setShowMessage(true)
+    }, 1000)
   };
 
   return (

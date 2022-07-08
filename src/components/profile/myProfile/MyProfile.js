@@ -11,12 +11,12 @@ import { Alert } from "@mui/material";
 import ErrorOrSuccess from "../../common/ErrorOrSuccess";
 
 const Profile = () => {
-  const [passwordError, setPasswordError] = useState(null);
+  const [passwordError, setPasswordError] = useState('');
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [showMessage, setShowMessage] = useState(false)
   const [loading, setLoading] = useState(false);
+  const [showMessage, setShowMessage] = useState(false)
 
   const {
     user: {
@@ -34,7 +34,7 @@ const Profile = () => {
     if (newPassword !== repeatPassword) {
       setPasswordError("Passwords do not match");
     } else {
-      setPasswordError(null);
+      setPasswordError('');
     }
   }, [newPassword, repeatPassword]);
 
@@ -62,18 +62,20 @@ const Profile = () => {
             <Divider />
             <div className="row">
               <TextField
+                style={{marginBottom: "20px", marginRight: "10px"}}
                 id="outlined-basic"
                 label="First name"
-                disabled={"disabled"}
+                disabled={true}
                 size="small"
                 value={firstName}
                 variant="outlined"
                 className="disabled-textfield"
               />
               <TextField
+                style={{marginBottom: "20px", marginRight: "10px"}}
                 id="outlined-basic"
                 label="Last name"
-                disabled={"disabled"}
+                disabled={true}
                 size="small"
                 value={lastName}
                 variant="outlined"
@@ -82,18 +84,20 @@ const Profile = () => {
             </div>
             <div className="row">
               <TextField
+                style={{marginBottom: "20px", marginRight: "10px"}}
                 id="outlined-basic"
                 label="Role"
-                disabled={"disabled"}
+                disabled={true}
                 size="small"
                 value={name}
                 variant="outlined"
                 className="disabled-textfield"
               />
               <TextField
+                style={{marginBottom: "20px", marginRight: "10px"}}
                 id="outlined-basic"
                 label="Email"
-                disabled={"disabled"}
+                disabled={true}
                 size="small"
                 value={email}
                 variant="outlined"
@@ -105,11 +109,11 @@ const Profile = () => {
             <div className="Average-Mark-Container">
               <h4>Average mark</h4>
               <span className="average-mark-profile">
-                {avgMark?.toFixed(2)}/100
+                {avgMark?.toFixed(2) || 0}/100
               </span>
               <CircularProgress
                 variant="determinate"
-                value={avgMark?.toFixed(2) || 100}
+                value={avgMark?.toFixed(2) || 1}
                 size={100}
                 style={{
                   color:
@@ -131,6 +135,7 @@ const Profile = () => {
         {showMessage && <ErrorOrSuccess successMessage="Your password successfully changed!"/>}
         <div className="password-bar">
           <TextField
+            style={{marginBottom: "20px"}}
             id="outlined-basic"
             label="Old password..."
             type="password"
@@ -141,6 +146,7 @@ const Profile = () => {
             }}
           />
           <TextField
+            style={{marginBottom: "20px"}}
             id="outlined-basic"
             label="New password..."
             type="password"
@@ -151,6 +157,7 @@ const Profile = () => {
             }}
           />
           <TextField
+            style={{marginBottom: "20px"}}
             id="outlined-basic"
             label="Repeat new password..."
             type="password"
@@ -167,7 +174,7 @@ const Profile = () => {
             !(oldPassword && newPassword && repeatPassword && !passwordError)
           }
           className="save-changes"
-          onClick={async () => {
+          onClick={() => {
             setLoading(true);
             setShowMessage(true);
             dispatch(
