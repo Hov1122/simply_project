@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./CreateUser.css";
 import { useDispatch, useSelector } from "react-redux";
 import { createUserRequest } from "../../../state-management/users/requests";
-import { Field, Form, Formik, FieldArray, ErrorMessage } from "formik";
+import { Form, Formik, FieldArray } from "formik";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchRoles } from "../../../state-management/role/requests";
 import { usersSelector } from "../../../state-management/users/selectors";
@@ -11,6 +11,7 @@ import { CircularProgress } from "@mui/material";
 import { Button, IconButton } from "@material-ui/core";
 import { Alert } from "@mui/material";
 import Loading from "../../common/Loading";
+import { TextField, Grid } from "@material-ui/core";
 import * as Yup from "yup";
 
 function CreateUser() {
@@ -32,85 +33,113 @@ function CreateUser() {
     usersData: Yup.array().of(
       Yup.object().shape({
         firstName: Yup.string()
-          .min(2, <span className="field-error-message">Too Short</span>)
-          .max(50, <span className="field-error-message">Too Long</span>)
-          .required(<span className="field-error-message">*</span>),
+          .min(2, "Too Short")
+          .max(50, "Too Long")
+          .required("*"),
         lastName: Yup.string()
-          .min(2, <span className="field-error-message">Too Short</span>)
-          .max(50, <span className="field-error-message">Too Long</span>)
-          .required(<span className="field-error-message">*</span>),
+          .min(2, "Too Short")
+          .max(50, "Too Long")
+          .required("*"),
         email: Yup.string().email("Invalid email").required("*"),
-        password: Yup.string().required(
-          <span className="field-error-message">*</span>
-        ),
+        password: Yup.string().required("*"),
       })
     ),
   });
 
-  const rowJSX = (userCount, remove) => {
+  const rowJSX = (
+    userCount,
+    remove,
+    errors,
+    touched,
+    handleBlur,
+    handleChange
+  ) => {
     return (
-      <div key={userCount} style={{ marginBottom: "20px" }}>
+      <Grid item xs={2} sm={4} md={12} key={userCount}>
         <span>{userCount + 1}</span>
-        <Field
+        <TextField
           type="text"
           name={`usersData[${userCount}].firstName`}
           placeholder="First Name"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={
+            errors?.usersData?.[userCount]?.firstName &&
+            touched?.usersData?.[userCount]?.firstName
+          }
+          helperText={errors?.usersData?.[userCount]?.firstName}
           style={{
-            padding: "5px",
+            // padding: "5px",
             borderRadius: "3px",
             marginRight: "25px",
+            outline: "none",
           }}
         />
 
-        <ErrorMessage name={`usersData[${userCount}].firstName`} />
-
-        <Field
+        <TextField
           type="text"
           name={`usersData[${userCount}].lastName`}
           placeholder="Last Name"
+          onBlur={handleBlur}
+          error={
+            Boolean(errors?.usersData?.[userCount]?.lastName) &&
+            touched?.usersData?.[userCount]?.lastName
+          }
+          helperText={errors?.usersData?.[userCount]?.lastName}
+          onChange={handleChange}
           style={{
-            padding: "5px",
+            // padding: "5px",
             borderRadius: "3px",
             marginRight: "25px",
+            outline: "none",
           }}
         />
 
-        <ErrorMessage name={`usersData[${userCount}].lastName`} />
-
-        <Field
-          type="email"
+        <TextField
+          type="text"
           name={`usersData[${userCount}].email`}
           placeholder="E-Mail"
+          onBlur={handleBlur}
+          error={
+            errors?.usersData?.[userCount]?.email &&
+            touched?.usersData?.[userCount]?.email
+          }
+          helperText={errors?.usersData?.[userCount]?.email}
+          onChange={handleChange}
           style={{
-            padding: "5px",
-            border: "none",
-            borderBottom: "1px solid black",
+            // padding: "5px",
             borderRadius: "3px",
-            outline: "none",
             marginRight: "25px",
+            outline: "none",
           }}
         />
-
-        <Field
+        <TextField
           type="password"
           name={`usersData[${userCount}].password`}
           placeholder="Password"
+          onBlur={handleBlur}
+          error={
+            errors?.usersData?.[userCount]?.password &&
+            touched?.usersData?.[userCount]?.password
+          }
+          helperText={errors?.usersData?.[userCount]?.password}
+          onChange={handleChange}
           style={{
-            padding: "5px",
+            // padding: "5px",
             borderRadius: "3px",
             marginRight: "25px",
+            outline: "none",
           }}
         />
-
-        <ErrorMessage name={`usersData[${userCount}].password`} />
-
-        <Field
-          as="select"
+        <TextField
           name={`usersData[${userCount}].roleId`}
+          select
+          value={roles[0]?.id || ""}
           style={{
-            padding: "5px",
+            padding: "10px",
             borderRadius: "3px",
             marginRight: "25px",
+            outline: "none",
           }}
         >
           {roles.map((role) => (
@@ -118,14 +147,14 @@ function CreateUser() {
               {role.name}
             </option>
           ))}
-        </Field>
+        </TextField>
         <IconButton
           onClick={() => remove(userCount)}
           disabled={userCount === 0}
         >
           <DeleteIcon></DeleteIcon>
         </IconButton>
-      </div>
+      </Grid>
     );
   };
 
@@ -163,7 +192,7 @@ function CreateUser() {
         validationSchema={addUserSchema}
         onSubmit={(values, { setSubmitting }) => addUser(values, setSubmitting)}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, errors, handleBlur, touched, handleChange }) => (
           <Form autoCapitalize="off">
             <Button
               disabled={isSubmitting}
@@ -183,7 +212,27 @@ function CreateUser() {
                 },
               }) => {
                 arrayPushRef.current = push;
-                return usersData?.map((user, i) => rowJSX(i, remove));
+                return (
+                  <Grid
+                    container
+                    wrap="nowrap"
+                    sx={{ overflow: "auto" }}
+                    spacing={2}
+                    direction="column"
+                    columns={{ xs: 4, sm: 8, md: 12 }}
+                  >
+                    {usersData?.map((user, i) =>
+                      rowJSX(
+                        i,
+                        remove,
+                        errors,
+                        touched,
+                        handleBlur,
+                        handleChange
+                      )
+                    )}
+                  </Grid>
+                );
               }}
             </FieldArray>
 
