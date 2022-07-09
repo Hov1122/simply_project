@@ -111,12 +111,13 @@
 }
 
 .profile-dropdown {
+    position: relative;
+    z-index: 1100;
     display: flex;
     box-sizing: border-box;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     flex-direction: column;
     margin-top: 15px;
-    z-index: 1100;
     color: #344767;
     background-color: #f8f9fa;
 }

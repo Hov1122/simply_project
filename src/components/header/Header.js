@@ -54,7 +54,7 @@ const Header = () => {
 
   return token ? (
     <div
-      style={{ position: "relative", marginLeft: "25px", marginTop: "15px" }}
+      style={{ position: "relative", marginLeft: "25px", marginTop: "15px", zIndex:1100 }}
     >
       <div className="Header-Container blur">
         <HeaderPagePart />

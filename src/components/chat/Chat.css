@@ -1,4 +1,5 @@
 .chat {
+    z-index: auto;
     padding: 20px 70px 40px 70px; 
     height: 100%;
     width: 100%;
