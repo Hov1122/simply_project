@@ -15,7 +15,7 @@ import ErrorOrSuccess from "../../common/ErrorOrSuccess";
 
 function CreateUser() {
   const { roles, loading: rolesLoading } = useSelector(rolesSelector);
-  const [showMessage, setShowMessage] = useState(false)
+  const [showMessage, setShowMessage] = useState(false);
   const arrayPushRef = useRef(null);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ function CreateUser() {
           onChange={handleChange}
           onBlur={handleBlur}
           error={
-            errors?.usersData?.[userNumber]?.firstName &&
+            Boolean(errors?.usersData?.[userNumber]?.firstName) &&
             touched?.usersData?.[userNumber]?.firstName
           }
           helperText={errors?.usersData?.[userNumber]?.firstName}
@@ -99,7 +99,7 @@ function CreateUser() {
           placeholder="E-Mail"
           onBlur={handleBlur}
           error={
-            errors?.usersData?.[userNumber]?.email &&
+            Boolean(errors?.usersData?.[userNumber]?.email) &&
             touched?.usersData?.[userNumber]?.email
           }
           helperText={errors?.usersData?.[userNumber]?.email}
@@ -117,7 +117,7 @@ function CreateUser() {
           placeholder="Password"
           onBlur={handleBlur}
           error={
-            errors?.usersData?.[userNumber]?.password &&
+            Boolean(errors?.usersData?.[userNumber]?.password) &&
             touched?.usersData?.[userNumber]?.password
           }
           helperText={errors?.usersData?.[userNumber]?.password}
@@ -161,14 +161,16 @@ function CreateUser() {
     usersData.forEach((user) => (user.roleId = +user.roleId));
     dispatch(createUserRequest(usersData, setSubmitting));
     setTimeout(() => {
-      setShowMessage(true)
-    }, 1000)
+      setShowMessage(true);
+    }, 1000);
   };
 
   return (
     <div className="UserCreater-Container">
       <h2 style={{ margin: "15px 0" }}>Create User</h2>
-      {showMessage && <ErrorOrSuccess successMessage="Users created successfully"/>}
+      {showMessage && (
+        <ErrorOrSuccess successMessage="Users created successfully" />
+      )}
 
       <Formik
         initialValues={{
@@ -233,7 +235,8 @@ function CreateUser() {
             <button
               type={`button`}
               className="add-new-row-button"
-              onClick={() =>  arrayPushRef.current({
+              onClick={() =>
+                arrayPushRef.current({
                   firstName: "",
                   lastName: "",
                   email: "",
