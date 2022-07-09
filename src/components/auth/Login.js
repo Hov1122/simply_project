@@ -103,13 +103,19 @@ function LoginPage() {
           onChange={handlePasswordChange}
           onKeyDown={logHandler}
         />
-        <NavLink className="forgot-password-box" to="/recovery">
-          Forgot password?
-        </NavLink>
-
         <button disabled={!(email && password)} onClick={logHandler}>
           Log In
         </button>
+
+        <NavLink className="forgot-password-box" 
+          to="/recovery"
+        >
+          Forgot or change your password?
+        </NavLink>
+        <NavLink className="terms-box" 
+          to="/terms">
+          Read our terms and conditions
+        </NavLink>
       </div>
     </div>
   );
