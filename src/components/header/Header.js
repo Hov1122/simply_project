@@ -43,9 +43,9 @@ const Header = () => {
     }
   };
 
-  const handleSearch = debounce((keyword) => {
+  const handleSearch = debounce((search) => {
     setLoading(true);
-    dispatch(fetchUsersRequest(keyword));
+    dispatch(fetchUsersRequest({ search }));
 
     setTimeout(() => {
       setLoading(false);
@@ -54,7 +54,12 @@ const Header = () => {
 
   return token ? (
     <div
-      style={{ position: "relative", marginLeft: "25px", marginTop: "15px", zIndex:1100 }}
+      style={{
+        position: "relative",
+        marginLeft: "25px",
+        marginTop: "15px",
+        zIndex: 1100,
+      }}
     >
       <div className="Header-Container blur">
         <HeaderPagePart />
