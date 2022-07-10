@@ -55,7 +55,7 @@ export const deleteGroupRequest = (payload) => {
       const { data } = await axiosApiInstance.delete(`/groups`, {
         data: payload,
       });
-      dispatch(deleteGroupSuccess(data));
+      dispatch(deleteGroupSuccess({ data, payload }));
     } catch (error) {
       dispatch(fetchGroupsFailure(error));
     }

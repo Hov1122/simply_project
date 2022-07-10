@@ -65,7 +65,7 @@ const usersSlice = createSlice({
     // DELETE USER
     deleteUserSuccess: (state, { payload }) => {
       state.users = state.users.filter(
-        (user) => user.id !== payload.deletedUser.id
+        (user) => !payload.payload.ids.some((id) => id === user.id)
       );
       state.loading = false;
       state.error = null;
@@ -75,7 +75,7 @@ const usersSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchUsersFailure: (state, {payload}) => {
+    fetchUsersFailure: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
     },

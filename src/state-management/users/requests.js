@@ -104,7 +104,10 @@ export const resetPasswordRequest = ({ userId, recovery_token, password }) => {
   return async (dispatch) => {
     dispatch(fetchUsersPending());
     try {
-      await axiosApiInstance.put(`/users/resetPassword/${userId}/${recovery_token}`, { password });
+      await axiosApiInstance.put(
+        `/users/resetPassword/${userId}/${recovery_token}`,
+        { password }
+      );
       dispatch(resetPasswordSuccess());
     } catch (error) {
       dispatch(fetchUsersFailure(error.response.data.message));
@@ -120,7 +123,7 @@ export const deletedUserRequest = (payload) => {
       const { data } = await axiosApiInstance.delete(`/users`, {
         data: payload,
       });
-      dispatch(deleteUserSuccess(data));
+      dispatch(deleteUserSuccess({ data, payload }));
     } catch (error) {
       dispatch(fetchUsersFailure(error.response.data.message));
     }

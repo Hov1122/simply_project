@@ -17,7 +17,7 @@ const groupsSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    // GET ALL GROUPS
+    // GET ALL GROUP USERS
     fetchGroupUsersSuccess: (state, { payload: { data } }) => {
       state.groupUsers[data.id] = data.users;
       state.loading = false;
@@ -25,15 +25,17 @@ const groupsSlice = createSlice({
     },
     // CREATE GROUP
     createGroupSuccess: (state, { payload }) => {
-      state.groups.push(payload.createdGroup);
+      state.groups.push(payload.data.createdGroup);
       state.loading = false;
       state.error = null;
     },
     // DELETE GROUP
     deleteGroupSuccess: (state, { payload }) => {
       state.groups = state.groups.filter(
-        (group) => group.id !== payload.deletedGroup.id
+        (group) => !payload.payload.ids.some((id) => id === group.id)
       );
+      state.loading = false;
+      state.error = null;
     },
     // FETCH PENDING AND FAILURE
     fetchGroupsPending: (state) => {

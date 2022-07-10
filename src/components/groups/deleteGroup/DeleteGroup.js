@@ -25,7 +25,7 @@ const DeleteGroup = () => {
     dispatch(fetchGroupsRequest());
   }, []);
 
-  const GroupJSX = ({ id, name }) => {
+  const GroupJSX = ({ id, name } = {}) => {
     return (
       <div id="checklist" key={id}>
         <input
@@ -59,6 +59,7 @@ const DeleteGroup = () => {
       return;
     } else {
       dispatch(deleteGroupRequest(data));
+      setfilteredGroups([]);
       setSuccess(!error);
     }
   };
@@ -82,8 +83,12 @@ const DeleteGroup = () => {
               }, 500);
             }}
           />
-          {success && <Alert severity="success">Groups deleted successfully!</Alert>}
-          {success && error && <Alert severity="error">Something went wrong!</Alert>}
+          {success && (
+            <Alert severity="success">Groups deleted successfully!</Alert>
+          )}
+          {success && error && (
+            <Alert severity="error">Something went wrong!</Alert>
+          )}
           <div className="loading-search-bar">
             {loading && <Loading width="20px" height="20px" />}
           </div>
