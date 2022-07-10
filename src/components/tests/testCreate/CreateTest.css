@@ -10,7 +10,7 @@
 }
 
 .TestCreater-Container > div {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     width: 100%;
 }
 
@@ -92,25 +92,12 @@ input[area-hidden='true'] {
     justify-content: center;
 }
 
-.MuiButton-label {
-    padding: 10px 30px;
-    background-color: lightgreen;
-    color: #ffff;
-    border-radius: 15px;
-    opacity: .7;
-}
-
-.MuiButton-label:hover {
-    opacity: 1;
-    color: green;
-}
-
 .Question {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .Question-Container {
@@ -144,7 +131,6 @@ hr {
     flex-direction: column;
     padding: 20px;
     border-radius: 20px;
-    margin-bottom: 15px;
     background-color: #ffff;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;

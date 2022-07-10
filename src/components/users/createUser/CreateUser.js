@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchRoles } from "../../../state-management/role/requests";
 import { rolesSelector } from "../../../state-management/role/selectors";
 import { CircularProgress } from "@mui/material";
-import { Button, IconButton } from "@material-ui/core";
+import { Button, IconButton, TextField } from "@material-ui/core";
 import Loading from "../../common/Loading";
 import * as Yup from "yup";
 import ErrorOrSuccess from "../../common/ErrorOrSuccess";
@@ -51,15 +51,15 @@ function CreateUser() {
     handleChange,
     usersCount
   ) => {
-    return ( 
+    return (
       <div className="create-user-panel-table-row" key={userNumber}>
-        <div className="create-user-table-cell" data-title="Name">
+        <div className="create-user-table-cell" data-title="No.">
           {userNumber + 1}
         </div>
-        <div className="create-user-table-cell" data-title="Name">
-          <input 
-            type="text" 
-            placeholder="First name" 
+        <div className="create-user-table-cell" data-title="First Name">
+          <TextField
+            type="text"
+            placeholder="First name"
             name={`usersData[${userNumber}].firstName`}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -70,10 +70,10 @@ function CreateUser() {
             helperText={errors?.usersData?.[userNumber]?.firstName}
           />
         </div>
-        <div className="create-user-table-cell" data-title="Age">
-          <input 
-            type="text" 
-            placeholder="Last name" 
+        <div className="create-user-table-cell" data-title="Last Name">
+          <TextField
+            type="text"
+            placeholder="Last name"
             name={`usersData[${userNumber}].lastName`}
             onBlur={handleBlur}
             error={
@@ -84,10 +84,10 @@ function CreateUser() {
             onChange={handleChange}
           />
         </div>
-        <div className="create-user-table-cell" data-title="Occupation">
-          <input 
-            type="email" 
-            placeholder="E-mail" 
+        <div className="create-user-table-cell" data-title="Email">
+          <TextField
+            type="email"
+            placeholder="E-mail"
             name={`usersData[${userNumber}].email`}
             onBlur={handleBlur}
             error={
@@ -98,10 +98,10 @@ function CreateUser() {
             onChange={handleChange}
           />
         </div>
-        <div className="create-user-table-cell" data-title="Occupation">
-          <input 
-            type="password" 
-            placeholder="Password" 
+        <div className="create-user-table-cell" data-title="Password">
+          <TextField
+            type="password"
+            placeholder="Password"
             name={`usersData[${userNumber}].password`}
             onBlur={handleBlur}
             error={
@@ -112,11 +112,8 @@ function CreateUser() {
             onChange={handleChange}
           />
         </div>
-        <div className="create-user-table-cell" data-title="Occupation">
-          <select
-            name={`usersData[${userNumber}].roleId`}
-            value={roles[0]?.id || ""}
-          >
+        <div className="create-user-table-cell" data-title="Role">
+          <select name={`usersData[${userNumber}].roleId`}>
             {roles.map((role) => (
               <option key={role.id} value={role.id}>
                 {role.name}
@@ -124,7 +121,7 @@ function CreateUser() {
             ))}
           </select>
         </div>
-        <div className="create-user-table-cell" data-title="Occupation">
+        <div className="create-user-table-cell" data-title="">
           <IconButton
             onClick={() => remove(userNumber)}
             disabled={usersCount === 1}
@@ -148,52 +145,51 @@ function CreateUser() {
   return (
     <>
       <div className="create-user-panel-component">
-        <h2 style={{ margin: "15px 0" }}>Create User</h2>
+        <h2 style={{ margin: "15px 0" }}>Create Users</h2>
         {showMessage && (
           <ErrorOrSuccess successMessage="Users created successfully" />
         )}
 
-
-
-          <Formik
-            initialValues={{
-              usersData: [
-                {
-                  firstName: "",
-                  lastName: "",
-                  email: "",
-                  password: "",
-                  roleId: roles[0]?.id,
-                },
-              ],
-            }}
-            validationSchema={addUserSchema}
-            onSubmit={(values, { setSubmitting }) =>
-              addUser(values, setSubmitting)
-            }
-          >
-            {({ isSubmitting, errors, handleBlur, touched, handleChange }) => (
-              <Form autoCapitalize="off">
-                <Button
-                  disabled={isSubmitting}
-                  type="submit"
-                  color="primary"
-                  className="submit-create"
-                  startIcon={isSubmitting ? <CircularProgress /> : undefined}
-                >
-                  {isSubmitting ? "Submitting..." : "Submit"}
-                </Button>
-                <FieldArray name="usersData">
-                  {({
-                    push,
-                    remove,
-                    form: {
-                      values: { usersData },
-                    },
-                  }) => {
-                    arrayPushRef.current = push;
-                    return (
-                      <div className="create-user-panel-table">
+        <Formik
+          initialValues={{
+            usersData: [
+              {
+                firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                roleId: roles[0]?.id,
+              },
+            ],
+          }}
+          validationSchema={addUserSchema}
+          onSubmit={(values, { setSubmitting }) =>
+            addUser(values, setSubmitting)
+          }
+        >
+          {({ isSubmitting, errors, handleBlur, touched, handleChange }) => (
+            <Form autoCapitalize="off">
+              <Button
+                disabled={isSubmitting}
+                type="submit"
+                color="primary"
+                className="submit-create"
+                style={{ marginBottom: "30px" }}
+                startIcon={isSubmitting ? <CircularProgress /> : undefined}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+              <FieldArray name="usersData">
+                {({
+                  push,
+                  remove,
+                  form: {
+                    values: { usersData },
+                  },
+                }) => {
+                  arrayPushRef.current = push;
+                  return (
+                    <div className="create-user-panel-table">
                       <div className="create-user-panel-table-row create-user-panel-header">
                         <div className="create-user-table-cell">No.</div>
                         <div className="create-user-table-cell">First name</div>

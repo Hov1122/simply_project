@@ -122,10 +122,10 @@ function TestCreater() {
             onChange={handleChange}
             onBlur={handleBlur}
             error={
-              Boolean(errors?.questions?.[questionNumber].name) &&
-              touched?.questions?.[questionNumber].name
+              Boolean(errors?.questions?.[questionNumber]?.name) &&
+              touched?.questions?.[questionNumber]?.name
             }
-            helperText={errors?.questions?.[questionNumber].name}
+            helperText={errors?.questions?.[questionNumber]?.name}
           />
           <IconButton
             onClick={() => remove(questionNumber)}
@@ -153,6 +153,7 @@ function TestCreater() {
           }}
         </FieldArray>
         <button
+          type="button"
           className="icon-btn add-btn"
           onClick={() => {
             answerPushRefs[questionNumber]({ isCorrect: false, name: "" });
@@ -194,12 +195,12 @@ function TestCreater() {
           onBlur={handleBlur}
           error={
             Boolean(
-              errors?.questions?.[questionNumber].answers?.[answerNumber].name
+              errors?.questions?.[questionNumber]?.answers?.[answerNumber]?.name
             ) &&
-            touched?.questions?.[questionNumber].answers?.[answerNumber].name
+            touched?.questions?.[questionNumber]?.answers?.[answerNumber]?.name
           }
           helperText={
-            errors?.questions?.[questionNumber].answers?.[answerNumber].name
+            errors?.questions?.[questionNumber]?.answers?.[answerNumber]?.name
           }
         />
 
@@ -243,7 +244,7 @@ function TestCreater() {
       <h2>Create Test</h2>
       <Formik
         initialValues={{
-          userId: id, // userId
+          userId: id,
           name: "",
           subjectId: subjectSelect[0]?.value,
           highestScore: "",
@@ -278,7 +279,7 @@ function TestCreater() {
               className="submit-create"
               startIcon={isSubmitting ? <CircularProgress /> : undefined}
             >
-              {isSubmitting ? "Submitting..." : "Submit"}
+              {isSubmitting ? "Creating..." : "Create"}
             </Button>
             <div className="testInformationHeader">
               <TextField
@@ -293,11 +294,7 @@ function TestCreater() {
             </div>
 
             <div className="testInformationData">
-              <TextField
-                select
-                name="subjectId"
-                value={subjectSelect[0]?.value || ""}
-              >
+              <Field as="select" name="subjectId">
                 {subjectSelect.map((element) => {
                   return (
                     <option key={element.label} value={element.value}>
@@ -305,12 +302,8 @@ function TestCreater() {
                     </option>
                   );
                 })}
-              </TextField>
-              <TextField
-                select
-                name="group"
-                value={groupSelect[0]?.value || ""}
-              >
+              </Field>
+              <Field as="select" name="group">
                 {groupSelect.map((element) => {
                   return (
                     <option key={element.label} value={element.value}>
@@ -318,7 +311,7 @@ function TestCreater() {
                     </option>
                   );
                 })}
-              </TextField>
+              </Field>
             </div>
             <div className="testInformationData">
               <TextField
@@ -373,6 +366,7 @@ function TestCreater() {
                 }}
               </FieldArray>
               <button
+                type="button"
                 className="icon-btn add-btn add-question-btn"
                 onClick={() =>
                   arrayPushRef.current({

@@ -216,3 +216,14 @@
    span.switcher-user-group input:after {
     content: "Groups";
   }
+
+  @media (max-width: 600px) {
+    .Change-Data-bar {
+      padding: 0;
+    }
+
+    .Change-Data-Header {
+      text-align: start;
+      margin-right: 200px;
+    }
+  }

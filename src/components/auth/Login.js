@@ -107,13 +107,10 @@ function LoginPage() {
           Log In
         </button>
 
-        <NavLink className="forgot-password-box" 
-          to="/recovery"
-        >
-          Forgot or change your password?
+        <NavLink className="forgot-password-box" to="/recovery">
+          Forgot your password?
         </NavLink>
-        <NavLink className="terms-box" 
-          to="/terms">
+        <NavLink className="terms-box" to="/terms">
           Read our terms and conditions
         </NavLink>
       </div>

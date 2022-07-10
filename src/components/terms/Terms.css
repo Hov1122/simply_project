@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.Terms-Container {
+    padding: 50px;
+    height: 100vh;
+    position: absolute;
+    overflow: auto;
+    background-color: #fff;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif
+}
+
+.Terms-Container h2, h3 {
+    font-weight: 700;
+    font-style: bold;
+    margin-bottom: 15px;
+}
+
+.Terms-Container p {
+    margin: 0 0 20px 0;
+}
+
+.Terms-Container ul, .Terms-Container ol {
+    margin-top: 0;
+    margin-bottom: 10px;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}

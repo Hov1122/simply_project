@@ -9,22 +9,22 @@ import NotFound from "./components/notFound/NotFound";
 import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Loading from "./components/common/Loading";
-import ChangeData from "./components/changeData/ChangeData";
-
 
 // LAZY LOADING
 const Home = lazy(() => import("./components/home/home"));
 const Tests = lazy(() => import("./components/tests/tests"));
 const Schedule = lazy(() => import("./components/schedule/schedule"));
-const Recovery = lazy(() => import("./components/recovery/Recovery"))
-const ResetPass = lazy(() => import("./components/recovery/reset/Reset"))
+const Recovery = lazy(() => import("./components/recovery/Recovery"));
+const ResetPass = lazy(() => import("./components/recovery/reset/Reset"));
 const CheckResults = lazy(() =>
   import("./components/tests/checkResults/CheckResults")
 );
+const ChangeData = lazy(() => import("./components/changeData/ChangeData"));
 const Chat = lazy(() => import("./components/chat/Chat"));
 const UserProfile = lazy(() =>
   import("./components/profile/userProfile/UserProfile")
 );
+const Terms = lazy(() => import("./components/terms/Terms"));
 
 function App() {
   return (
@@ -40,8 +40,12 @@ function App() {
                   (// PUBLIC ROUTES)
                   <Route path="/" element={<Login />} />
                   <Route path="/recovery" element={<Recovery />} />
-                  {/* <Route path="/terms" element={<Terms />} /> */}
-                  <Route path="/reset-password/:userId/:recovery_token" exact element={<ResetPass />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route
+                    path="/reset-password/:userId/:recovery_token"
+                    exact
+                    element={<ResetPass />}
+                  />
                   (// PROTECTED ROUTES)
                   <Route element={<RequireAuth />}>
                     <Route path="/home" element={<Home />} />
