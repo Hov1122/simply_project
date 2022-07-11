@@ -260,6 +260,7 @@ const Chat = () => {
               />
             </Grid>
             <Grid
+              item
               xs={1}
               align="right"
               onClick={() => {

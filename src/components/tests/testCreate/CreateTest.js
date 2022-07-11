@@ -36,7 +36,7 @@ function TestCreater() {
 
   const createTestSchema = Yup.object().shape({
     userId: Yup.number().strict().required(),
-    name: Yup.string().min(2, "Too Short").max(50, "Too Long").required("*"),
+    name: Yup.string().min(3, "Too Short").max(50, "Too Long").required("*"),
     subjectId: Yup.number().required(),
     start: Yup.date()
       .required("*")
@@ -51,7 +51,7 @@ function TestCreater() {
     questions: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .min(4, "Too Short")
+          .min(3, "Too Short")
           .max(150, "Too Long")
           .required("*"),
         answers: Yup.array().of(

@@ -48,7 +48,8 @@ const testsSlice = createSlice({
     },
     // CREATE TEST
     createTestSuccess: (state, { payload }) => {
-      state.tests.push(payload.createdTest);
+      state.tests.push(payload.data.createdTest);
+      state.userTests.push(payload.data.createdTest);
       state.loading = false;
       state.error = null;
     },
