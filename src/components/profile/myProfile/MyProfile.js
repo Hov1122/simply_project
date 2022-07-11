@@ -11,12 +11,12 @@ import { Alert } from "@mui/material";
 import ErrorOrSuccess from "../../common/ErrorOrSuccess";
 
 const Profile = () => {
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showMessage, setShowMessage] = useState(false)
+  const [showMessage, setShowMessage] = useState(false);
 
   const {
     user: {
@@ -34,7 +34,7 @@ const Profile = () => {
     if (newPassword !== repeatPassword) {
       setPasswordError("Passwords do not match");
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
   }, [newPassword, repeatPassword]);
 
@@ -62,8 +62,7 @@ const Profile = () => {
             <Divider />
             <div className="row">
               <TextField
-                style={{marginBottom: "20px", marginRight: "10px"}}
-                id="outlined-basic"
+                style={{ marginBottom: "20px", marginRight: "10px" }}
                 label="First name"
                 disabled={true}
                 size="small"
@@ -72,8 +71,7 @@ const Profile = () => {
                 className="disabled-textfield"
               />
               <TextField
-                style={{marginBottom: "20px", marginRight: "10px"}}
-                id="outlined-basic"
+                style={{ marginBottom: "20px", marginRight: "10px" }}
                 label="Last name"
                 disabled={true}
                 size="small"
@@ -84,8 +82,7 @@ const Profile = () => {
             </div>
             <div className="row">
               <TextField
-                style={{marginBottom: "20px", marginRight: "10px"}}
-                id="outlined-basic"
+                style={{ marginBottom: "20px", marginRight: "10px" }}
                 label="Role"
                 disabled={true}
                 size="small"
@@ -94,8 +91,7 @@ const Profile = () => {
                 className="disabled-textfield"
               />
               <TextField
-                style={{marginBottom: "20px", marginRight: "10px"}}
-                id="outlined-basic"
+                style={{ marginBottom: "20px", marginRight: "10px" }}
                 label="Email"
                 disabled={true}
                 size="small"
@@ -132,11 +128,12 @@ const Profile = () => {
       <div className="Profile-Info-Container">
         <h4>Change password</h4>
         <Divider />
-        {showMessage && <ErrorOrSuccess successMessage="Your password successfully changed!"/>}
+        {showMessage && (
+          <ErrorOrSuccess successMessage="Your password successfully changed!" />
+        )}
         <div className="password-bar">
           <TextField
-            style={{marginBottom: "20px"}}
-            id="outlined-basic"
+            style={{ marginBottom: "20px" }}
             label="Old password..."
             type="password"
             size="small"
@@ -146,8 +143,7 @@ const Profile = () => {
             }}
           />
           <TextField
-            style={{marginBottom: "20px"}}
-            id="outlined-basic"
+            style={{ marginBottom: "20px" }}
             label="New password..."
             type="password"
             size="small"
@@ -157,8 +153,7 @@ const Profile = () => {
             }}
           />
           <TextField
-            style={{marginBottom: "20px"}}
-            id="outlined-basic"
+            style={{ marginBottom: "20px" }}
             label="Repeat new password..."
             type="password"
             size="small"

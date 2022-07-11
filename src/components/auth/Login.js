@@ -82,7 +82,7 @@ function LoginPage() {
 
         <TextField
           variant="outlined"
-          id="outlined-basic"
+          id="login"
           label="Email"
           type="text"
           autoFocus
@@ -94,7 +94,6 @@ function LoginPage() {
         <br />
         <TextField
           variant="outlined"
-          id="outlined-basic"
           label="Password"
           type="password"
           autoFocus
