@@ -129,7 +129,6 @@ const Chat = () => {
         <Grid item xs={3} className="borderRight500">
           <Grid item xs={12} style={{ padding: "10px" }}>
             <TextField
-              id="outlined-basic-email"
               label="Search"
               variant="outlined"
               value={searchGroupKeyword}
@@ -243,7 +242,6 @@ const Chat = () => {
           >
             <Grid item xs={11}>
               <TextField
-                id="outlined-basic-email"
                 label="Type Something..."
                 fullWidth
                 variant="outlined"
