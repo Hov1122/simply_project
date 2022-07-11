@@ -7,18 +7,32 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { fetchRoles } from "../../../state-management/role/requests";
 import { rolesSelector } from "../../../state-management/role/selectors";
 import { CircularProgress } from "@mui/material";
-import { Button, IconButton, TextField } from "@material-ui/core";
+import {
+  Button,
+  Checkbox,
+  IconButton,
+  InputLabel,
+  ListItem,
+  MenuItem,
+  OutlinedInput,
+  Select,
+  TextField,
+} from "@material-ui/core";
 import Loading from "../../common/Loading";
 import * as Yup from "yup";
 import ErrorOrSuccess from "../../common/ErrorOrSuccess";
+import { fetchGroupsRequest } from "../../../state-management/groups/requests";
+import { groupsSelector } from "../../../state-management/groups/selectors";
 
 function CreateUser() {
   const { roles, loading: rolesLoading } = useSelector(rolesSelector);
+  const { groups } = useSelector(groupsSelector);
   const [showMessage, setShowMessage] = useState(false);
   const arrayPushRef = useRef(null);
 
   useEffect(() => {
     dispatch(fetchRoles());
+    dispatch(fetchGroupsRequest());
   }, []);
 
   if (rolesLoading) return <Loading />;
@@ -49,8 +63,10 @@ function CreateUser() {
     touched,
     handleBlur,
     handleChange,
-    usersCount
+    usersCount,
+    values
   ) => {
+    console.log(values?.usersData?.[userNumber]?.groups);
     return (
       <div className="create-user-panel-table-row" key={userNumber}>
         <div className="create-user-table-cell" data-title="No.">
@@ -112,6 +128,36 @@ function CreateUser() {
             onChange={handleChange}
           />
         </div>
+        <div className="create-user-table-cell" data-title="Groups">
+          <InputLabel id="demo-multiple-checkbox-label">Groups</InputLabel>
+          <Select
+            name={`usersData[${userNumber}].groups`}
+            labelId="demo-multiple-checkbox-label"
+            multiple
+            value={values?.usersData?.[userNumber]?.groups.map(
+              ({ name }) => name
+            )}
+            input={<OutlinedInput label="Groups" />}
+            onChange={handleChange}
+            renderValue={(selected) => selected.join(", ")}
+          >
+            {groups?.map(({ name }) => (
+              <MenuItem key={name} value={name}>
+                <Checkbox
+                  id={name}
+                  checked={touched?.usersData?.[userNumber]?.groups.indexOf(
+                    (name) => name > -1
+                  )}
+                />
+                <label htmlFor={name}>
+                  <ListItem primary={name} html>
+                    {name}
+                  </ListItem>
+                </label>
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
         <div className="create-user-table-cell" data-title="Role">
           <select name={`usersData[${userNumber}].roleId`}>
             {roles.map((role) => (
@@ -158,6 +204,7 @@ function CreateUser() {
                 lastName: "",
                 email: "",
                 password: "",
+                groups: [],
                 roleId: roles[0]?.id,
               },
             ],
@@ -167,7 +214,14 @@ function CreateUser() {
             addUser(values, setSubmitting)
           }
         >
-          {({ isSubmitting, errors, handleBlur, touched, handleChange }) => (
+          {({
+            isSubmitting,
+            errors,
+            handleBlur,
+            touched,
+            handleChange,
+            values,
+          }) => (
             <Form autoCapitalize="off">
               <Button
                 disabled={isSubmitting}
@@ -196,6 +250,7 @@ function CreateUser() {
                         <div className="create-user-table-cell">Last name</div>
                         <div className="create-user-table-cell">Email</div>
                         <div className="create-user-table-cell">Password</div>
+                        <div className="create-user-table-cell">Groups</div>
                         <div className="create-user-table-cell">Role</div>
                         <div className="create-user-table-cell"></div>
                       </div>
@@ -207,7 +262,8 @@ function CreateUser() {
                           touched,
                           handleBlur,
                           handleChange,
-                          usersData.length
+                          usersData.length,
+                          values
                         )
                       )}
                     </div>

@@ -79,7 +79,7 @@ function ScheduleCreater() {
         {Object.keys(scheduleSubjects[0]).map((time) => (
           <Select
             options={subjectsArr}
-            defaultValue={{ label: "Free class", value: 1 }}
+            defaultValue={{ label: "Free Class", value: 1 }}
             key={uuidv4()}
             onChange={(e) => {
               handleChangeSubject(day, time, e);

@@ -35,7 +35,9 @@ const DeleteUser = () => {
         />
         <label htmlFor={id}>
           <b>
-            {`${firstName} ${lastName}`}
+            <span
+              style={{ display: "inline-block" }}
+            >{`${firstName} ${lastName}`}</span>
             <span className="user-email-span">{email}</span>
           </b>
         </label>
