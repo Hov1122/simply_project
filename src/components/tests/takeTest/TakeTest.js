@@ -114,7 +114,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
         <TestCountDown hours={hours} minutes={minutes} seconds={seconds} />
         {questions
           .slice(questionCount - 5, questionCount)
-          .map(({ id, name, answers }) => {
+          .map(({ id, name, answers, isMultiSelect }) => {
             return (
               <motion.div
                 initial={{ x: "100vw" }}
@@ -128,6 +128,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
                 <span className="question-text">
                   {questions.findIndex((q) => q.id === id) + 1}. {name}
                 </span>
+                {isMultiSelect && <span>Multiple Choice</span>}
                 <div className="Answers-Container">
                   {answers.map(({ id, name }) => {
                     return (

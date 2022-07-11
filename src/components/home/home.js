@@ -82,7 +82,7 @@ function Home() {
                     data={userTest.map((test, index) => {
                       if (index !== 5) {
                         return {
-                          mark: test.mark,
+                          mark: test.mark === -1 ? 0 : test.mark,
                           index: index + 1,
                         };
                       }

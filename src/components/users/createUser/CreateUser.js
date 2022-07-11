@@ -10,6 +10,7 @@ import { CircularProgress } from "@mui/material";
 import {
   Button,
   Checkbox,
+  FormControl,
   IconButton,
   InputLabel,
   MenuItem,
@@ -138,32 +139,52 @@ function CreateUser() {
             onChange={handleChange}
           />
         </div>
-        <div className="create-user-table-cell" data-title="Groups">
-          <InputLabel id="demo-multiple-checkbox-label">Groups</InputLabel>
-          <Select
-            name={`usersData[${userNumber}].groups`}
-            labelId="demo-multiple-checkbox-label"
-            id="demo-multiple-checkbox"
-            multiple
-            value={[""]}
-            input={<OutlinedInput label="Groups" />}
-            renderValue={() => selectedGroups.join(", ")}
-          >
-            {groups?.map(({ name }, i) => (
-              <MenuItem
-                // name={`usersData[${userNumber}].groups`}
-                key={name}
-                value={name}
-              >
-                <Checkbox
-                  onChange={handleChange}
-                  name={`usersData[${userNumber}].groups[${i}].checked`}
-                  checked={values.usersData[userNumber].groups[i].checked}
-                />
-                {values.usersData[userNumber].groups[i].name}
-              </MenuItem>
-            ))}
-          </Select>
+        <div
+          style={{ maxWidth: "30%", maxHeight: 150, overflow: "hidden" }}
+          className="create-user-table-cell"
+          data-title="Groups"
+        >
+          <FormControl size="small" variant="standard" required={true}>
+            <InputLabel id="demo-multiple-checkbox-label">Groups</InputLabel>
+            <Select
+              name={`usersData[${userNumber}].groups`}
+              labelId="demo-multiple-checkbox-label"
+              label={selectedGroups.length ? "Groups" : ""}
+              id="demo-multiple-checkbox"
+              multiple
+              value={[""]}
+              input={<OutlinedInput label="Groups" />}
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 100,
+                    width: 150,
+                    marginTop: 60,
+                  },
+                },
+              }}
+              renderValue={() => {
+                if (selectedGroups.length <= 2)
+                  return selectedGroups.join(", ");
+
+                return selectedGroups.slice(0, 2).join(", ") + "...";
+              }}
+            >
+              {groups?.map(({ name }, i) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox
+                    id={name}
+                    onChange={handleChange}
+                    name={`usersData[${userNumber}].groups[${i}].checked`}
+                    checked={values.usersData[userNumber].groups[i].checked}
+                  />
+                  <label htmlFor={name}>
+                    {values.usersData[userNumber].groups[i].name}
+                  </label>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
         <div className="create-user-table-cell" data-title="Role">
           <select name={`usersData[${userNumber}].roleId`}>

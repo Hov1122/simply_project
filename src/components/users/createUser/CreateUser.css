@@ -3,6 +3,7 @@
     width: 100%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     display: table;
+    overflow: auto;
   }
 
   .create-user-panel-table-row input {
