@@ -25,9 +25,10 @@ import { fetchGroupsRequest } from "../../../state-management/groups/requests";
 import { groupsSelector } from "../../../state-management/groups/selectors";
 
 function CreateUser() {
+  const [showMessage, setShowMessage] = useState(false);
+  const [groupNames, setGroupNames] = useState([]);
   const { roles, loading: rolesLoading } = useSelector(rolesSelector);
   const { groups } = useSelector(groupsSelector);
-  const [showMessage, setShowMessage] = useState(false);
   const arrayPushRef = useRef(null);
 
   useEffect(() => {
@@ -43,11 +44,11 @@ function CreateUser() {
     usersData: Yup.array().of(
       Yup.object().shape({
         firstName: Yup.string()
-          .min(2, "Too Short")
+          .min(3, "Too Short")
           .max(50, "Too Long")
           .required("*"),
         lastName: Yup.string()
-          .min(2, "Too Short")
+          .min(3, "Too Short")
           .max(50, "Too Long")
           .required("*"),
         email: Yup.string().email("Invalid email").required("*"),
@@ -63,10 +64,8 @@ function CreateUser() {
     touched,
     handleBlur,
     handleChange,
-    usersCount,
-    values
+    usersCount
   ) => {
-    console.log(values?.usersData?.[userNumber]?.groups);
     return (
       <div className="create-user-panel-table-row" key={userNumber}>
         <div className="create-user-table-cell" data-title="No.">
@@ -131,29 +130,26 @@ function CreateUser() {
         <div className="create-user-table-cell" data-title="Groups">
           <InputLabel id="demo-multiple-checkbox-label">Groups</InputLabel>
           <Select
-            name={`usersData[${userNumber}].groups`}
+            // name={`usersData[${userNumber}].groups`}
             labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
             multiple
-            value={values?.usersData?.[userNumber]?.groups.map(
-              ({ name }) => name
-            )}
+            value={groupNames}
             input={<OutlinedInput label="Groups" />}
-            onChange={handleChange}
+            onChange={(e) => {
+              const {
+                target: { value },
+              } = e;
+              setGroupNames(
+                typeof value === "string" ? value.split(",") : value
+              );
+            }}
             renderValue={(selected) => selected.join(", ")}
           >
             {groups?.map(({ name }) => (
               <MenuItem key={name} value={name}>
-                <Checkbox
-                  id={name}
-                  checked={touched?.usersData?.[userNumber]?.groups.indexOf(
-                    (name) => name > -1
-                  )}
-                />
-                <label htmlFor={name}>
-                  <ListItem primary={name} html>
-                    {name}
-                  </ListItem>
-                </label>
+                <Checkbox checked={groupNames.join("").includes(name)} />
+                <ListItem primary={name}>{name}</ListItem>
               </MenuItem>
             ))}
           </Select>
@@ -181,7 +177,7 @@ function CreateUser() {
 
   // ADD USER
   const addUser = ({ usersData }, setSubmitting) => {
-    usersData.forEach((user) => (user.roleId = +user.roleId));
+    console.log(usersData);
     dispatch(createUserRequest(usersData, setSubmitting));
     setTimeout(() => {
       setShowMessage(true);
@@ -204,7 +200,7 @@ function CreateUser() {
                 lastName: "",
                 email: "",
                 password: "",
-                groups: [],
+                groupIds: groupNames,
                 roleId: roles[0]?.id,
               },
             ],
