@@ -12,7 +12,6 @@ import {
   Checkbox,
   IconButton,
   InputLabel,
-  ListItem,
   MenuItem,
   OutlinedInput,
   Select,
@@ -26,7 +25,6 @@ import { groupsSelector } from "../../../state-management/groups/selectors";
 
 function CreateUser() {
   const [showMessage, setShowMessage] = useState(false);
-  const [groupNames, setGroupNames] = useState([]);
   const { roles, loading: rolesLoading } = useSelector(rolesSelector);
   const { groups } = useSelector(groupsSelector);
   const arrayPushRef = useRef(null);
@@ -57,6 +55,10 @@ function CreateUser() {
     ),
   });
 
+  const groupFormik = groups.map((group) => {
+    return { name: group.name, checked: false, id: group.id };
+  });
+
   const rowJSX = (
     userNumber,
     remove,
@@ -64,8 +66,17 @@ function CreateUser() {
     touched,
     handleBlur,
     handleChange,
-    usersCount
+    usersCount,
+    values
   ) => {
+    const selectedGroups = values.usersData[userNumber].groups.reduce(
+      (acc, curr) => {
+        if (curr.checked) acc.push(curr.name);
+        return acc;
+      },
+      []
+    );
+
     return (
       <div className="create-user-panel-table-row" key={userNumber}>
         <div className="create-user-table-cell" data-title="No.">
@@ -130,26 +141,26 @@ function CreateUser() {
         <div className="create-user-table-cell" data-title="Groups">
           <InputLabel id="demo-multiple-checkbox-label">Groups</InputLabel>
           <Select
-            // name={`usersData[${userNumber}].groups`}
+            name={`usersData[${userNumber}].groups`}
             labelId="demo-multiple-checkbox-label"
             id="demo-multiple-checkbox"
             multiple
-            value={groupNames}
+            value={[""]}
             input={<OutlinedInput label="Groups" />}
-            onChange={(e) => {
-              const {
-                target: { value },
-              } = e;
-              setGroupNames(
-                typeof value === "string" ? value.split(",") : value
-              );
-            }}
-            renderValue={(selected) => selected.join(", ")}
+            renderValue={() => selectedGroups.join(", ")}
           >
-            {groups?.map(({ name }) => (
-              <MenuItem key={name} value={name}>
-                <Checkbox checked={groupNames.join("").includes(name)} />
-                <ListItem primary={name}>{name}</ListItem>
+            {groups?.map(({ name }, i) => (
+              <MenuItem
+                // name={`usersData[${userNumber}].groups`}
+                key={name}
+                value={name}
+              >
+                <Checkbox
+                  onChange={handleChange}
+                  name={`usersData[${userNumber}].groups[${i}].checked`}
+                  checked={values.usersData[userNumber].groups[i].checked}
+                />
+                {values.usersData[userNumber].groups[i].name}
               </MenuItem>
             ))}
           </Select>
@@ -177,7 +188,6 @@ function CreateUser() {
 
   // ADD USER
   const addUser = ({ usersData }, setSubmitting) => {
-    console.log(usersData);
     dispatch(createUserRequest(usersData, setSubmitting));
     setTimeout(() => {
       setShowMessage(true);
@@ -200,7 +210,7 @@ function CreateUser() {
                 lastName: "",
                 email: "",
                 password: "",
-                groupIds: groupNames,
+                groups: groupFormik,
                 roleId: roles[0]?.id,
               },
             ],
@@ -277,6 +287,7 @@ function CreateUser() {
                     email: "",
                     password: "",
                     roleId: roles[0]?.id,
+                    groups: groupFormik,
                   })
                 }
               >
