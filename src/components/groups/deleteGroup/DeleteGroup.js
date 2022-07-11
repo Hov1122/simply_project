@@ -70,7 +70,6 @@ const DeleteGroup = () => {
         <h2 style={{ marginBottom: "25px" }}>Delete Groups</h2>
         <div className="search-field-container">
           <TextField
-            id="outlined-basic"
             label="Search group..."
             variant="outlined"
             value={searchKeyword}

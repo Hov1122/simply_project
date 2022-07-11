@@ -19,24 +19,21 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@mui/icons-material/Delete";
 import * as Yup from "yup";
-import { Alert } from "@mui/material";
-import { testsSelector } from "../../../state-management/tests/selectors";
+import ErrorOrSuccess from "./helpers/ErrorOrSuccess";
 
 function TestCreater() {
   const [loading] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const [success, setSuccess] = useState("");
   const arrayPushRef = useRef(null);
   const answerPushRefs = useRef([]);
   const { loading: groupsLoading } = useSelector(groupsSelector);
   const { loading: subjectsLoading } = useSelector(subjectsSelector);
-  const { error } = useSelector(testsSelector);
 
   const today = new Date();
 
   const createTestSchema = Yup.object().shape({
     userId: Yup.number().strict().required(),
-    name: Yup.string().min(2, "Too Short").max(50, "Too Long").required("*"),
+    name: Yup.string().min(3, "Too Short").max(50, "Too Long").required("*"),
     subjectId: Yup.number().required(),
     start: Yup.date()
       .required("*")
@@ -51,7 +48,7 @@ function TestCreater() {
     questions: Yup.array().of(
       Yup.object().shape({
         name: Yup.string()
-          .min(4, "Too Short")
+          .min(3, "Too Short")
           .max(150, "Too Long")
           .required("*"),
         answers: Yup.array().of(
@@ -256,21 +253,13 @@ function TestCreater() {
         validationSchema={createTestSchema}
         onSubmit={(values, { setSubmitting }) => {
           setShowMessage(true);
-          setTimeout(() => setSuccess(error), 1000);
           return addTest({ ...values }, setSubmitting);
         }}
       >
         {({ isSubmitting, errors, handleChange, handleBlur, touched }) => (
           <Form autoCapitalize="off">
-            {showMessage && success && (
-              <Alert severity="error" sx={{ margin: "15px auto" }}>
-                Test created successfully.
-              </Alert>
-            )}
-            {showMessage && error && (
-              <Alert severity="error" sx={{ margin: "15px auto" }}>
-                {error}
-              </Alert>
+            {showMessage && (
+              <ErrorOrSuccess successMessage="Test created successfully." />
             )}
             <Button
               disabled={isSubmitting}

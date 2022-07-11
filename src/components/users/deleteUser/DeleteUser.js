@@ -74,7 +74,6 @@ const DeleteUser = () => {
         <h2 style={{ marginBottom: "25px" }}>Delete Users</h2>
         <div className="search-field-container">
           <TextField
-            id="outlined-basic"
             label="Search user..."
             variant="outlined"
             value={searchKeyword}

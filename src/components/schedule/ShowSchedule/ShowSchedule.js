@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { schedulesSelector } from "../../../state-management/schedule/selectors";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { addTime, randomColor } from "../../../helpers/helpers";
+import { v4 as uuidv4 } from "uuid";
 
 function ShowSchedule() {
   const [loading] = useState(false);
@@ -31,7 +32,7 @@ function ShowSchedule() {
           if (scheduleSubject[index].subject.name == "Free class")
             return <td style={{ backgroundColor: "#f7f7f7" }}></td>;
           return (
-            <td key={scheduleSubject[index].subject.id}>
+            <td key={uuidv4()}>
               <span
                 style={{ backgroundColor: randomColor(), color: "#ffff" }}
                 className="padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
