@@ -27,13 +27,18 @@ const socket = io.connect("http://localhost:5000");
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");
   const [showUsers, setShowUsers] = useState(false);
-  const [messageLoading, setMessageLoading] = useState(false);
+  const [initialising, setIninitalising] = useState(false);
+  const [prevHeight, setPrevHeight] = useState(0);
   const { user } = useSelector(authSelector);
   const { userGroup } = user;
   const [filtredGroups, setFiltredGroups] = useState(userGroup);
   const [searchGroupKeyword, setSearchGroupKeyword] = useState("");
   const [currentGroup, setCurrentGroup] = useState(userGroup[0]?.group.id);
-  const { messages } = useSelector(messagesSelector);
+  const {
+    messages,
+    loading: msgLoading,
+    hasMore,
+  } = useSelector(messagesSelector);
   const messageAreaRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -43,7 +48,6 @@ const Chat = () => {
     userGroup.forEach(({ group }) => {
       socket.emit("join_chat", { groupId: group.id, userId: user.id });
     });
-    messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
 
     userGroup.forEach(({ group }) => {
       dispatch(fetchGroupUsers(group.id));
@@ -55,47 +59,43 @@ const Chat = () => {
     socket.on("receive_message", (data) => {
       if (data) {
         dispatch(addUserMessage({ data, user: false }));
-
-        setTimeout(() => {
-          messageAreaRef.current.scrollTop =
-            messageAreaRef.current.scrollHeight;
-        }, 0);
       }
     });
     socket.on("message_sent", (data) => {
       if (data) {
         dispatch(addUserMessage({ data, user: true }));
-        setTimeout(() => {
-          messageAreaRef.current.scrollTop =
-            messageAreaRef.current.scrollHeight;
-        }, 0);
+        setIninitalising(true);
       }
     });
   }, [socket]);
 
   useEffect(() => {
     dispatch(fetchGroupsMessages({ groupId: currentGroup, initialise: true }));
-    setTimeout(() => {
-      messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
-    }, 100);
+    setIninitalising(true);
   }, [currentGroup]);
 
+  useEffect(() => {
+    if (initialising) {
+      messageAreaRef.current.scrollTop = messageAreaRef.current.scrollHeight;
+      setIninitalising(false);
+      setPrevHeight(0);
+      return;
+    }
+  }, [initialising]);
+
+  useEffect(() => {
+    if (!msgLoading) {
+      messageAreaRef.current.scrollTop =
+        messageAreaRef.current.scrollHeight - prevHeight - 100;
+    }
+  }, [msgLoading]);
+
   const loadOnScroll = () => {
-    if (messageAreaRef.current.scrollTop === 0 && messages.length) {
-      setMessageLoading(true);
-
-      setTimeout(() => {
-        setMessageLoading(false);
-      }, 1000);
-
-      const prevHeight = messageAreaRef.current.scrollHeight;
+    if (messageAreaRef.current.scrollTop === 0 && messages.length && hasMore) {
+      setPrevHeight(messageAreaRef.current.scrollHeight);
       dispatch(
         fetchGroupsMessages({ groupId: currentGroup, skip: messages.length })
       );
-      setTimeout(() => {
-        messageAreaRef.current.scrollTop =
-          messageAreaRef.current.scrollHeight - prevHeight - 100;
-      }, 100);
     }
   };
 
@@ -109,7 +109,7 @@ const Chat = () => {
 
   return (
     <div className="chat">
-      {messageLoading && (
+      {msgLoading && (
         <div className="chat-loading">
           <Loading />
         </div>
