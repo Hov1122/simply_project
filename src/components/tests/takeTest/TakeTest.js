@@ -3,19 +3,30 @@ import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { authSelector } from "../../../state-management/auth/selectors";
-import { submitTestRequest } from "../../../state-management/tests/requests";
+import {
+  fetchTestById,
+  submitTestRequest,
+} from "../../../state-management/tests/requests";
 import { motion } from "framer-motion";
 import { useBlocker } from "../../../helpers/hooks/useBlocker";
 import "./TakeTest.css";
 import TestCountDown from "./TestCountDown/TestCountDown";
 import Warning from "./Warning/Warning";
+import { testsSelector } from "../../../state-management/tests/selectors";
 
-const TakeTest = ({ questions, testId, testDuration: length }) => {
+const TakeTest = ({ testId, testDuration: length }) => {
   const {
     user: {
       role: { name },
     },
   } = useSelector(authSelector);
+  const {
+    currentTest: { questions },
+  } = useSelector(testsSelector);
+
+  setTimeout(() => {
+    console.log(questions);
+  }, 2000);
 
   const [showWarning, setShowWarning] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -56,6 +67,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
 
   useEffect(() => {
     document.addEventListener("visibilitychange", tabChange);
+    dispatch(fetchTestById({ id: testId }));
 
     const intervalId = setInterval(() => {
       setSeconds((prevSec) => prevSec - 1);
@@ -113,7 +125,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
       <div className="Take-Test-Container">
         <TestCountDown hours={hours} minutes={minutes} seconds={seconds} />
         {questions
-          .slice(questionCount - 5, questionCount)
+          ?.slice(questionCount - 5, questionCount)
           .map(({ id, name, answers, isMultiSelect }) => {
             return (
               <motion.div
@@ -178,7 +190,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
               </motion.div>
             );
           })}
-        {questions.length <= questionCount && (
+        {questions?.length <= questionCount && (
           <div
             className="btn-container"
             onClick={() => {
@@ -199,7 +211,7 @@ const TakeTest = ({ questions, testId, testDuration: length }) => {
           </div>
         )}
         <Pagination
-          count={Math.ceil(questions.length / 5)}
+          count={Math.ceil(questions?.length / 5)}
           variant="outlined"
           color="primary"
           size="large"

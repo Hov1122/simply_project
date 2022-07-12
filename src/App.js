@@ -56,7 +56,10 @@ function App() {
 
                     <Route path="/profile/:id" element={<UserProfile />} />
 
-                    <Route path="/test/result" element={<CheckResults />} />
+                    <Route
+                      path="/test/result/:testId"
+                      element={<CheckResults />}
+                    />
 
                     <Route path="/admin" element={<ChangeData />} />
 

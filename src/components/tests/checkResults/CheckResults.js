@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { authSelector } from "../../../state-management/auth/selectors";
 import { motion } from "framer-motion";
 import {
@@ -11,13 +11,12 @@ import {
 import { testsSelector } from "../../../state-management/tests/selectors";
 import Loading from "../../common/Loading";
 import "./CheckResults.css";
+import "../takeTest/TakeTest.css";
 
 const CheckResults = () => {
   const [questionCount, setQuestionCount] = useState(5);
 
-  const {
-    state: { testId },
-  } = useLocation();
+  const { testId } = useParams();
 
   const {
     user: { id },

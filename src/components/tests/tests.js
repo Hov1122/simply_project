@@ -17,7 +17,6 @@ function Tests() {
   const [createTest, setCreateTest] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [takeTest, setTakeTest] = useState(false);
-  const [currentQuestions, setCurrentQuestions] = useState([]);
   const [testDuration, setTestDuration] = useState({});
   const [skipInComplete, setSkipInComplete] = useState(0);
   const [skipCompleted, setSkipCompleted] = useState(0);
@@ -47,7 +46,6 @@ function Tests() {
     if (name === "Student") {
       setCompleted(false);
     } else {
-      // setCreateTest(false);
       setShowTests(true);
     }
   }, [dispatch, filterBy]);
@@ -65,13 +63,7 @@ function Tests() {
   }
 
   if (takeTest) {
-    return (
-      <TakeTest
-        questions={currentQuestions}
-        testId={testId}
-        testDuration={testDuration[testId]}
-      />
-    );
+    return <TakeTest testId={testId} testDuration={testDuration[testId]} />;
   }
 
   const filterTest = ({ target }) => {
@@ -168,7 +160,6 @@ function Tests() {
                       {...test}
                       key={test.id}
                       setTakeTest={setTakeTest}
-                      setCurrentQuestions={setCurrentQuestions}
                       setTestId={setTestId}
                       setTestDuration={setTestDuration}
                     />
@@ -188,7 +179,6 @@ function Tests() {
                       mark={mark}
                       key={test.id}
                       setTakeTest={setTakeTest}
-                      setCurrentQuestions={setCurrentQuestions}
                       setTestId={setTestId}
                       setTestDuration={setTestDuration}
                     />
@@ -205,7 +195,6 @@ function Tests() {
                     {...test}
                     key={test.id}
                     setTakeTest={setTakeTest}
-                    setCurrentQuestions={setCurrentQuestions}
                     setTestId={setTestId}
                     setTestDuration={setTestDuration}
                     teacher

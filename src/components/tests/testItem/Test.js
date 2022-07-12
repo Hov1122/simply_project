@@ -17,7 +17,6 @@ const Test = ({
   teacher,
   start,
   setTakeTest,
-  setCurrentQuestions,
   setTestId,
   setTestDuration,
 }) => {
@@ -107,7 +106,6 @@ const Test = ({
                         onClick={() => {
                           setTakeTest(true);
                           setTestId(id);
-                          setCurrentQuestions(questions);
                         }}
                       >
                         Start
@@ -116,9 +114,7 @@ const Test = ({
                   ) : (
                     <button
                       className="test-result-btn"
-                      onClick={() =>
-                        navigate("/test/result", { state: { testId: id } })
-                      }
+                      onClick={() => navigate(`/test/result/${id}`)}
                     >
                       Results
                     </button>
