@@ -24,10 +24,6 @@ const TakeTest = ({ testId, testDuration: length }) => {
     currentTest: { questions },
   } = useSelector(testsSelector);
 
-  setTimeout(() => {
-    console.log(questions);
-  }, 2000);
-
   const [showWarning, setShowWarning] = useState(true);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [blocking, setBlocking] = useState(true);
@@ -115,7 +111,7 @@ const TakeTest = ({ testId, testDuration: length }) => {
 
     setTimeout(() => {
       navigate("/home", { state: { testSubmitted: true, message } });
-    }, 1000);
+    });
   };
 
   return name === "Student" ? (
@@ -199,7 +195,7 @@ const TakeTest = ({ testId, testDuration: length }) => {
 
               setTimeout(() => {
                 submitTestHandler("Test Submitted Successfully");
-              }, 4000);
+              }, 2000);
             }}
           >
             <div className="btn" ref={submitBtnRef}>
@@ -211,7 +207,7 @@ const TakeTest = ({ testId, testDuration: length }) => {
           </div>
         )}
         <Pagination
-          count={Math.ceil(questions?.length / 5)}
+          count={Math.ceil(questions?.length / 5) || 1}
           variant="outlined"
           color="primary"
           size="large"

@@ -56,7 +56,7 @@ const Test = ({
         setTestDuration(length - Math.floor(timeDifference / 1000 / 60));
         setTimeLeft(length - Math.floor(timeDifference / 1000 / 60));
       }
-    }, 30000);
+    }, 10000);
 
     setTimeout(() => {
       setLoading(false);
