@@ -81,7 +81,7 @@ const Test = ({
             <div className="progress-text">
               <div className="test-body">
                 <div>
-                  <h6>Questions: {questions?.length}</h6>
+                  <h6>Questions: {questions}</h6>
                   <h2>Duration: {length} minutes</h2>
                   {mark !== -1 && <h2>Mark: {mark}</h2>}
                 </div>

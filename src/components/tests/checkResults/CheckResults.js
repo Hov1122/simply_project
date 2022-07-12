@@ -67,15 +67,12 @@ const CheckResults = () => {
                           disabled="disabled"
                           id={aid}
                           defaultChecked={
-                            !testResults?.questions?.[qid] ||
-                            testResults?.questions[qid][0][aid] !== undefined
-                              ? false
-                              : true
+                            testResults?.questions?.[qid]?.[aid] !== undefined
                           }
                           style={{
                             borderRadius: 10,
                             borderWidth: "2px",
-                            backgroundColor: !isCorrect ? "green" : "red",
+                            backgroundColor: isCorrect ? "green" : "red",
                           }}
                         />
                         <label htmlFor={aid} className="answer-text">
@@ -89,8 +86,7 @@ const CheckResults = () => {
             );
           })}
       <Pagination
-        // count={Math.ceil(currentTest?.questions?.length / 5)}
-        count={2}
+        count={Math.ceil(currentTest?.questions?.length / 5) || 1}
         sx={{ marginTop: 3 }}
         variant="outlined"
         color="primary"
