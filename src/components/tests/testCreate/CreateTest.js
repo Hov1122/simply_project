@@ -45,22 +45,31 @@ function TestCreater() {
       .required("*"),
     highestScore: Yup.number().strict().min(1, "Too Little").required("*"),
     group: Yup.number().required(),
-    questions: Yup.array().of(
-      Yup.object().shape({
-        name: Yup.string()
-          .min(3, "Too Short")
-          .max(150, "Too Long")
-          .required("*"),
-        answers: Yup.array().of(
-          Yup.object().shape({
-            name: Yup.string().required("*").max(150, "Too Long"),
-            isCorrect: Yup.boolean().required(
-              <span className="field-error-message">*</span>
-            ),
-          })
-        ),
-      })
-    ),
+    questions: Yup.array()
+      .of(
+        Yup.object().shape({
+          name: Yup.string()
+            .min(3, "Too Short")
+            .max(150, "Too Long")
+            .required("*"),
+          answers: Yup.array()
+            .of(
+              Yup.object().shape({
+                name: Yup.string().required("*").max(150, "Too Long"),
+                isCorrect: Yup.boolean().required(
+                  <span className="field-error-message">*</span>
+                ),
+              })
+            )
+            .test(
+              "contains-correct-answer",
+              "Should contain at least one correct answer",
+              (answers) => answers.some((answer) => answer.isCorrect)
+            )
+            .required("*"),
+        })
+      )
+      .required("*"),
   });
 
   const { subjects } = useSelector(subjectsSelector);
@@ -107,6 +116,10 @@ function TestCreater() {
     handleChange
   ) => {
     const { answers } = question;
+    const containsCorrectAnswerMsg =
+      typeof errors?.questions?.[questionNumber]?.answers === "string"
+        ? errors.questions[questionNumber].answers
+        : "";
     return (
       <div key={questionNumber}>
         <h3>Question {+questionNumber + 1}</h3>
@@ -119,10 +132,14 @@ function TestCreater() {
             onChange={handleChange}
             onBlur={handleBlur}
             error={
-              Boolean(errors?.questions?.[questionNumber]?.name) &&
+              (Boolean(errors?.questions?.[questionNumber]?.name) ||
+                Boolean(containsCorrectAnswerMsg)) &&
               touched?.questions?.[questionNumber]?.name
             }
-            helperText={errors?.questions?.[questionNumber]?.name}
+            helperText={
+              errors?.questions?.[questionNumber]?.name ||
+              containsCorrectAnswerMsg
+            }
           />
           <IconButton
             onClick={() => remove(questionNumber)}
