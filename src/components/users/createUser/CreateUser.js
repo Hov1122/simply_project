@@ -144,7 +144,7 @@ function CreateUser() {
           className="create-user-table-cell"
           data-title="Groups"
         >
-          <FormControl size="small" variant="standard" required={true}>
+          <FormControl size="small" variant="standard">
             <InputLabel id="demo-multiple-checkbox-label">Groups</InputLabel>
             <Select
               name={`usersData[${userNumber}].groups`}

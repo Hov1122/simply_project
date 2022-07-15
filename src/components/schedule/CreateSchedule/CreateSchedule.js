@@ -79,7 +79,10 @@ function ScheduleCreater() {
         {Object.keys(scheduleSubjects[0]).map((time) => (
           <Select
             options={subjectsArr}
-            defaultValue={{ label: "Free Class", value: 1 }}
+            defaultValue={{
+              label: "Free Class",
+              value: subjectsArr?.[0]?.value,
+            }}
             key={uuidv4()}
             onChange={(e) => {
               handleChangeSubject(day, time, e);
@@ -122,11 +125,10 @@ function ScheduleCreater() {
 
     if (
       Object.values(scheduleSubjects).some((value) =>
-        Object.values(value).every((item) => item != true)
-      ) ||
-      !data.groupId
+        Object.values(value).every((item) => item === subjectsArr?.[0]?.value)
+      )
     ) {
-      setRequestError("Something went wrong");
+      setRequestError("Select at least one subject for each day");
       setSuccess("");
     } else {
       setSuccess("Schedule added");
