@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./home.css";
 import Loading from "../common/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +41,19 @@ function Home() {
 
   const group = userGroup[0]?.group?.id;
   const times = ["9:30", "11:10", "13:00", "14:40", "16:20"];
+  const marksData = useMemo(() => userTest.reduce((acc, test, index) => {
+      if (index !== 5 && test.mark !== -1) {
+        acc.push({
+          mark: test.mark === -1 ? 0 : test.mark,
+          index: index + 1,
+        });
+        
+      }
+      return acc
+      }, []), [userTest])
+  
+  
+
 
   const dispatch = useDispatch();
 
@@ -79,14 +92,7 @@ function Home() {
               <div className="Marks-Chart">
                 <ResponsiveContainer width="70%" height="70%">
                   <LineChart
-                    data={userTest.map((test, index) => {
-                      if (index !== 5) {
-                        return {
-                          mark: test.mark === -1 ? 0 : test.mark,
-                          index: index + 1,
-                        };
-                      }
-                    })}
+                    data={marksData}
                   >
                     <XAxis dataKey="index" tick={{ fontSize: 20 }} />
                     <YAxis dataKey="mark" tick={{ fontSize: 20 }} />
@@ -101,13 +107,13 @@ function Home() {
         ) : (
           <div className="Last-Exams-Container">
             {userTests.length ? (
-              <h3 style={{ marginLeft: 50 }}>Last 4 Exams</h3>
+              <h3 style={{ marginLeft: 50 }}>Last 4 created exams</h3>
             ) : null}
             <hr />
             <div className="Last-Exams-Main">
               {userTests.length ? (
                 userTests
-                  .slice(userTests.length - 4)
+                  .slice(-4).reverse()
                   .map(({ id, name, highestScore, createdAt }) => {
                     return (
                       <div
@@ -160,7 +166,8 @@ function Home() {
         </div>
       </div>
       <div style={{ padding: "0 20px 0 5px" }}>
-        <div className="Today-Schedule">
+        {name !== "Admin" && (
+          <div className="Today-Schedule">
           <h3 style={{ marginLeft: 50, marginBottom: 20 }}>
             {"Today's Schedule"}
           </h3>
@@ -221,6 +228,7 @@ function Home() {
             <span>You Dont Have Schedule For Today</span>
           )}
         </div>
+        )}
       </div>
     </div>
   );

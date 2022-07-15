@@ -101,15 +101,17 @@ const Test = ({
                           <span className="test-time-left">Test Ended</span>
                         )
                       ) : null}
-                      <button
-                        className="start-test-btn"
-                        onClick={() => {
-                          setTakeTest(true);
-                          setTestId(id);
-                        }}
-                      >
-                        Start
-                      </button>
+                      {timeLeft > 0 && (
+                        <button
+                          className="start-test-btn"
+                          onClick={() => {
+                            setTakeTest(true);
+                            setTestId(id);
+                          }}
+                        >
+                          Start
+                        </button>
+                      )}
                     </div>
                   ) : (
                     <button

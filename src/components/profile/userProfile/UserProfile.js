@@ -18,8 +18,8 @@ const UserProfile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUserByIdRequest(userId));
-  }, [dispatch]);
+    dispatch(getUserByIdRequest(+userId));
+  }, [dispatch, userId]);
 
   return +userId === id ? (
     <MyProfile />
@@ -37,9 +37,9 @@ const UserProfile = () => {
             Last Name : <span>{userProfile?.lastName}</span>
           </h3>
 
-          {name !== "Teacher" && (
+          {userProfile?.role?.name === "Student" && (
             <h3>
-              Average Mark : <span>{userProfile?.avgMark?.toFixed(2)}</span>
+              Average Mark : <span>{userProfile?.avgMark.toFixed(2)}</span>
             </h3>
           )}
 

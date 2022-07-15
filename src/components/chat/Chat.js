@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Chat.css";
-import io from "socket.io-client";
+import { socket } from "../header/Header";
 
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -22,7 +22,6 @@ import { addUserMessage } from "../../state-management/chat/slice";
 import UsersDropDown from "./usersDropDown/UsersDropDown";
 import Loading from "../common/Loading";
 
-const socket = io.connect("http://localhost:5000");
 
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");

@@ -15,6 +15,10 @@ import { HeaderPagePart } from "./helper";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { debounce } from "@material-ui/core";
+import io from "socket.io-client";
+
+export const socket = io.connect("http://localhost:5000");
+
 
 const Header = () => {
   const [color] = useState(randomColor());
@@ -34,8 +38,14 @@ const Header = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.removeEventListener("click", closeDropDown);
+    document.removeEventListener("click", closeDropDown);    
   }, []);
+
+  useEffect(() => {
+    id && socket.emit('login', {id})
+    
+  }, [id]);
+
 
   const closeDropDown = (e) => {
     if (!dropDownRef || !dropDownRef?.current?.contains(e.target)) {
@@ -130,6 +140,7 @@ const Header = () => {
                 <span
                   style={{ display: "flex", justifyContent: "space-between" }}
                   onClick={() => {
+                    socket.close()
                     dispatch(logoutRequest());
                   }}
                 >
