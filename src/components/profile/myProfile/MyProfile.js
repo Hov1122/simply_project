@@ -109,7 +109,7 @@ const Profile = () => {
               </span>
               <CircularProgress
                 variant="determinate"
-                value={avgMark?.toFixed(2) || 1}
+                value={+avgMark?.toFixed(2) || 1}
                 size={100}
                 style={{
                   color:

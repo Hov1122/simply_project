@@ -126,15 +126,25 @@ function ScheduleCreater() {
     if (
       Object.values(scheduleSubjects).some((value) =>
         Object.values(value).every((item) => item === subjectsArr?.[0]?.value)
-      )
+      ) ||
+      !data.groupId
     ) {
       setRequestError("Select at least one subject for each day");
-      setSuccess("");
+      setSuccess(null);
     } else {
       setSuccess("Schedule added");
-      setRequestError("");
+      setRequestError(null);
       dispatch(createScheduleRequest(data));
     }
+    setScheduleSubjects(
+      days.map(() => ({
+        "2022-06-20T09:30:47.418Z": 1,
+        "2022-06-20T11:10:47.418Z": 1,
+        "2022-06-20T13:00:47.418Z": 1,
+        "2022-06-20T14:40:47.418Z": 1,
+        "2022-06-20T16:20:47.418Z": 1,
+      }))
+    );
   };
 
   if (loading) {

@@ -12,7 +12,7 @@ const SearchResults = ({ foundUsers }) => {
 
   return (
     <div className="Search-Results-Container">
-      {foundUsers.map(({ id: userId, firstName, role }) => (
+      {foundUsers.map(({ id: userId, firstName, lastName, role }) => (
         <div
           className="Search-Results-Item"
           key={userId}
@@ -23,6 +23,7 @@ const SearchResults = ({ foundUsers }) => {
           <span className="Search-Item-Name">
             {firstName} {userId === id && "(you)"}
           </span>
+          <span className="Search-Item-Name">{lastName}</span>
           <span className="Search-Item-Role">{role.name}</span>
         </div>
       ))}

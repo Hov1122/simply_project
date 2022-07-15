@@ -48,7 +48,11 @@ function Tests() {
     } else {
       setShowTests(true);
     }
-  }, [dispatch, filterBy]);
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchUserTestsRequest({ isComplete: completed, id, filterBy }));
+  }, [filterBy]);
 
   useEffect(() => {
     const skip = completed ? skipCompleted : skipInComplete;
@@ -73,6 +77,7 @@ function Tests() {
     }
     setFilterBy({ subjectId: target.value });
   };
+
   return (
     <div className="Tests">
       <div className="Tests-bar"></div>

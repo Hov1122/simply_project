@@ -14,13 +14,12 @@ const UserProfile = () => {
     user: { id },
   } = useSelector(authSelector);
 
-  const { userProfile } = useSelector(usersSelector)
+  const { userProfile } = useSelector(usersSelector);
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch();  
-  
   useEffect(() => {
-    dispatch(getUserByIdRequest(userId))
-  },[dispatch])
+    dispatch(getUserByIdRequest(userId));
+  }, [dispatch]);
 
   return +userId === id ? (
     <MyProfile />

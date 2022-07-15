@@ -47,11 +47,7 @@ const Chat = () => {
   useEffect(() => {
     userGroup.forEach(({ group }) => {
       socket.emit("join_chat", { groupId: group.id, userId: user.id });
-    });
-
-    userGroup.forEach(({ group }) => {
       dispatch(fetchGroupUsers(group.id));
-      socket.emit("join_chat", { groupId: group.id });
     });
   }, []);
 

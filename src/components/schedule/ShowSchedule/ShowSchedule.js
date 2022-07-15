@@ -26,11 +26,13 @@ function ShowSchedule() {
 
   const daySchedule = (index) => {
     return (
-      <tr key={index}>
+      <tr key={uuidv4()}>
         <td className="align-middle">{times[index]}</td>
         {groupSchedules.map(({ scheduleSubject }) => {
           if (scheduleSubject[index].subject.name == "Free class")
-            return <td style={{ backgroundColor: "#f7f7f7" }}></td>;
+            return (
+              <td key={uuidv4()} style={{ backgroundColor: "#f7f7f7" }}></td>
+            );
           return (
             <td key={uuidv4()}>
               <span

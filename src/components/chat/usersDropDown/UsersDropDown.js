@@ -41,7 +41,7 @@ const UsersDropDown = ({ users, setShowUsers }) => {
           >
             <Avatar
               sx={{ bgcolor: "#2596be", marginTop: "10px" }}
-              variant="circle"
+              variant="circular"
             ></Avatar>
             <div className="full-name-container">
               <p>

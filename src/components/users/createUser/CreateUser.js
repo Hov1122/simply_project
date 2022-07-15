@@ -86,6 +86,7 @@ function CreateUser() {
         <div className="create-user-table-cell" data-title="First Name">
           <TextField
             type="text"
+            value={values?.usersData?.[userNumber]?.firstName}
             placeholder="First name"
             name={`usersData[${userNumber}].firstName`}
             onChange={handleChange}
@@ -101,6 +102,7 @@ function CreateUser() {
           <TextField
             type="text"
             placeholder="Last name"
+            value={values?.usersData?.[userNumber]?.lastName}
             name={`usersData[${userNumber}].lastName`}
             onBlur={handleBlur}
             error={
@@ -115,6 +117,7 @@ function CreateUser() {
           <TextField
             type="email"
             placeholder="E-mail"
+            value={values?.usersData?.[userNumber]?.email}
             name={`usersData[${userNumber}].email`}
             onBlur={handleBlur}
             error={
@@ -130,6 +133,7 @@ function CreateUser() {
             type="password"
             placeholder="Password"
             name={`usersData[${userNumber}].password`}
+            value={values?.usersData?.[userNumber]?.password}
             onBlur={handleBlur}
             error={
               errors?.usersData?.[userNumber]?.password &&
@@ -187,7 +191,10 @@ function CreateUser() {
           </FormControl>
         </div>
         <div className="create-user-table-cell" data-title="Role">
-          <select name={`usersData[${userNumber}].roleId`}>
+          <select
+            name={`usersData[${userNumber}].roleId`}
+            onChange={handleChange}
+          >
             {roles.map((role) => (
               <option key={role.id} value={role.id}>
                 {role.name}
@@ -237,9 +244,10 @@ function CreateUser() {
             ],
           }}
           validationSchema={addUserSchema}
-          onSubmit={(values, { setSubmitting }) =>
-            addUser(values, setSubmitting)
-          }
+          onSubmit={(values, { setSubmitting, resetForm }) => {
+            addUser(values, setSubmitting);
+            resetForm();
+          }}
         >
           {({
             isSubmitting,
