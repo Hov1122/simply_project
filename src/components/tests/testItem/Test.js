@@ -5,6 +5,7 @@ import "./Test.css";
 import { fetchSubjectsRequest } from "../../../state-management/subjects/requests";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../common/Loading";
+import { deleteTestRequest } from "../../../state-management/tests/requests";
 
 const Test = ({
   id,
@@ -122,9 +123,17 @@ const Test = ({
                     </button>
                   )
                 ) : (
-                  <span>
-                    Created: {new Date(createdAt).toLocaleDateString()}
-                  </span>
+                  <div className="teacher-btns">
+                    <span>
+                      Created: {new Date(createdAt).toLocaleDateString()}
+                    </span>
+                    <button
+                      className="test-delete-btn"
+                      onClick={() => dispatch(deleteTestRequest(id))}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 )}
               </div>
             </div>

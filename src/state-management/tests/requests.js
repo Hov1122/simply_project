@@ -105,7 +105,7 @@ export const createTestRequest = (payload, setSubmitting) => {
 };
 
 // UPDATE TEST
-export const updateUserRequest = (payload) => {
+export const updateTestRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {
@@ -118,11 +118,13 @@ export const updateUserRequest = (payload) => {
 };
 
 // DELETE TEST
-export const deletedUserRequest = (payload) => {
+export const deleteTestRequest = (payload) => {
   return async (dispatch) => {
     dispatch(fetchTestsPending());
     try {
-      const { data } = await axiosApiInstance.delete(`/tests`, payload);
+      const { data } = await axiosApiInstance.delete(`/tests`, {
+        data: { id: payload },
+      });
       dispatch(deleteTestSuccess(data));
     } catch (error) {
       dispatch(fetchTestsFailure(error));

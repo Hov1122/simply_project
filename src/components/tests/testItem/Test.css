@@ -65,7 +65,7 @@
     flex-direction: column;
 }
 
-.start-test-btn, .test-result-btn {
+.start-test-btn, .test-result-btn, .test-delete-btn   {
 	cursor: pointer;
 	background-color: #0a009d;
     color: #ffff;
@@ -79,6 +79,19 @@
 .test-result-btn {
     width: 10%;
 	height: 25%;
+}
+
+.test-delete-btn {
+	width: 50%;
+	height: 25%;
+	margin: 0 auto;
+}
+
+.teacher-btns {
+	display: flex;
+	flex-direction: column;
+	gap: 50px;
+	height: 100%;
 }
 
 .test-time-left {
