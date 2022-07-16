@@ -1,13 +1,11 @@
 import React from "react";
 import Chart from "react-apexcharts";
-import './UsersChart.css'
+import "./UsersChart.css";
 
 const UsersChart = ({ data }) => {
-  console.log(data);
-
   return (
     <div className="users-online-charts">
-        <Chart
+      <Chart
         type="radialBar"
         width="380"
         options={{
@@ -88,12 +86,11 @@ const UsersChart = ({ data }) => {
         series={[data?.Student || 0]}
       />
 
-
       <Chart
         type="radialBar"
         width="380"
         options={{
-          colors: ['#F44336'],
+          colors: ["#F44336"],
           plotOptions: {
             radialBar: {
               size: undefined,
@@ -175,7 +172,7 @@ const UsersChart = ({ data }) => {
         type="radialBar"
         width="380"
         options={{
-          colors: ['#007319'],
+          colors: ["#007319"],
           plotOptions: {
             radialBar: {
               size: undefined,

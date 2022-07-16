@@ -22,7 +22,6 @@ import { addUserMessage } from "../../state-management/chat/slice";
 import UsersDropDown from "./usersDropDown/UsersDropDown";
 import Loading from "../common/Loading";
 
-
 const Chat = () => {
   const [messageValue, setMessageValue] = useState("");
   const [showUsers, setShowUsers] = useState(false);
@@ -47,6 +46,12 @@ const Chat = () => {
     userGroup.forEach(({ group }) => {
       socket.emit("join_chat", { groupId: group.id, userId: user.id });
       dispatch(fetchGroupUsers(group.id));
+    });
+
+    socket.on("online_users", () => {
+      userGroup.forEach(({ group }) => {
+        dispatch(fetchGroupUsers(group.id));
+      });
     });
   }, []);
 

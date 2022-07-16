@@ -13,6 +13,7 @@
 }
 
 .Search-Results-Item {
+    justify-content: space-evenly;
     display: flex;
     color: #9CB3C9;
     padding: 10px 0 10px 30px;
@@ -22,12 +23,11 @@
 }
 
 .Search-Item-Online {
-    font: normal 14px/16px Arial;
-    margin-right: 30px;
-    color: rgb(29, 162, 29);
-    font-size: 60px;
-    cursor: pointer;
-    z-index: 2;
+    width: 12px;
+    height: 12px;
+    background-color: rgb(3, 255, 70);
+    border-radius: 50%;
+    box-shadow: #000 0 -1px 7px 1px, inset rgb(20, 170, 45) 0 -1px 9px, rgb(0, 255, 119) 0 2px 12px;
 }
 
 .Search-Results-Item:hover {

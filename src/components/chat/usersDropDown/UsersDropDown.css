@@ -14,14 +14,23 @@
     overflow-y: auto;
 }
 
+.Search-Item-Online {
+    width: 12px;
+    height: 12px;
+    margin-top: 15px;
+    background-color: rgb(3, 255, 70);
+    border-radius: 50%;
+    box-shadow: #000 0 -1px 7px 1px, inset rgb(20, 170, 45) 0 -1px 9px, rgb(0, 255, 119) 0 2px 12px;
+}
+
 .members-count {
     width: fit-content;
     margin: 20px auto;
 }
 
 .User-Container {
-    cursor: pointer;
     display: flex;
+    cursor: pointer;
     border-bottom: 1px solid black;
     padding-bottom: 10px;
     padding-left: 30px;

@@ -31,8 +31,8 @@ const UsersDropDown = ({ users, setShowUsers }) => {
 
   return (
     <div className="Users-Drop-Down-Container" ref={dropDownRef}>
-      <p className="members-count">Members: {users.length}</p>
-      {users.map(({ user }) => {
+      <p className="members-count">Members: {users?.length}</p>
+      {users?.map(({ user }) => {
         return (
           <div
             key={user.id}
@@ -53,6 +53,7 @@ const UsersDropDown = ({ users, setShowUsers }) => {
                 </b>
               </p>
             </div>
+            {user.isOnline && <div className="Search-Item-Online"></div>}
           </div>
         );
       })}
