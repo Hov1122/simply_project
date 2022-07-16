@@ -22,9 +22,12 @@ import { schedulesSelector } from "../../state-management/schedule/selectors";
 import { addTime, randomColor } from "../../helpers/helpers";
 import { v4 as uuidv4 } from "uuid";
 import { getTopStudentsRequest } from "../../state-management/users/requests";
+import { socket } from "../header/Header";
+import UsersChart from "./usersChart/UsersChart";
 
 function Home() {
   const [loading, setLoading] = useState(false);
+  const [onlineUsers, setOnlineUsers] = useState([])
   const {
     user: {
       id,
@@ -61,6 +64,11 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    socket.on('online_users', (data) => {
+      setOnlineUsers(data)
+      console.log(data)
+      console.log(onlineUsers)
+    })
     setLoading(true);
     dispatch(getTopStudentsRequest());
     dispatch(fetchUserTestsRequest(+id));
@@ -166,7 +174,7 @@ function Home() {
         </div>
       </div>
       <div style={{ padding: "0 20px 0 5px" }}>
-        {name !== "Admin" && (
+        {name !== "Admin" ? (
           <div className="Today-Schedule">
           <h3 style={{ marginLeft: 50, marginBottom: 20 }}>
             {"Today's Schedule"}
@@ -228,7 +236,12 @@ function Home() {
             <span>You Dont Have Schedule For Today</span>
           )}
         </div>
-        )}
+        ) : 
+        <div className="users-online">
+          Users online 
+            <UsersChart data={onlineUsers}/>
+        </div>
+        }
       </div>
     </div>
   );

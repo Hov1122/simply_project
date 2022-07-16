@@ -9,6 +9,8 @@ import NotFound from "./components/notFound/NotFound";
 import Header from "./components/header/Header";
 import Main from "./components/main/Main";
 import Loading from "./components/common/Loading";
+import { useSelector } from "react-redux";
+import { authSelector } from "./state-management/auth/selectors";
 
 // LAZY LOADING
 const Home = lazy(() => import("./components/home/home"));
@@ -27,13 +29,14 @@ const UserProfile = lazy(() =>
 const Terms = lazy(() => import("./components/terms/Terms"));
 
 function App() {
+  const { token } = useSelector(authSelector)
   return (
     <div className="App">
       <ErrorBoundary>
         <div style={{ display: "flex", backgroundColor: "#eff0f1" }}>
           <Menu />
           <div style={{ width: "100%", height: "100%" }}>
-            <Header />
+            {token && <Header />}
             <Main>
               <Suspense fallback={<Loading />}>
                 <Routes>

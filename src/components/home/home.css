@@ -213,3 +213,10 @@
     border-top: 1px solid #dee2e6;
 }
 
+.users-online {
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 15px;
+    padding: 20px;
+}
+
