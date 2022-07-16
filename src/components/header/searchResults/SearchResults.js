@@ -9,10 +9,10 @@ const SearchResults = ({ foundUsers }) => {
     user: { id },
   } = useSelector(authSelector);
   const navigate = useNavigate();
-
+  console.log(foundUsers);
   return (
     <div className="Search-Results-Container">
-      {foundUsers.map(({ id: userId, firstName, lastName, role }) => (
+      {foundUsers.map(({ id: userId, firstName, lastName, isOnline, role }) => (
         <div
           className="Search-Results-Item"
           key={userId}
@@ -25,6 +25,7 @@ const SearchResults = ({ foundUsers }) => {
           </span>
           <span className="Search-Item-Name">{lastName}</span>
           <span className="Search-Item-Role">{role.name}</span>
+          {isOnline && <span className="Search-Item-Online">.</span>}
         </div>
       ))}
     </div>

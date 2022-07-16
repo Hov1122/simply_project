@@ -21,6 +21,15 @@
     z-index: 2;
 }
 
+.Search-Item-Online {
+    font: normal 14px/16px Arial;
+    margin-right: 30px;
+    color: rgb(29, 162, 29);
+    font-size: 60px;
+    cursor: pointer;
+    z-index: 2;
+}
+
 .Search-Results-Item:hover {
     background-color: rgb(233, 233, 233);
 }
