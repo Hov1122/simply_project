@@ -10,6 +10,7 @@ import {
   fetchUserByIdSuccess,
   recoverPasswordSuccess,
   resetPasswordSuccess,
+  fetchOnlineUsersSuccess,
 } from "./slice";
 
 // GET USERS
@@ -44,6 +45,18 @@ export const getUserByIdRequest = (payload) => {
   };
 };
 
+// GET ALL ONLINE USERS
+export const getAllOnlineUsersRequest = () => {
+  return async (dispatch) => {
+    dispatch(fetchUsersPending());
+    try {
+      const { data } = await axiosApiInstance.get(`/users/onlineUsers`);
+      dispatch(fetchOnlineUsersSuccess(data.data));
+    } catch (error) {
+      dispatch(fetchUsersFailure(error.response.data.message));
+    }
+  };
+};
 
 // FILTER TOP 3 USERS
 export const getTopStudentsRequest = () => {

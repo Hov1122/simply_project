@@ -21,13 +21,12 @@ import { fetchGroupScheduleRequest } from "../../state-management/schedule/reque
 import { schedulesSelector } from "../../state-management/schedule/selectors";
 import { addTime, randomColor } from "../../helpers/helpers";
 import { v4 as uuidv4 } from "uuid";
-import { getTopStudentsRequest } from "../../state-management/users/requests";
+import { getAllOnlineUsersRequest, getTopStudentsRequest } from "../../state-management/users/requests";
 import { socket } from "../header/Header";
 import UsersChart from "./usersChart/UsersChart";
 
 function Home() {
   const [loading, setLoading] = useState(false);
-  const [onlineUsers, setOnlineUsers] = useState([])
   const {
     user: {
       id,
@@ -38,9 +37,10 @@ function Home() {
       userGroup,
     },
   } = useSelector(authSelector);
-  const { topStudents } = useSelector(usersSelector);
+  const { topStudents, usersOnline } = useSelector(usersSelector);
   const { userTests } = useSelector(testsSelector);
   const { groupSchedules } = useSelector(schedulesSelector);
+  const [onlineUsers, setOnlineUsers] = useState([])
 
   const group = userGroup[0]?.group?.id;
   const times = ["9:30", "11:10", "13:00", "14:40", "16:20"];
@@ -54,21 +54,22 @@ function Home() {
       }
       return acc
       }, []), [userTest])
-  
-  
+
 
 
   const dispatch = useDispatch();
 
   const { state } = useLocation();
   const navigate = useNavigate();
+  useEffect(()=>{
+    setOnlineUsers(usersOnline)
+  }, [usersOnline])
 
   useEffect(() => {
     socket.on('online_users', (data) => {
       setOnlineUsers(data)
-      console.log(data)
-      console.log(onlineUsers)
     })
+    name === "Admin" && dispatch(getAllOnlineUsersRequest())
     setLoading(true);
     dispatch(getTopStudentsRequest());
     dispatch(fetchUserTestsRequest(+id));

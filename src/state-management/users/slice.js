@@ -4,6 +4,7 @@ const initialState = {
   topStudents: [],
   users: [],
   userProfile: {},
+  usersOnline: {},
   loading: false,
   error: null,
 };
@@ -21,6 +22,12 @@ const usersSlice = createSlice({
     // GET USER BY ID
     fetchUserByIdSuccess: (state, { payload: { data } }) => {
       state.userProfile = data.user;
+      state.loading = false;
+      state.error = null;
+    },
+    // GET ONLINE USERS
+    fetchOnlineUsersSuccess: (state, {payload: { onlineUsersCount }}) => {
+      state.usersOnline = onlineUsersCount;
       state.loading = false;
       state.error = null;
     },
@@ -92,6 +99,7 @@ export const {
   deleteUserSuccess,
   fetchUsersPending,
   fetchUsersFailure,
+  fetchOnlineUsersSuccess,
   resetPasswordSuccess,
 } = usersSlice.actions;
 
