@@ -167,6 +167,7 @@ function Tests() {
                       setTakeTest={setTakeTest}
                       setTestId={setTestId}
                       setTestDuration={setTestDuration}
+                      role={name}
                     />
                   );
                 }

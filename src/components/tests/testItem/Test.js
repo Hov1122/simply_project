@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../common/Loading";
 import { deleteTestRequest } from "../../../state-management/tests/requests";
 
-const Test = ({
+const   Test = ({
   id,
   name,
   subjectId,
@@ -20,6 +20,7 @@ const Test = ({
   setTakeTest,
   setTestId,
   setTestDuration,
+  role
 }) => {
   const [loading, setLoading] = useState(true);
   const [testStarted, setTestStarted] = useState(false);
@@ -87,9 +88,11 @@ const Test = ({
                   {mark !== -1 && <h2>Mark: {mark}</h2>}
                 </div>
                 {!testStarted ? (
+                  <>
                   <span className="test-starts-at">
                     Starts At: {new Date(start).toUTCString()}
                   </span>
+                  </>
                 ) : !teacher ? (
                   mark === -1 ? (
                     <div className="test-btn-container">
@@ -115,26 +118,29 @@ const Test = ({
                       )}
                     </div>
                   ) : (
-                    <button
+                  <div className="teacher-btns">
+                    <span>
+                      Created: {new Date(createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  )
+                ) : (
+                  <button
                       className="test-result-btn"
                       onClick={() => navigate(`/test/result/${id}`)}
                     >
                       Results
                     </button>
-                  )
-                ) : (
-                  <div className="teacher-btns">
-                    <span>
-                      Created: {new Date(createdAt).toLocaleDateString()}
-                    </span>
-                    <button
+
+                )}
+                {role !== "Student" ? (
+                      <button
                       className="test-delete-btn"
                       onClick={() => dispatch(deleteTestRequest(id))}
-                    >
+                      >
                       Delete
-                    </button>
-                  </div>
-                )}
+                      </button>
+                ): null}
               </div>
             </div>
           </div>
