@@ -28,6 +28,11 @@
     width: 100%;
 }
 
+.create-test-subjects, .create-test-groups {
+    border-radius: 7px;
+    padding: 5px;
+}
+
 .TestCreater-Container input{
     margin: 5px;
     width: 100%;

@@ -102,25 +102,27 @@ const Profile = () => {
             </div>
           </div>
           <div style={{ margin: "auto" }}>
-            <div className="Average-Mark-Container">
-              <h4>Average mark</h4>
-              <span className="average-mark-profile">
-                {avgMark?.toFixed(2) || 0}/100
-              </span>
-              <CircularProgress
-                variant="determinate"
-                value={+avgMark?.toFixed(2) || 1}
-                size={100}
-                style={{
-                  color:
-                    avgMark?.toFixed(2) > 60
-                      ? "#03590a"
-                      : avgMark?.toFixed(2) > 40
-                      ? "#d9c725"
-                      : "#c40014",
-                }}
-              />
-            </div>
+            {name === "Student" && (
+              <div className="Average-Mark-Container">
+                <h4>Average mark</h4>
+                <span className="average-mark-profile">
+                  {avgMark?.toFixed(2) || 0}/100
+                </span>
+                <CircularProgress
+                  variant="determinate"
+                  value={+avgMark?.toFixed(2) || 1}
+                  size={100}
+                  style={{
+                    color:
+                      avgMark?.toFixed(2) > 60
+                        ? "#03590a"
+                        : avgMark?.toFixed(2) > 40
+                        ? "#d9c725"
+                        : "#c40014",
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

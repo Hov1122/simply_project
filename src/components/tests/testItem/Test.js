@@ -118,21 +118,30 @@ const Test = ({
                         </button>
                       )}
                     </div>
-                  ) : (
-                    <div className="teacher-btns">
-                      <span>
-                        Created: {new Date(createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                  )
+                  ) : null
                 ) : null}
                 {role !== "Student" && (
-                  <button
-                    className="test-delete-btn"
-                    onClick={() => dispatch(deleteTestRequest(id))}
-                  >
-                    Delete
-                  </button>
+                  <div className="teacher-btns">
+                    <span>
+                      Created: {new Date(createdAt).toLocaleDateString()}
+                    </span>
+
+                    <button
+                      className="test-delete-btn"
+                      onClick={() => {
+                        if (
+                          !window.confirm(
+                            "Are you sure you want to delete this test?"
+                          )
+                        )
+                          return;
+
+                        dispatch(deleteTestRequest(id));
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 )}
                 {role === "Student" && completed && (
                   <button

@@ -125,6 +125,7 @@ function TestCreater() {
         <h3>Question {+questionNumber + 1}</h3>
         <div className="Question-header">
           <TextField
+            variant="outlined"
             placeholder="Enter Question"
             type="text"
             name={`questions[${questionNumber}].name`}
@@ -201,6 +202,7 @@ function TestCreater() {
           className={`answer-input`}
         />
         <TextField
+          variant="outlined"
           type="text"
           placeholder="Enter Answer"
           name={`questions[${questionNumber}].answers[${answerNumber}].name`}
@@ -289,6 +291,7 @@ function TestCreater() {
             </Button>
             <div className="testInformationHeader">
               <TextField
+                variant="outlined"
                 type="text"
                 placeholder="Test Name"
                 name="name"
@@ -300,7 +303,11 @@ function TestCreater() {
             </div>
 
             <div className="testInformationData">
-              <Field as="select" name="subjectId">
+              <Field
+                as="select"
+                name="subjectId"
+                className="create-test-subjects"
+              >
                 {subjectSelect.map((element) => {
                   return (
                     <option key={element.label} value={element.value}>
@@ -309,7 +316,7 @@ function TestCreater() {
                   );
                 })}
               </Field>
-              <Field as="select" name="group">
+              <Field as="select" name="group" className="create-test-groups">
                 {groupSelect.map((element) => {
                   return (
                     <option key={element.label} value={element.value}>
@@ -321,6 +328,7 @@ function TestCreater() {
             </div>
             <div className="testInformationData">
               <TextField
+                variant="outlined"
                 placeholder="Test Start Date"
                 type="datetime-local"
                 name="start"
@@ -332,6 +340,7 @@ function TestCreater() {
               />
 
               <TextField
+                variant="outlined"
                 placeholder="Test length"
                 type="number"
                 name="length"
@@ -342,6 +351,7 @@ function TestCreater() {
               />
 
               <TextField
+                variant="outlined"
                 placeholder="Test rating"
                 type="number"
                 name="highestScore"

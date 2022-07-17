@@ -13,8 +13,8 @@
 }
 
 .Search-Results-Item {
-    justify-content: space-evenly;
     display: flex;
+    justify-content: space-evenly;
     color: #9CB3C9;
     padding: 10px 0 10px 30px;
     border-bottom: 1px solid #babbbd;

@@ -21,7 +21,10 @@ import { fetchGroupScheduleRequest } from "../../state-management/schedule/reque
 import { schedulesSelector } from "../../state-management/schedule/selectors";
 import { addTime, randomColor } from "../../helpers/helpers";
 import { v4 as uuidv4 } from "uuid";
-import { getAllOnlineUsersRequest, getTopStudentsRequest } from "../../state-management/users/requests";
+import {
+  getAllOnlineUsersRequest,
+  getTopStudentsRequest,
+} from "../../state-management/users/requests";
 import { socket } from "../header/Header";
 import UsersChart from "./usersChart/UsersChart";
 
@@ -40,36 +43,37 @@ function Home() {
   const { topStudents, usersOnline } = useSelector(usersSelector);
   const { userTests } = useSelector(testsSelector);
   const { groupSchedules } = useSelector(schedulesSelector);
-  const [onlineUsers, setOnlineUsers] = useState([])
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   const group = userGroup[0]?.group?.id;
   const times = ["9:30", "11:10", "13:00", "14:40", "16:20"];
-  const marksData = useMemo(() => userTest.reduce((acc, test, index) => {
-      if (index !== 5 && test.mark !== -1) {
-        acc.push({
-          mark: test.mark === -1 ? 0 : test.mark,
-          index: index + 1,
-        });
-        
-      }
-      return acc
-      }, []), [userTest])
-
-
+  const marksData = useMemo(
+    () =>
+      userTest.reduce((acc, test, index) => {
+        if (index !== 5 && test.mark !== -1) {
+          acc.push({
+            mark: test.mark === -1 ? 0 : test.mark,
+            index: index + 1,
+          });
+        }
+        return acc;
+      }, []),
+    [userTest]
+  );
 
   const dispatch = useDispatch();
 
   const { state } = useLocation();
   const navigate = useNavigate();
-  useEffect(()=>{
-    setOnlineUsers(usersOnline)
-  }, [usersOnline])
+  useEffect(() => {
+    setOnlineUsers(usersOnline);
+  }, [usersOnline]);
 
   useEffect(() => {
-    socket.on('online_users', (data) => {
-      setOnlineUsers(data)
-    })
-    name === "Admin" && dispatch(getAllOnlineUsersRequest())
+    socket.on("online_users", (data) => {
+      setOnlineUsers(data);
+    });
+    name === "Admin" && dispatch(getAllOnlineUsersRequest());
     setLoading(true);
     dispatch(getTopStudentsRequest());
     dispatch(fetchUserTestsRequest(+id));
@@ -100,9 +104,7 @@ function Home() {
               </h3>
               <div className="Marks-Chart">
                 <ResponsiveContainer width="70%" height="70%">
-                  <LineChart
-                    data={marksData}
-                  >
+                  <LineChart data={marksData}>
                     <XAxis dataKey="index" tick={{ fontSize: 20 }} />
                     <YAxis dataKey="mark" tick={{ fontSize: 20 }} />
                     <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
@@ -122,7 +124,8 @@ function Home() {
             <div className="Last-Exams-Main">
               {userTests.length ? (
                 userTests
-                  .slice(-4).reverse()
+                  .slice(-4)
+                  .reverse()
                   .map(({ id, name, highestScore, createdAt }) => {
                     return (
                       <div
@@ -177,72 +180,74 @@ function Home() {
       <div style={{ padding: "0 20px 0 5px" }}>
         {name !== "Admin" ? (
           <div className="Today-Schedule">
-          <h3 style={{ marginLeft: 50, marginBottom: 20 }}>
-            {"Today's Schedule"}
-          </h3>
-          {userGroup.length ? (
-            <div className="Schedule-Container">
-              <div className="table-responsive">
-                <table className="home-table home-table-bordered text-center">
-                  <thead>
-                    <tr className="bg-light-gray">
-                      <th className="text-uppercase">9:30</th>
-                      <th className="text-uppercase">11:10</th>
-                      <th className="text-uppercase">13:00</th>
-                      <th className="text-uppercase">14:40</th>
-                      <th className="text-uppercase">16:20</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      {groupSchedules.map(({ day, scheduleSubject }) => {
-                        if (day !== new Date().getDay()) return;
+            <h3 style={{ marginLeft: 50, marginBottom: 20 }}>
+              {"Today's Schedule"}
+            </h3>
+            {userGroup.length ? (
+              <div className="Schedule-Container">
+                <div className="table-responsive">
+                  <table className="home-table home-table-bordered text-center">
+                    <thead>
+                      <tr className="bg-light-gray">
+                        <th className="text-uppercase">9:30</th>
+                        <th className="text-uppercase">11:10</th>
+                        <th className="text-uppercase">13:00</th>
+                        <th className="text-uppercase">14:40</th>
+                        <th className="text-uppercase">16:20</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        {groupSchedules.map(({ day, scheduleSubject }) => {
+                          if (day !== new Date().getDay()) return;
 
-                        return scheduleSubject.map(
-                          ({ subject: { name } }, index) => {
-                            if (name === "Free class") {
+                          return scheduleSubject.map(
+                            ({ subject: { name } }, index) => {
+                              if (name === "Free class") {
+                                return (
+                                  <td
+                                    style={{ backgroundColor: "#f7f7f7" }}
+                                    key={uuidv4()}
+                                  ></td>
+                                );
+                              }
+
                               return (
-                                <td
-                                  style={{ backgroundColor: "#f7f7f7" }}
-                                  key={uuidv4()}
-                                ></td>
+                                <td key={uuidv4()}>
+                                  <span
+                                    style={{
+                                      backgroundColor: randomColor(),
+                                      color: "#ffff",
+                                    }}
+                                    className="padding-5px-tb padding-15px-lr home-table-border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
+                                  >
+                                    {name}
+                                  </span>
+                                  <div className="margin-10px-top font-size14">
+                                    {times[index]}-{addTime(times[index], 90)}
+                                  </div>
+                                </td>
                               );
                             }
-
-                            return (
-                              <td key={uuidv4()}>
-                                <span
-                                  style={{
-                                    backgroundColor: randomColor(),
-                                    color: "#ffff",
-                                  }}
-                                  className="padding-5px-tb padding-15px-lr home-table-border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13"
-                                >
-                                  {name}
-                                </span>
-                                <div className="margin-10px-top font-size14">
-                                  {times[index]}-{addTime(times[index], 90)}
-                                </div>
-                              </td>
-                            );
-                          }
-                        );
-                      })}
-                    </tr>
-                  </tbody>
-                </table>
+                          );
+                        })}
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
-          ) : (
-            <span>You Dont Have Schedule For Today</span>
-          )}
-        </div>
-        ) : 
-        <div className="users-online">
-          Users online 
-            <UsersChart data={onlineUsers}/>
-        </div>
-        }
+            ) : (
+              <span>You Dont Have Schedule For Today</span>
+            )}
+          </div>
+        ) : (
+          <div className="Online-Users-Container">
+            <span className="online-users-title">
+              <b>Online Users</b>
+            </span>
+            <UsersChart data={onlineUsers} />
+          </div>
+        )}
       </div>
     </div>
   );
