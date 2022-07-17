@@ -40,20 +40,32 @@ const Chat = () => {
   const messageAreaRef = useRef(null);
 
   const dispatch = useDispatch();
-  const { groupUsers } = useSelector(groupsSelector);
+  const { groupUsers: gUsers } = useSelector(groupsSelector);
+  const [groupUsers, setGroupUsers] = useState(gUsers);
 
   useEffect(() => {
     userGroup.forEach(({ group }) => {
       socket.emit("join_chat", { groupId: group.id, userId: user.id });
       dispatch(fetchGroupUsers(group.id));
     });
-
-    socket.on("online_users", () => {
-      userGroup.forEach(({ group }) => {
-        dispatch(fetchGroupUsers(group.id));
-      });
-    });
   }, []);
+
+  useEffect(() => {
+    setGroupUsers(gUsers);
+    socket.on("online_group_users", ({ userId, loggedIn }) => {
+      const newGroupUsers = {};
+      Object.keys(gUsers).forEach((key) => {
+        newGroupUsers[key] = gUsers[key].map(({ user }) => {
+          const { isOnline, ...newUser } = user; // eslint-disable-line no-unused-vars
+          if (user.id == userId) {
+            newUser.isOnline = loggedIn;
+          }
+          return { user: newUser };
+        });
+      });
+      setGroupUsers(newGroupUsers);
+    });
+  }, [gUsers]);
 
   useEffect(() => {
     socket.on("receive_message", (data) => {

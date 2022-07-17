@@ -35,7 +35,7 @@ const UsersDropDown = ({ users, setShowUsers }) => {
       {users?.map(({ user }) => {
         return (
           <div
-            key={user.id}
+            key={user?.id}
             className="User-Container"
             onClick={() => navigate(`/profile/${user?.id}`)}
           >
@@ -45,15 +45,15 @@ const UsersDropDown = ({ users, setShowUsers }) => {
             ></Avatar>
             <div className="full-name-container">
               <p>
-                <b>{user.firstName}</b>
+                <b>{user?.firstName}</b>
               </p>
               <p>
                 <b>
-                  {user.lastName} {user.id === id && "(you)"}
+                  {user?.lastName} {user?.id === id && "(you)"}
                 </b>
               </p>
             </div>
-            {user.isOnline && <div className="Search-Item-Online"></div>}
+            {user?.isOnline && <div className="Search-Item-Online"></div>}
           </div>
         );
       })}

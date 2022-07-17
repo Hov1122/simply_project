@@ -63,10 +63,9 @@ const testsSlice = createSlice({
       });
     },
     // DELETE TEST
-    deleteTestSuccess: (state, { payload }) => {
-      state.tests = state.tests.filter(
-        (test) => test.id !== payload.deletedTest.id
-      );
+    deleteTestSuccess: (state, { payload: { data } }) => {
+      state.tests = state.tests.filter((test) => test.id !== data.id);
+      state.userTests = state.userTests.filter((test) => test.id !== data.id);
     },
     // FETCH PENDING AND FAILURE
     fetchTestsPending: (state) => {

@@ -29,7 +29,7 @@ const Header = () => {
 
   const {
     token,
-    user: { id, firstName, image },
+    user: { id, firstName, image, userGroup },
   } = useSelector(authSelector);
   const { users } = useSelector(usersSelector);
   const dispatch = useDispatch();
@@ -41,9 +41,9 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    console.log(id);
     socket = io.connect("http://localhost:5000");
-    id && socket.emit("login", { id });
+    const groupIds = userGroup.map(({ group: { id } }) => id);
+    id && socket.emit("login", { id, groupIds });
   }, [id]);
 
   const closeDropDown = (e) => {
