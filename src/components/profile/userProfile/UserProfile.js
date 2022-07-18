@@ -39,7 +39,12 @@ const UserProfile = () => {
 
           {userProfile?.role?.name === "Student" && (
             <h3>
-              Average Mark : <span>{userProfile?.avgMark.toFixed(2)}</span>
+              Average Mark :{" "}
+              <span>
+                {userProfile?.avgMark === -1
+                  ? "-"
+                  : userProfile?.avgMark.toFixed(2)}
+              </span>
             </h3>
           )}
 
@@ -49,6 +54,17 @@ const UserProfile = () => {
 
           <h3>
             Role : <span>{userProfile?.role?.name}</span>
+          </h3>
+
+          <h3>
+            Group/s :{" "}
+            <span>
+              {userProfile?.userGroup?.length !== 0
+                ? userProfile?.userGroup
+                    ?.map(({ group }) => group.name)
+                    .toString()
+                : "-"}
+            </span>
           </h3>
         </div>
       </div>
