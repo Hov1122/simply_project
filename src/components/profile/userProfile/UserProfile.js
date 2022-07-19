@@ -28,44 +28,50 @@ const UserProfile = () => {
       <div style={{ height: "75px" }}></div>
       <div className="User-Profile-Container">
         <h2 style={{ margin: "15px auto" }}>Profile</h2>
-        <div className="User-Profile">
-          <h3>
-            First Name : <span>{userProfile?.firstName}</span>
-          </h3>
-
-          <h3>
-            Last Name : <span>{userProfile?.lastName}</span>
-          </h3>
-
-          {userProfile?.role?.name === "Student" && (
+        <div className="User-Profile profile-container">
+          <div>
             <h3>
-              Average Mark :{" "}
+              First Name : <span>{userProfile?.firstName}</span>
+            </h3>
+
+            <h3>
+              Last Name : <span>{userProfile?.lastName}</span>
+            </h3>
+          </div>
+
+          <div>
+            {userProfile?.role?.name === "Student" && (
+              <h3>
+                Average Mark :{" "}
+                <span>
+                  {userProfile?.avgMark === -1
+                    ? "-"
+                    : userProfile?.avgMark.toFixed(2)}
+                </span>
+              </h3>
+            )}
+
+            <h3>
+              Email : <span>{userProfile?.email}</span>
+            </h3>
+          </div>
+
+          <div>
+            <h3>
+              Role : <span>{userProfile?.role?.name}</span>
+            </h3>
+
+            <h3>
+              Group/s :{" "}
               <span>
-                {userProfile?.avgMark === -1
-                  ? "-"
-                  : userProfile?.avgMark.toFixed(2)}
+                {userProfile?.userGroup?.length !== 0
+                  ? userProfile?.userGroup
+                      ?.map(({ group }) => group.name)
+                      .toString()
+                  : "-"}
               </span>
             </h3>
-          )}
-
-          <h3>
-            Email : <span>{userProfile?.email}</span>
-          </h3>
-
-          <h3>
-            Role : <span>{userProfile?.role?.name}</span>
-          </h3>
-
-          <h3>
-            Group/s :{" "}
-            <span>
-              {userProfile?.userGroup?.length !== 0
-                ? userProfile?.userGroup
-                    ?.map(({ group }) => group.name)
-                    .toString()
-                : "-"}
-            </span>
-          </h3>
+          </div>
         </div>
       </div>
     </div>
