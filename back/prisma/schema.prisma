@@ -1,0 +1,197 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int               @id @default(autoincrement())
+  isOnline        Boolean           @default(false)
+  firstName       String            @db.VarChar(30)
+  lastName        String            @db.VarChar(30)
+  email           String            @unique @db.VarChar(30)
+  password        String            @db.VarChar(100)
+  refreshToken    String?           @unique
+  roleId          Int
+  role            Role              @relation(fields: [roleId], references: [id])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  userGroup       UserGroup[]
+  userTest        UserTest[]
+  UserTestAnswers UserTestAnswers[]
+  userMessage     userMessage[]
+  Message         Message[]
+  ipAddresses     IpAddresses[]
+}
+
+model IpAddresses {
+  id        Int       @id @default(autoincrement())
+  ipAddress String    @db.VarChar(16)
+  userId    Int
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+}
+
+model UserGroup {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  groupId   Int?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group     Group?   @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, groupId])
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(30)
+  user User[]
+}
+
+model Group {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique @db.VarChar(30)
+  schedule  Schedule[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  userGroup UserGroup[]
+  GroupTest GroupTest[]
+  Message   Message[]
+}
+
+model Schedule {
+  id              Int               @id @default(autoincrement())
+  day             Int
+  group           Group             @relation(fields: [groupId], references: [id])
+  groupId         Int
+  scheduleSubject ScheduleSubject[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@unique([day, groupId])
+}
+
+model ScheduleSubject {
+  id         Int      @id @default(autoincrement())
+  time       DateTime @db.Time()
+  scheduleId Int
+  subjectId  Int
+  subject    Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  schedule   Schedule @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+
+  @@unique([scheduleId, time])
+}
+
+model Subject {
+  id              Int               @id @default(autoincrement())
+  name            String            @unique
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  scheduleSubject ScheduleSubject[]
+  test            Test[]
+}
+
+model Test {
+  id              Int               @id @default(autoincrement())
+  name            String
+  subjectId       Int?
+  start           DateTime          @db.Timestamp()
+  length          Int
+  highestScore    Int
+  subject         Subject?          @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  questions       Question[]
+  userTest        UserTest[]
+  GroupTest       GroupTest[]
+  UserTestAnswers UserTestAnswers[]
+}
+
+model GroupTest {
+  id      Int    @id @default(autoincrement())
+  testId  Int?
+  groupId Int?
+  test    Test?  @relation(fields: [testId], references: [id], onDelete: Cascade)
+  group   Group? @relation(fields: [groupId], references: [id], onDelete: Cascade)
+}
+
+model UserTest {
+  id         Int      @id @default(autoincrement())
+  userId     Int?
+  testId     Int?
+  mark       Float    @default(-1) @db.Double
+  isComplete Boolean  @default(false)
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  test       Test?    @relation(fields: [testId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, testId])
+}
+
+model UserTestAnswers {
+  id         Int       @id @default(autoincrement())
+  userId     Int?
+  testId     Int?
+  test       Test?     @relation(fields: [testId], references: [id], onDelete: Cascade)
+  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId Int?
+  answerId   Int?
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  answer     Answer?   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, testId, questionId, answerId])
+}
+
+model Question {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(160)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  test            Test?             @relation(fields: [testId], references: [id], onDelete: Cascade)
+  testId          Int?
+  isMultiSelect   Boolean           @default(false)
+  answers         Answer[]
+  userTestAnswers UserTestAnswers[]
+}
+
+model Answer {
+  id              Int               @id @default(autoincrement())
+  name            String            @db.VarChar(30)
+  isCorrect       Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  question        Question          @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId      Int
+  userTestAnswers UserTestAnswers[]
+}
+
+model Message {
+  id          Int           @id @default(autoincrement())
+  groupId     Int?
+  senderId    Int?
+  sender      User?         @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  group       Group?        @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  text        String        @db.VarChar(160)
+  createdAt   DateTime      @default(now())
+  userMessage userMessage[]
+}
+
+model userMessage {
+  id        Int      @id @default(autoincrement())
+  messageId Int?
+  userId    Int?
+  seen      Boolean  @default(false)
+  message   Message? @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  readAt    DateTime @default(now())
+
+  @@unique([userId, messageId])
+}

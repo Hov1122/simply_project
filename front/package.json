@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    
-    
-    
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@material-ui/core": "^4.12.4",
@@ -17,7 +14,6 @@
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "framer-motion": "^6.3.11",
-    "husky": "^8.0.1",
     "react": "^18.1.0",
     "react-apexcharts": "^1.4.0",
     "react-countdown-circle-timer": "^3.0.9",
@@ -41,7 +37,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .js",
     "lint:fix": "eslint . --fix",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install front/.husky"
   },
   "lint-staged": {
     "!(build)/**/*.{js,jsx}": [
@@ -69,7 +65,7 @@
   "devDependencies": {
     "eslint": "^8.17.0",
     "eslint-plugin-react": "^7.30.0",
-    "husky": "^8.0.0",
+    "husky": "^8.0.1",
     "lint-staged": "^13.0.1"
   }
 }
