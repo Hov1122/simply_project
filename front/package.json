@@ -40,7 +40,7 @@
     "prepare": "cd .. && husky install front/.husky"
   },
   "lint-staged": {
-    "!(build)/**/*.{js,jsx}": [
+    "**/*.{js,jsx}": [
       "eslint . --fix"
     ]
   },
