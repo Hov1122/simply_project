@@ -1,0 +1,15 @@
+.head {
+    height: 70px;
+    background: none;
+}
+
+.Main-Container {
+    display: flex;
+    background-color: #eff0f1;
+    height: 86vh;
+    overflow: auto;
+}
+
+.login {
+    height: calc(100vh);
+}

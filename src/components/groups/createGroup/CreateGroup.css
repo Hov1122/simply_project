@@ -1,0 +1,14 @@
+.Create-Group-Container {
+    display: flex;
+    gap:20px;
+    flex-direction: column;
+}
+
+.Create-Group-Container input[type=button]{
+    width: 200px;
+    border-radius: 30px;
+    padding: 5px;
+    border: none;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    color: white;
+}

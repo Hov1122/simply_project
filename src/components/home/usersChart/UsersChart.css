@@ -1,0 +1,4 @@
+.users-online-charts {
+    display: flex;
+    flex-wrap: wrap;
+}

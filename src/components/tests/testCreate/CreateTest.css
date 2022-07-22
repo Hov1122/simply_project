@@ -1,0 +1,304 @@
+.TestCreater-Container {
+    background-color: #ffff;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.TestCreater-Container > div {
+    width: 100%;
+}
+
+.TestCreater-Answer-Container {
+    display: flex;
+    gap:5px;
+    width: 100%;
+}
+
+.Question-header {
+    display: flex;
+    width: 100%;
+}
+
+.Question-header input {
+    width: 100%;
+}
+
+.create-test-subjects, .create-test-groups {
+    border-radius: 7px;
+    padding: 5px;
+}
+
+.TestCreater-Container input{
+    margin: 5px;
+    width: 100%;
+}
+
+.AnswersForm {
+    width: 100%;
+}
+
+.TestCreater-Container input[type=button] {
+    width: 100%;
+    border-radius: 30px;
+    padding: 5px;border: none;
+    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    color: white;
+}
+
+.css-319lph-ValueContainer {
+    background-color: inherit;
+}
+
+.testInformationHeader input[type=button] {
+    width: 200px;
+}
+
+.MuiFormControl-root > label:first-child {
+    line-height: .8;
+    bottom: 15px;
+}
+
+fieldset[aria-hidden="true"] {
+    border: none;
+}
+
+label ~ [data-value] {
+    border-radius: 20px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+label ~ [data-value] > div:first-child {
+    padding: 10px;
+}
+
+input[area-hidden='true'] {
+    tabIndex: 0;
+}
+ 
+.TestCreater-Container input[type=text], .TestCreater-Container input[type=datetime-local], .TestCreater-Container input[type=number] {
+    background-color: inherit;
+    border-radius: 20px;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-bottom: .5px solid black;
+}
+
+.testInformationData {
+    display: flex;
+    gap:20px;
+    justify-content: center;
+}
+
+.Question {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    /* margin-bottom: 10px; */
+}
+
+.Question-Container {
+    position: relative;
+    margin: 0 auto;
+
+}
+
+.Question-Container > div {
+    width: 100%;
+}
+
+.Answer {
+    display: flex;
+}
+
+.testInformationHeader {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+hr {
+    width: 80%;
+}
+
+.QuestionsForm > div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: #ffff;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;;
+}
+
+.answerChecker {
+    top: 25%;
+    position: relative;
+}
+
+.QuestionsForm {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 20px;
+    align-items: center;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+
+input[type='button'], input[type='submit'], .CreateTest-buttons {
+    cursor:pointer;
+}
+
+
+#addNewQuestion {
+    width: 60%;
+}
+
+[data-value="rigthAnswer"] {
+    border-radius: 50%;
+    height: 20px;
+}
+
+/* add anser button */
+.icon-btn {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #cdcdcd;
+    background: white;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+  }
+  .add-btn:hover {
+    width: 130px;
+  }
+
+  .add-question-btn:hover {
+    width: 140px;
+  }
+
+  .add-btn::before,
+  .add-btn::after {
+    transition: width 0.2s ease-in-out, border-radius 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 4px;
+    width: 10px;
+    top: calc(50% - 2px);
+    background: lightgreen;
+  }
+  .add-btn::after {
+    right: 14px;
+    overflow: hidden;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+  .add-btn::before {
+    left: 14px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+  .icon-btn:focus {
+    outline: none;
+  }
+  .btn-txt {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .add-btn:hover::before,
+  .add-btn:hover::after {
+    width: 4px;
+    border-radius: 2px;
+  }
+  .add-btn:hover .btn-txt {
+    opacity: 1;
+  }
+  .add-icon::after,
+  .add-icon::before {
+    transition: all 0.2s ease-in-out;
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: 2px;
+    top: calc(50% - 10px);
+    background: lightgreen;
+    overflow: hidden;
+  }
+  .add-icon::before {
+    left: 22px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+  .add-icon::after {
+    right: 22px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+  .add-btn:hover .add-icon::before {
+    left: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+  }
+  .add-btn:hover .add-icon::after {
+    right: 15px;
+    height: 4px;
+    top: calc(50% - 2px);
+  }
+
+
+/* checkbox */
+.answer-input {
+    -webkit-appearance: none;
+    cursor: pointer;
+	background-color: #f0f9ff;
+	border: 2px solid #bad9f4;
+    border-radius: 15px;
+    width: 10px !important;
+    height: 10px;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	padding: 9px;
+	display: inline-block;
+	position: relative;
+}
+
+
+.answer-input:active, .answer-input:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.answer-input:checked {
+    background-color: green;
+	border: 1px solid #f0f9ff;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	color: #f0f9ff;
+}
+
+.answer-input:checked:after {
+	content: '\2714';
+	font-size: 14px;
+	position: absolute;
+	top: 0;
+	left: 3px;
+	color: #f0f9ff;
+}

@@ -1,0 +1,44 @@
+.Search-Results-Container {
+    position: relative;
+    width: 100%;
+    max-height: 199px;
+    overflow-y: auto;
+    border: 1px solid #d8d8d8;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 10px;
+    z-index: 1100;
+    color: #344767;
+    background-color: #f8f9fa;
+}
+
+.Search-Results-Item {
+    display: flex;
+    justify-content: space-evenly;
+    color: #9CB3C9;
+    padding: 10px 0 10px 30px;
+    border-bottom: 1px solid #babbbd;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.Search-Item-Online {
+    width: 12px;
+    height: 12px;
+    background-color: rgb(3, 255, 70);
+    border-radius: 50%;
+    box-shadow: #000 0 -1px 7px 1px, inset rgb(20, 170, 45) 0 -1px 9px, rgb(0, 255, 119) 0 2px 12px;
+}
+
+.Search-Results-Item:hover {
+    background-color: rgb(233, 233, 233);
+}
+
+.Search-Item-Name {
+    font: normal 14px/16px Arial;
+    margin-right: 30px;
+}
+
+.Search-Item-Role {
+    font: bold 16px/16px "Roboto", sans-serif;
+}

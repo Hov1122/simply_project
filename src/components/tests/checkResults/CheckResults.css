@@ -1,0 +1,16 @@
+.Check-Results-Container {
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 100px;
+    margin: auto auto;
+    margin-top: 100px;
+    width: 90%;
+    height: 90%;
+    overflow-x: hidden;
+}
+
+.question-text {
+    margin: 10px 0;
+}

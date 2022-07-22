@@ -1,0 +1,125 @@
+  .create-user-panel-table {
+    margin: 0 0 40px 0;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: table;
+    overflow: auto;
+  }
+
+  .create-user-panel-table-row input {
+    border-radius: 7px;
+    padding: 5px;
+  }
+
+  .create-user-panel-table-row select {
+    border-radius: 7px;
+    padding: 5px;
+  }
+
+  /* add new row button */
+  .add-new-row-button { 
+    cursor: pointer;
+    background: #3498db;
+    color: #fff;
+    border: 0.25rem solid #3498db;
+    padding: 0.85em 0.75em;
+    position: relative;
+    margin-right: 40px;
+    z-index: 1;
+    overflow: hidden;
+  }
+  .add-new-row-button:hover {
+    color: #3498db;
+  }
+  .add-new-row-button::after {
+    left: -20%;
+    right: -20%;
+    top: 0;
+    bottom: 0;
+    content: "";
+  background: #ecf0f1;
+  position: absolute;
+  z-index: -1;
+  padding: 0.85em 0.75em;
+  display: block;
+    transform: skewX(-45deg) scale(0, 1);
+    transition: all 0.3s ease;
+  }
+  .add-new-row-button:hover::after {
+    transform: skewX(-45deg) scale(1, 1);
+    transition: all 0.3s ease-out;
+  }
+  
+  @media screen and (max-width: 580px) {
+    .create-user-panel-table {
+      display: block;
+    }
+  }
+  
+  .create-user-panel-table-row {
+    margin-bottom: 50px;
+    display: table-row;
+    background: #f6f6f6;
+  }
+  
+  .create-user-panel-table-row:nth-of-type(odd) {
+    background: #e9e9e9;
+  }
+  
+  .create-user-panel-table-row.create-user-panel-header {
+    font-weight: 900;
+    color: #ffffff;
+    background: #2980b9;
+  }
+  
+  @media screen and (max-width: 580px) {
+    .create-user-panel-table-row {
+      padding: 14px 0 7px;
+      display: block;
+    }
+  
+    .create-user-panel-table-row.create-user-panel-header {
+      padding: 0;
+      height: 6px;
+    }
+  
+    .create-user-panel-table-row.create-user-panel-header .create-user-table-cell {
+      display: none;
+    }
+  
+    .create-user-panel-table-row .create-user-table-cell {
+      margin-bottom: 10px;
+    }
+  
+    .create-user-panel-table-row .create-user-table-cell:before {
+      margin-bottom: 3px;
+      content: attr(data-title);
+      min-width: 98px;
+      font-size: 10px;
+      /* line-height: 10px; */
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #969696;
+      display: block;
+    }
+  }
+  
+  .create-user-table-cell {
+    padding: 2px;
+    display: table-cell;
+  }
+  
+  @media screen and (max-width: 580px) {
+    .create-user-table-cell {
+      padding: 2px ;
+      display: block;
+    }
+  }
+  
+  .create-user-panel-component input {
+    outline: none;
+    background-color: none;
+
+    width: 100%;
+    height: 100%;
+  }

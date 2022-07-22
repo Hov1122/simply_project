@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+
+.course {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	max-width: 100%;
+    margin: 20px auto;
+	overflow: hidden;
+	width: 90%;
+    height: 80%;
+    opacity: .8;
+}
+
+.course:hover {
+    opacity: 1;
+}
+
+.course h6 {
+	opacity: 0.9;
+	margin: 0;
+	font-size: 12px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.course h2 {
+	letter-spacing: 1px;
+	margin: 10px 0;
+}
+
+.course-preview {
+	background-color: #2A265F;
+	color: #fff;
+	padding: 30px;
+	max-width: 250px;
+}
+
+.course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+}
+
+.test-body {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.progress-container {
+	width: 100%;
+}
+
+.progress-text {
+	font-size: 12px;
+	opacity: 0.6;
+	letter-spacing: 1px;
+    width: 100%;
+}
+
+.test-btn-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.start-test-btn, .test-result-btn, .test-delete-btn   {
+	cursor: pointer;
+	background-color: #0a009d;
+    color: #ffff;
+    padding: 10px;
+    border: none;
+    border-radius: 7px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.test-result-btn {
+    width: 10%;
+	height: 25%;
+}
+
+.test-delete-btn {
+	width: 50%;
+	height: 25%;
+	margin: 0 auto;
+}
+
+.teacher-btns {
+	display: flex;
+	flex-direction: column;
+	gap: 50px;
+	height: 100%;
+}
+
+.test-time-left {
+    font-size: 15px;
+    margin-bottom: 25px;
+    font: bold;
+}
