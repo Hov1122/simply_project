@@ -75,6 +75,7 @@ export const handleLogin = async (req, res) => {
       res.status(401).json(unauthorizedErrorCreator())
     }
   } catch (err) {
+    console.log(err)
     res.status(500).json(internalServerErrorCreator())
   }
 }

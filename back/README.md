@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# Getting Started with University Student dashboard App
-=======
 # Getting Started with University Student dashboard App (Backend)
->>>>>>> back/main
 
 This project was created with love for internship of [Simply technologies](https://www.simplytechnologies.net/).
 
@@ -10,21 +6,6 @@ This project was created with love for internship of [Simply technologies](https
 
 In the project directory, you can run:
 
-<<<<<<< HEAD
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.\
-For uninterrupted work you need to run backend too.\
-[Backend](https://github.com/smikayel/Simply-Final-Project)
-
-## You have questions ? 
-
-We will happy to help you.\
-=======
 ### `npm run dev`
 
 Runs the app in the development mode.\
@@ -45,7 +26,6 @@ Or you can download and test it with\
 ## You have questions ?
 
 We will be happy to help you.\
->>>>>>> back/main
 Our git hub links. \
 [Sasha Mikayelyan](https://github.com/smikayel)
 [Davit Avakian](https://github.com/Davit-Avakian)

@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { Provider } from "react-redux";
-import store from "../src/state-management/index";
-import { BrowserRouter } from "react-router-dom";
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  // <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  // </React.StrictMode>
-);
-
-reportWebVitals();
-=======
 import app from './app.js'
 import * as routes from './api/index.js'
 import { internalServerErrorCreator, notFoundErrorCreator } from './helpers/errors.js'
@@ -49,4 +27,3 @@ app.use((err, req, res, next) => {
 server.listen(PORT, function () {
   console.log(`\n🚀 Server ready at: http://localhost:${this.address().port}\n`)
 })
->>>>>>> back/main
